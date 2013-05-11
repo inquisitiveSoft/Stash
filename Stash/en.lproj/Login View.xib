@@ -235,20 +235,20 @@
 					<int key="connectionID">154</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">attemptToLogin:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="937176855"/>
-					</object>
-					<int key="connectionID">155</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">loginButton</string>
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="937176855"/>
 					</object>
 					<int key="connectionID">156</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">login:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="937176855"/>
+					</object>
+					<int key="connectionID">157</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -788,7 +788,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">156</int>
+			<int key="maxID">157</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -804,13 +804,13 @@
 					<string key="className">StashLoginViewController</string>
 					<string key="superclassName">StashViewController</string>
 					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">attemptToLogin:</string>
+						<string key="NS.key.0">login:</string>
 						<string key="NS.object.0">id</string>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">attemptToLogin:</string>
+						<string key="NS.key.0">login:</string>
 						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">attemptToLogin:</string>
+							<string key="name">login:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</object>

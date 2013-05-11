@@ -24,7 +24,7 @@
 }
 
 
-- (IBAction)attemptToLogin:(id)sender
+- (IBAction)login:(id)sender
 {
 	self.userInterfaceElementsEnabled = FALSE;
 	
@@ -34,7 +34,8 @@
 	[sharedNetworkManager setUsername:self.usernameTextField.stringValue andPassword:self.passwordTextField.stringValue];
 	[sharedNetworkManager requestOAuthTokens:^(BOOL success, id result) {
 		if(success) {
-			qLog(@"success");
+			loginViewController.usernameTextField.stringValue = @"";
+			loginViewController.passwordTextField.stringValue = @"";
 		} else {
 			loginViewController.userInterfaceElementsEnabled = TRUE;
 		}
