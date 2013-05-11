@@ -12,7 +12,27 @@
 		4AD190C5173DE4B100D3F24E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD190C4173DE4B100D3F24E /* main.m */; };
 		4AD190C9173DE4B100D3F24E /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 4AD190C7173DE4B100D3F24E /* Credits.rtf */; };
 		4AD190CC173DE4B100D3F24E /* StashAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD190CB173DE4B100D3F24E /* StashAppDelegate.m */; };
-		4AD190CF173DE4B100D3F24E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AD190CD173DE4B100D3F24E /* MainMenu.xib */; };
+		4AD190CF173DE4B100D3F24E /* Main Menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AD190CD173DE4B100D3F24E /* Main Menu.xib */; };
+		4AD190D6173DE4C000D3F24E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AD190D5173DE4C000D3F24E /* Security.framework */; };
+		4AD190E7173DE6F100D3F24E /* StashIssuesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD190DA173DE6F100D3F24E /* StashIssuesWindowController.m */; };
+		4AD190E8173DE6F100D3F24E /* StashLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD190DC173DE6F100D3F24E /* StashLoginViewController.m */; };
+		4AD190E9173DE6F100D3F24E /* StashNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD190DE173DE6F100D3F24E /* StashNetworkManager.m */; };
+		4AD190EA173DE6F100D3F24E /* StashStatusItemController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD190E0173DE6F100D3F24E /* StashStatusItemController.m */; };
+		4AD190EB173DE6F100D3F24E /* StashTexturedWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD190E2173DE6F100D3F24E /* StashTexturedWindow.m */; };
+		4AD190EC173DE6F100D3F24E /* StashTexturedWindowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD190E4173DE6F100D3F24E /* StashTexturedWindowView.m */; };
+		4AD190ED173DE6F100D3F24E /* StashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD190E6173DE6F100D3F24E /* StashViewController.m */; };
+		4AD190FF173DE71B00D3F24E /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD190EF173DE71B00D3F24E /* AFHTTPClient.m */; };
+		4AD19100173DE71B00D3F24E /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD190F1173DE71B00D3F24E /* AFHTTPRequestOperation.m */; };
+		4AD19101173DE71B00D3F24E /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD190F3173DE71B00D3F24E /* AFImageRequestOperation.m */; };
+		4AD19102173DE71B00D3F24E /* AFJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD190F5173DE71B00D3F24E /* AFJSONRequestOperation.m */; };
+		4AD19103173DE71B00D3F24E /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD190F7173DE71B00D3F24E /* AFNetworkActivityIndicatorManager.m */; };
+		4AD19104173DE71B00D3F24E /* AFPropertyListRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD190FA173DE71B00D3F24E /* AFPropertyListRequestOperation.m */; };
+		4AD19105173DE71B00D3F24E /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD190FC173DE71B00D3F24E /* AFURLConnectionOperation.m */; };
+		4AD19106173DE71B00D3F24E /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD190FE173DE71B00D3F24E /* AFXMLRequestOperation.m */; };
+		4AD1910B173DE75100D3F24E /* qLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD1910A173DE75100D3F24E /* qLog.m */; };
+		4AD19111173DE77A00D3F24E /* XSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD1910E173DE77A00D3F24E /* XSViewController.m */; };
+		4AD19112173DE77A00D3F24E /* XSWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD19110173DE77A00D3F24E /* XSWindowController.m */; };
+		4AD19118173DE7FE00D3F24E /* Login View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AD19116173DE7FE00D3F24E /* Login View.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,7 +48,47 @@
 		4AD190C8173DE4B100D3F24E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		4AD190CA173DE4B100D3F24E /* StashAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StashAppDelegate.h; sourceTree = "<group>"; };
 		4AD190CB173DE4B100D3F24E /* StashAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StashAppDelegate.m; sourceTree = "<group>"; };
-		4AD190CE173DE4B100D3F24E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		4AD190CE173DE4B100D3F24E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/Main Menu.xib"; sourceTree = "<group>"; };
+		4AD190D5173DE4C000D3F24E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		4AD190D7173DE51E00D3F24E /* Stash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Stash.entitlements; sourceTree = "<group>"; };
+		4AD190D9173DE6F100D3F24E /* StashIssuesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashIssuesWindowController.h; sourceTree = "<group>"; };
+		4AD190DA173DE6F100D3F24E /* StashIssuesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashIssuesWindowController.m; sourceTree = "<group>"; };
+		4AD190DB173DE6F100D3F24E /* StashLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashLoginViewController.h; sourceTree = "<group>"; };
+		4AD190DC173DE6F100D3F24E /* StashLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashLoginViewController.m; sourceTree = "<group>"; };
+		4AD190DD173DE6F100D3F24E /* StashNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashNetworkManager.h; sourceTree = "<group>"; };
+		4AD190DE173DE6F100D3F24E /* StashNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashNetworkManager.m; sourceTree = "<group>"; };
+		4AD190DF173DE6F100D3F24E /* StashStatusItemController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashStatusItemController.h; sourceTree = "<group>"; };
+		4AD190E0173DE6F100D3F24E /* StashStatusItemController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashStatusItemController.m; sourceTree = "<group>"; };
+		4AD190E1173DE6F100D3F24E /* StashTexturedWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashTexturedWindow.h; sourceTree = "<group>"; };
+		4AD190E2173DE6F100D3F24E /* StashTexturedWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashTexturedWindow.m; sourceTree = "<group>"; };
+		4AD190E3173DE6F100D3F24E /* StashTexturedWindowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashTexturedWindowView.h; sourceTree = "<group>"; };
+		4AD190E4173DE6F100D3F24E /* StashTexturedWindowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashTexturedWindowView.m; sourceTree = "<group>"; };
+		4AD190E5173DE6F100D3F24E /* StashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashViewController.h; sourceTree = "<group>"; };
+		4AD190E6173DE6F100D3F24E /* StashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashViewController.m; sourceTree = "<group>"; };
+		4AD190EE173DE71B00D3F24E /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPClient.h; path = Submodules/AFNetworking/AFNetworking/AFHTTPClient.h; sourceTree = SOURCE_ROOT; };
+		4AD190EF173DE71B00D3F24E /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFHTTPClient.m; path = Submodules/AFNetworking/AFNetworking/AFHTTPClient.m; sourceTree = SOURCE_ROOT; };
+		4AD190F0173DE71B00D3F24E /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPRequestOperation.h; path = Submodules/AFNetworking/AFNetworking/AFHTTPRequestOperation.h; sourceTree = SOURCE_ROOT; };
+		4AD190F1173DE71B00D3F24E /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFHTTPRequestOperation.m; path = Submodules/AFNetworking/AFNetworking/AFHTTPRequestOperation.m; sourceTree = SOURCE_ROOT; };
+		4AD190F2173DE71B00D3F24E /* AFImageRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFImageRequestOperation.h; path = Submodules/AFNetworking/AFNetworking/AFImageRequestOperation.h; sourceTree = SOURCE_ROOT; };
+		4AD190F3173DE71B00D3F24E /* AFImageRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFImageRequestOperation.m; path = Submodules/AFNetworking/AFNetworking/AFImageRequestOperation.m; sourceTree = SOURCE_ROOT; };
+		4AD190F4173DE71B00D3F24E /* AFJSONRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFJSONRequestOperation.h; path = Submodules/AFNetworking/AFNetworking/AFJSONRequestOperation.h; sourceTree = SOURCE_ROOT; };
+		4AD190F5173DE71B00D3F24E /* AFJSONRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFJSONRequestOperation.m; path = Submodules/AFNetworking/AFNetworking/AFJSONRequestOperation.m; sourceTree = SOURCE_ROOT; };
+		4AD190F6173DE71B00D3F24E /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFNetworkActivityIndicatorManager.h; path = Submodules/AFNetworking/AFNetworking/AFNetworkActivityIndicatorManager.h; sourceTree = SOURCE_ROOT; };
+		4AD190F7173DE71B00D3F24E /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFNetworkActivityIndicatorManager.m; path = Submodules/AFNetworking/AFNetworking/AFNetworkActivityIndicatorManager.m; sourceTree = SOURCE_ROOT; };
+		4AD190F8173DE71B00D3F24E /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFNetworking.h; path = Submodules/AFNetworking/AFNetworking/AFNetworking.h; sourceTree = SOURCE_ROOT; };
+		4AD190F9173DE71B00D3F24E /* AFPropertyListRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFPropertyListRequestOperation.h; path = Submodules/AFNetworking/AFNetworking/AFPropertyListRequestOperation.h; sourceTree = SOURCE_ROOT; };
+		4AD190FA173DE71B00D3F24E /* AFPropertyListRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFPropertyListRequestOperation.m; path = Submodules/AFNetworking/AFNetworking/AFPropertyListRequestOperation.m; sourceTree = SOURCE_ROOT; };
+		4AD190FB173DE71B00D3F24E /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLConnectionOperation.h; path = Submodules/AFNetworking/AFNetworking/AFURLConnectionOperation.h; sourceTree = SOURCE_ROOT; };
+		4AD190FC173DE71B00D3F24E /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLConnectionOperation.m; path = Submodules/AFNetworking/AFNetworking/AFURLConnectionOperation.m; sourceTree = SOURCE_ROOT; };
+		4AD190FD173DE71B00D3F24E /* AFXMLRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFXMLRequestOperation.h; path = Submodules/AFNetworking/AFNetworking/AFXMLRequestOperation.h; sourceTree = SOURCE_ROOT; };
+		4AD190FE173DE71B00D3F24E /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFXMLRequestOperation.m; path = Submodules/AFNetworking/AFNetworking/AFXMLRequestOperation.m; sourceTree = SOURCE_ROOT; };
+		4AD19109173DE75100D3F24E /* qLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = qLog.h; path = Submodules/SYMLFoundation/Combined/Functions/qLog.h; sourceTree = SOURCE_ROOT; };
+		4AD1910A173DE75100D3F24E /* qLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = qLog.m; path = Submodules/SYMLFoundation/Combined/Functions/qLog.m; sourceTree = SOURCE_ROOT; };
+		4AD1910D173DE77A00D3F24E /* XSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XSViewController.h; path = Submodules/XSControllers/XSViewController.h; sourceTree = SOURCE_ROOT; };
+		4AD1910E173DE77A00D3F24E /* XSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XSViewController.m; path = Submodules/XSControllers/XSViewController.m; sourceTree = SOURCE_ROOT; };
+		4AD1910F173DE77A00D3F24E /* XSWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XSWindowController.h; path = Submodules/XSControllers/XSWindowController.h; sourceTree = SOURCE_ROOT; };
+		4AD19110173DE77A00D3F24E /* XSWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XSWindowController.m; path = Submodules/XSControllers/XSWindowController.m; sourceTree = SOURCE_ROOT; };
+		4AD19117173DE7FE00D3F24E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/Login View.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AD190D6173DE4C000D3F24E /* Security.framework in Frameworks */,
 				4AD190B9173DE4B100D3F24E /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -47,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				4AD190BE173DE4B100D3F24E /* Stash */,
+				4AD190D8173DE55D00D3F24E /* Submodules */,
 				4AD190B7173DE4B100D3F24E /* Frameworks */,
 				4AD190B6173DE4B100D3F24E /* Products */,
 			);
@@ -63,6 +125,7 @@
 		4AD190B7173DE4B100D3F24E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4AD190D5173DE4C000D3F24E /* Security.framework */,
 				4AD190B8173DE4B100D3F24E /* Cocoa.framework */,
 				4AD190BA173DE4B100D3F24E /* Other Frameworks */,
 			);
@@ -84,7 +147,9 @@
 			children = (
 				4AD190CA173DE4B100D3F24E /* StashAppDelegate.h */,
 				4AD190CB173DE4B100D3F24E /* StashAppDelegate.m */,
-				4AD190CD173DE4B100D3F24E /* MainMenu.xib */,
+				4AD19114173DE7A600D3F24E /* Network Manager */,
+				4AD19113173DE79600D3F24E /* Issues Window */,
+				4AD19115173DE7DC00D3F24E /* Status Item */,
 				4AD190BF173DE4B100D3F24E /* Supporting Files */,
 			);
 			path = Stash;
@@ -93,6 +158,8 @@
 		4AD190BF173DE4B100D3F24E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4AD190CD173DE4B100D3F24E /* Main Menu.xib */,
+				4AD190D7173DE51E00D3F24E /* Stash.entitlements */,
 				4AD190C0173DE4B100D3F24E /* Stash-Info.plist */,
 				4AD190C1173DE4B100D3F24E /* InfoPlist.strings */,
 				4AD190C4173DE4B100D3F24E /* main.m */,
@@ -100,6 +167,113 @@
 				4AD190C7173DE4B100D3F24E /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4AD190D8173DE55D00D3F24E /* Submodules */ = {
+			isa = PBXGroup;
+			children = (
+				4AD1910C173DE75F00D3F24E /* XSControllers */,
+				4AD19108173DE73600D3F24E /* SYMLFoundation */,
+				4AD19107173DE72100D3F24E /* AFNetworking */,
+			);
+			name = Submodules;
+			path = Stash;
+			sourceTree = "<group>";
+		};
+		4AD19107173DE72100D3F24E /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				4AD190EE173DE71B00D3F24E /* AFHTTPClient.h */,
+				4AD190EF173DE71B00D3F24E /* AFHTTPClient.m */,
+				4AD190F0173DE71B00D3F24E /* AFHTTPRequestOperation.h */,
+				4AD190F1173DE71B00D3F24E /* AFHTTPRequestOperation.m */,
+				4AD190F2173DE71B00D3F24E /* AFImageRequestOperation.h */,
+				4AD190F3173DE71B00D3F24E /* AFImageRequestOperation.m */,
+				4AD190F4173DE71B00D3F24E /* AFJSONRequestOperation.h */,
+				4AD190F5173DE71B00D3F24E /* AFJSONRequestOperation.m */,
+				4AD190F6173DE71B00D3F24E /* AFNetworkActivityIndicatorManager.h */,
+				4AD190F7173DE71B00D3F24E /* AFNetworkActivityIndicatorManager.m */,
+				4AD190F8173DE71B00D3F24E /* AFNetworking.h */,
+				4AD190F9173DE71B00D3F24E /* AFPropertyListRequestOperation.h */,
+				4AD190FA173DE71B00D3F24E /* AFPropertyListRequestOperation.m */,
+				4AD190FB173DE71B00D3F24E /* AFURLConnectionOperation.h */,
+				4AD190FC173DE71B00D3F24E /* AFURLConnectionOperation.m */,
+				4AD190FD173DE71B00D3F24E /* AFXMLRequestOperation.h */,
+				4AD190FE173DE71B00D3F24E /* AFXMLRequestOperation.m */,
+			);
+			name = AFNetworking;
+			sourceTree = "<group>";
+		};
+		4AD19108173DE73600D3F24E /* SYMLFoundation */ = {
+			isa = PBXGroup;
+			children = (
+				4AD19109173DE75100D3F24E /* qLog.h */,
+				4AD1910A173DE75100D3F24E /* qLog.m */,
+			);
+			name = SYMLFoundation;
+			sourceTree = "<group>";
+		};
+		4AD1910C173DE75F00D3F24E /* XSControllers */ = {
+			isa = PBXGroup;
+			children = (
+				4AD1910D173DE77A00D3F24E /* XSViewController.h */,
+				4AD1910E173DE77A00D3F24E /* XSViewController.m */,
+				4AD1910F173DE77A00D3F24E /* XSWindowController.h */,
+				4AD19110173DE77A00D3F24E /* XSWindowController.m */,
+			);
+			name = XSControllers;
+			sourceTree = "<group>";
+		};
+		4AD19113173DE79600D3F24E /* Issues Window */ = {
+			isa = PBXGroup;
+			children = (
+				4AD190D9173DE6F100D3F24E /* StashIssuesWindowController.h */,
+				4AD190DA173DE6F100D3F24E /* StashIssuesWindowController.m */,
+				4AD1911A173DE8A400D3F24E /* UI Elements */,
+				4AD19119173DE80100D3F24E /* Login View */,
+			);
+			name = "Issues Window";
+			sourceTree = "<group>";
+		};
+		4AD19114173DE7A600D3F24E /* Network Manager */ = {
+			isa = PBXGroup;
+			children = (
+				4AD190DD173DE6F100D3F24E /* StashNetworkManager.h */,
+				4AD190DE173DE6F100D3F24E /* StashNetworkManager.m */,
+			);
+			name = "Network Manager";
+			sourceTree = "<group>";
+		};
+		4AD19115173DE7DC00D3F24E /* Status Item */ = {
+			isa = PBXGroup;
+			children = (
+				4AD190DF173DE6F100D3F24E /* StashStatusItemController.h */,
+				4AD190E0173DE6F100D3F24E /* StashStatusItemController.m */,
+			);
+			name = "Status Item";
+			sourceTree = "<group>";
+		};
+		4AD19119173DE80100D3F24E /* Login View */ = {
+			isa = PBXGroup;
+			children = (
+				4AD190DB173DE6F100D3F24E /* StashLoginViewController.h */,
+				4AD190DC173DE6F100D3F24E /* StashLoginViewController.m */,
+				4AD19116173DE7FE00D3F24E /* Login View.xib */,
+			);
+			name = "Login View";
+			sourceTree = "<group>";
+		};
+		4AD1911A173DE8A400D3F24E /* UI Elements */ = {
+			isa = PBXGroup;
+			children = (
+				4AD190E1173DE6F100D3F24E /* StashTexturedWindow.h */,
+				4AD190E2173DE6F100D3F24E /* StashTexturedWindow.m */,
+				4AD190E3173DE6F100D3F24E /* StashTexturedWindowView.h */,
+				4AD190E4173DE6F100D3F24E /* StashTexturedWindowView.m */,
+				4AD190E5173DE6F100D3F24E /* StashViewController.h */,
+				4AD190E6173DE6F100D3F24E /* StashViewController.m */,
+			);
+			name = "UI Elements";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -156,7 +330,8 @@
 			files = (
 				4AD190C3173DE4B100D3F24E /* InfoPlist.strings in Resources */,
 				4AD190C9173DE4B100D3F24E /* Credits.rtf in Resources */,
-				4AD190CF173DE4B100D3F24E /* MainMenu.xib in Resources */,
+				4AD190CF173DE4B100D3F24E /* Main Menu.xib in Resources */,
+				4AD19118173DE7FE00D3F24E /* Login View.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,6 +344,24 @@
 			files = (
 				4AD190C5173DE4B100D3F24E /* main.m in Sources */,
 				4AD190CC173DE4B100D3F24E /* StashAppDelegate.m in Sources */,
+				4AD190E7173DE6F100D3F24E /* StashIssuesWindowController.m in Sources */,
+				4AD190E8173DE6F100D3F24E /* StashLoginViewController.m in Sources */,
+				4AD190E9173DE6F100D3F24E /* StashNetworkManager.m in Sources */,
+				4AD190EA173DE6F100D3F24E /* StashStatusItemController.m in Sources */,
+				4AD190EB173DE6F100D3F24E /* StashTexturedWindow.m in Sources */,
+				4AD190EC173DE6F100D3F24E /* StashTexturedWindowView.m in Sources */,
+				4AD190ED173DE6F100D3F24E /* StashViewController.m in Sources */,
+				4AD190FF173DE71B00D3F24E /* AFHTTPClient.m in Sources */,
+				4AD19100173DE71B00D3F24E /* AFHTTPRequestOperation.m in Sources */,
+				4AD19101173DE71B00D3F24E /* AFImageRequestOperation.m in Sources */,
+				4AD19102173DE71B00D3F24E /* AFJSONRequestOperation.m in Sources */,
+				4AD19103173DE71B00D3F24E /* AFNetworkActivityIndicatorManager.m in Sources */,
+				4AD19104173DE71B00D3F24E /* AFPropertyListRequestOperation.m in Sources */,
+				4AD19105173DE71B00D3F24E /* AFURLConnectionOperation.m in Sources */,
+				4AD19106173DE71B00D3F24E /* AFXMLRequestOperation.m in Sources */,
+				4AD1910B173DE75100D3F24E /* qLog.m in Sources */,
+				4AD19111173DE77A00D3F24E /* XSViewController.m in Sources */,
+				4AD19112173DE77A00D3F24E /* XSWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,12 +384,20 @@
 			name = Credits.rtf;
 			sourceTree = "<group>";
 		};
-		4AD190CD173DE4B100D3F24E /* MainMenu.xib */ = {
+		4AD190CD173DE4B100D3F24E /* Main Menu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				4AD190CE173DE4B100D3F24E /* en */,
 			);
-			name = MainMenu.xib;
+			name = "Main Menu.xib";
+			sourceTree = "<group>";
+		};
+		4AD19116173DE7FE00D3F24E /* Login View.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4AD19117173DE7FE00D3F24E /* en */,
+			);
+			name = "Login View.xib";
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -264,6 +465,8 @@
 		4AD190D3173DE4B100D3F24E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Stash/Stash.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Stash/Stash-Prefix.pch";
@@ -276,6 +479,8 @@
 		4AD190D4173DE4B100D3F24E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Stash/Stash.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Stash/Stash-Prefix.pch";
@@ -304,6 +509,7 @@
 				4AD190D4173DE4B100D3F24E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
