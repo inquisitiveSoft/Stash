@@ -217,7 +217,7 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 			BOOL success = FALSE;
 			if([json isKindOfClass:[NSDictionary class]]) {
 				NSString *authorizationToken = [json objectForKey:StashRestRequestOAuthTokenKey];
-				NSNumber *authorizationIdentifier = [json objectForKey:StashRestRequestOAuthIdentifierKey];
+				NSString *authorizationIdentifier = [json objectForKey:StashRestRequestOAuthIdentifierKey];
 				
 				NSError *error = nil;
 				success = [networkManager setAuthorizationToken:authorizationToken withIdentifier:authorizationIdentifier error:&error];
@@ -244,13 +244,13 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 - (void)removeAuthentication:(AFRequestResultBlock)resultBlock
 {
 	NSError *error = nil;
-	NSNumber *authorizationID = [self authorizationObjectForKey:StashRestRequestOAuthIdentifierKey error:&error];
+	NSString *authorizationIdentifier = [self authorizationObjectForKey:StashRestRequestOAuthIdentifierKey error:&error];
 	
-	if(!authorizationID) {
+	if(!authorizationIdentifier) {
 		qLog(@"Couldn't retrieve the authorization id from the keychain: %@", error);
 	} else {
-		[self deleteRequest:@{
-			StashRestRequestURL : [NSString stringWithFormat:@"authorizations/:%ld", [authorizationID integerValue]],
+		[self getRequest:@{
+			StashRestRequestURL : [NSString stringWithFormat:@"authorizations/%@", authorizationIdentifier],
 			
 			StashRestRequestSuccessBlock : ^(NSURLRequest *request, NSHTTPURLResponse *response, id json) {
 				// Remove the authorizations data from the keychain
@@ -272,12 +272,14 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 			},
 			
 			StashRestRequestFailureBlock : ^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-				qLog(@"Failed to remove the authorization with the id: %@ error: %@", authorizationID, error);
+				qLog(@"Failed to remove the authorization with the id: %@ error: %@", authorizationIdentifier, error);
 				
 				if(resultBlock) {
 					resultBlock(FALSE, nil);
 				}
-			}
+			},
+			
+//			StashRestRequestShouldUseBasicAuthentication : @(TRUE)
 		}];
 	}
 }
@@ -286,17 +288,7 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 
 - (void)performSync
 {
-	[self getRequest:@{
-		StashRestRequestURL : @"https://api.github.com/authorizations",
-		StashRestRequestSuccessBlock : ^(NSURLRequest *request, NSHTTPURLResponse *response, id json) {
-			
-			qLog(@"success: %@ %@ returned: %@", request.HTTPMethod, request.URL, json);
-		},
-		StashRestRequestFailureBlock : ^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-			qLog(@"failure: %@, %@, %@, %@", request, response, error, JSON);
-		},
-		StashRestRequestShouldUseBasicAuthentication : @(TRUE)
-	}];
+
 }
 
 
@@ -363,13 +355,13 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 	if(![[attributes objectForKey:StashRestRequestShouldUseBasicAuthentication] boolValue]) {
 		// Use OAuth by default
 		NSString *authorizationToken = [NSString stringWithFormat:@"token %@", [self authorizationToken]];
-		qLog(@"authorizationToken: %@", authorizationToken);
-		
 		[urlRequest setValue:authorizationToken forHTTPHeaderField:@"Authorization"];
 	} else {
 		// Add the basic authentication header
 		[urlRequest setValue:[self basicAuthenticationHeader] forHTTPHeaderField:@"Authorization"];
 	}
+	
+	qLog(@"'%@'", [urlRequest allHTTPHeaderFields]);
 	
 	AFRequestSuccessBlock successBlock = [attributes objectForKey:StashRestRequestSuccessBlock];
 	AFRequestFailureBlock failureBlock = [attributes objectForKey:StashRestRequestFailureBlock];
@@ -377,7 +369,23 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 	NSAssert(successBlock, @"Can't perform a request without a successBlock: %@", attributes);
 	
 	
-	AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:urlRequest success:successBlock failure:failureBlock];	
+	AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:urlRequest success:successBlock failure:failureBlock];
+	
+	[operation setRedirectResponseBlock:^NSURLRequest *(NSURLConnection *connection, NSURLRequest *request, NSURLResponse *redirectResponse) {
+	
+			qLog(@"redirect: %@", [request valueForHTTPHeaderField:@"Authorization"]);
+            return request;
+
+        NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:request.URL cachePolicy:request.cachePolicy timeoutInterval:request.timeoutInterval];
+        NSString *authValue = [NSString stringWithFormat:@"bearer %@", [self authorizationToken]];
+        [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
+
+		qLog(@"redirect: %@", request);
+        return  urlRequest;
+
+    }];
+
+	
 	[operation start];
 }
 

@@ -34,11 +34,35 @@
 	[sharedNetworkManager setUsername:self.usernameTextField.stringValue andPassword:self.passwordTextField.stringValue];
 	[sharedNetworkManager requestOAuthTokens:^(BOOL success, id result) {
 		if(success) {
-			loginViewController.usernameTextField.stringValue = @"";
-			loginViewController.passwordTextField.stringValue = @"";
+//			[loginViewController.windowController setStashRootMode:StashRootModeIssues animated:TRUE];
 		} else {
 			loginViewController.userInterfaceElementsEnabled = TRUE;
 		}
+	}];
+}
+
+
+- (IBAction)listAuthentications:(id)sender {	
+	[[StashNetworkManager sharedNetworkManager] getRequest:@{
+		StashRestRequestURL : @"authorizations",
+		
+		StashRestRequestSuccessBlock : ^(NSURLRequest *request, NSHTTPURLResponse *response, id json) {
+			// Remove the authorizations data from the keychain
+			qLog(@"json: %@", json);
+		},
+		
+		StashRestRequestFailureBlock : ^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+			// Remove the authorizations data from the keychain
+			qLog(@"error: %@", error);
+		}
+	}];
+}
+
+
+- (IBAction)remove:(id)sender
+{
+	[[StashNetworkManager sharedNetworkManager] removeAuthentication:^(BOOL success, id result) {
+		qLog(@"removeAuthentication: %d", success);
 	}];
 }
 

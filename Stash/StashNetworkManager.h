@@ -22,8 +22,9 @@ typedef void (^ AFRequestResultBlock)(BOOL success, id result);
 
 - (void)setUsername:(NSString *)username andPassword:(NSString *)password;
 - (void)requestOAuthTokens:(AFRequestResultBlock)resultBlock;
-- (void)removeAuthentication:(AFRequestResultBlock)resultBlock;
+
 - (BOOL)setAuthorizationToken:(NSString *)token withIdentifier:(NSString *)identifier error:(NSError **)error;
+- (void)removeAuthentication:(AFRequestResultBlock)resultBlock;
 
 - (void)performSync;
 - (void)getRequest:(NSDictionary *)attributes;
