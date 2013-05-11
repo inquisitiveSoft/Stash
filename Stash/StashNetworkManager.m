@@ -241,46 +241,19 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 }
 
 
-- (void)removeAuthentication:(AFRequestResultBlock)resultBlock
+- (void)removeAuthentication:(NSError **)error
 {
-	NSError *error = nil;
-	NSString *authorizationIdentifier = [self authorizationObjectForKey:StashRestRequestOAuthIdentifierKey error:&error];
+	// Remove the authorizations data from the keychain
+	NSDictionary *matchingAttributes = @{
+		(id)kSecClass : (id)kSecClassGenericPassword,
+		(id)kSecAttrService : StashRestRequestOAuthKeychainIdentifier,
+	};
 	
-	if(!authorizationIdentifier) {
-		qLog(@"Couldn't retrieve the authorization id from the keychain: %@", error);
-	} else {
-		[self getRequest:@{
-			StashRestRequestURL : [NSString stringWithFormat:@"authorizations/%@", authorizationIdentifier],
-			
-			StashRestRequestSuccessBlock : ^(NSURLRequest *request, NSHTTPURLResponse *response, id json) {
-				// Remove the authorizations data from the keychain
-				NSDictionary *matchingAttributes = @{
-					(id)kSecClass : (id)kSecClassGenericPassword,
-					(id)kSecAttrService : StashRestRequestOAuthKeychainIdentifier,
-				};
-				
-				OSStatus result = SecItemDelete((__bridge CFDictionaryRef)matchingAttributes);
-				BOOL success = result != errSecSuccess;
-				
-				if(success) {
-					qLog(@"Couldn't remove the authorization data from the keychain: %@", error);
-				}
-				
-				if(resultBlock) {
-					resultBlock(success, nil);
-				}
-			},
-			
-			StashRestRequestFailureBlock : ^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-				qLog(@"Failed to remove the authorization with the id: %@ error: %@", authorizationIdentifier, error);
-				
-				if(resultBlock) {
-					resultBlock(FALSE, nil);
-				}
-			},
-			
-//			StashRestRequestShouldUseBasicAuthentication : @(TRUE)
-		}];
+	OSStatus result = SecItemDelete((__bridge CFDictionaryRef)matchingAttributes);
+	BOOL success = result != errSecSuccess;
+	
+	if(success) {
+		qLog(@"Couldn't remove the authorization data from the keychain: %@", error);
 	}
 }
 
@@ -405,36 +378,31 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 
 static NSString *StashBase64EncodedStringFromString(NSString *string)
 {
-	NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-	if(!data)
-		return nil;
+	NSData *dataToEncode = [string dataUsingEncoding:NSUTF8StringEncoding];
+	NSString *result = nil;
 	
-    NSUInteger length = [data length];
-    NSMutableData *mutableData = [NSMutableData dataWithLength:((length + 2) / 3) * 4];
+	if([dataToEncode length]) {
+		CFErrorRef error = nil;
+		SecTransformRef base64Transform = SecEncodeTransformCreate(kSecBase64Encoding, &error);
+		
+		if(base64Transform) {
+			if(SecTransformSetAttribute(base64Transform, kSecTransformInputAttributeName, (__bridge CFDataRef)dataToEncode, &error)) {
+				CFDataRef resultingData = SecTransformExecute(base64Transform, &error);
+				
+				if(resultingData) {
+					result = [[NSString alloc] initWithData:(__bridge_transfer NSData *)resultingData encoding:NSASCIIStringEncoding];
+				} else
+					NSLog(@"The base64 transform didn't return any data: %@", error);
+			} else
+				NSLog(@"There was an error setting the input attribute on the base64 attribute: %@", error);
+			
+			CFRelease(base64Transform);
+		} else
+			NSLog(@"There was an error creating a base64 transform: %@", error);
+	} else
+		NSLog(@"The StashBase64EncodedStringFromString was called with an empty string");
 	
-    uint8_t *input = (uint8_t *)[data bytes];
-    uint8_t *output = (uint8_t *)[mutableData mutableBytes];
-
-    for(NSUInteger i = 0; i < length; i += 3) {
-        NSUInteger value = 0;
-		for(NSUInteger j = i; j < (i + 3); j++) {
-            value <<= 8;
-            if (j < length) {
-                value |= (0xFF & input[j]);
-            }
-        }
-
-        static uint8_t const kAFBase64EncodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-
-        NSUInteger idx = (i / 3) * 4;
-        output[idx + 0] = kAFBase64EncodingTable[(value >> 18) & 0x3F];
-        output[idx + 1] = kAFBase64EncodingTable[(value >> 12) & 0x3F];
-        output[idx + 2] = (i + 1) < length ? kAFBase64EncodingTable[(value >> 6)  & 0x3F] : '=';
-        output[idx + 3] = (i + 2) < length ? kAFBase64EncodingTable[(value >> 0)  & 0x3F] : '=';
-    }
-	
-	NSString *result2 = [[NSString alloc] initWithData:mutableData encoding:NSASCIIStringEncoding];
-    return result2;
+	return result ? : @"";
 }
 
 

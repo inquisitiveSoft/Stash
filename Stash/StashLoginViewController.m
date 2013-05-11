@@ -44,7 +44,7 @@
 
 - (IBAction)listAuthentications:(id)sender {	
 	[[StashNetworkManager sharedNetworkManager] getRequest:@{
-		StashRestRequestURL : @"authorizations",
+		StashRestRequestURL : @"issues",
 		
 		StashRestRequestSuccessBlock : ^(NSURLRequest *request, NSHTTPURLResponse *response, id json) {
 			// Remove the authorizations data from the keychain
@@ -55,14 +55,6 @@
 			// Remove the authorizations data from the keychain
 			qLog(@"error: %@", error);
 		}
-	}];
-}
-
-
-- (IBAction)remove:(id)sender
-{
-	[[StashNetworkManager sharedNetworkManager] removeAuthentication:^(BOOL success, id result) {
-		qLog(@"removeAuthentication: %d", success);
 	}];
 }
 
