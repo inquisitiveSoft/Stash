@@ -1,12 +1,25 @@
 #import "StashIssuesWindowController.h"
 
+#import "StashNetworkManager.h"
+
 #import "StashLoginViewController.h"
+#import "StashIssuesViewController.h"
+
+#import "StashViewController.h"
 #import "StashTexturedWindow.h"
+#import "StashView.h"
+
+#import <QuartzCore/QuartzCore.h>
+#import "qLog.h"
+#import "NSView+ConstraintAdditions.h"
 
 
 @interface StashIssuesWindowController ()
 
 @property (strong) StashLoginViewController *loginViewController;
+@property (strong) StashIssuesViewController *issuesViewController;
+
+@property (strong) NSView *containerView, *currentContentView;
 
 @end
 
@@ -20,12 +33,7 @@
 	self = [super init];
 	
 	if(self) {
-		StashTexturedWindow *window = [[StashTexturedWindow alloc] initWithContentRect:NSMakeRect(0.0, 0.0, 372.0, 184.0) styleMask:NSTitledWindowMask backing:NSBackingStoreBuffered defer:TRUE];
-		[window setHasShadow:TRUE];
-		[window center];
-		self.window = window;
-		
-		[self windowDidLoad];
+		[self setup];
 	}
 	
 	return self;
@@ -33,21 +41,65 @@
 
 
 
-- (void)windowDidLoad
+- (void)setup
 {
-	[self.window center];
+	CGRect windowFrame = NSMakeRect(0.0, 0.0, 372.0, 464.0);
+	StashTexturedWindow *window = [[StashTexturedWindow alloc] initWithContentRect:windowFrame styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:TRUE];
+	[window center];
+	self.window = window;
 	
-	StashLoginViewController *loginViewController = [[StashLoginViewController alloc] initWithNibName:@"Login View" bundle:nil windowController:self];
-	self.window.contentView = loginViewController.view;
-	self.loginViewController = loginViewController;	
+	self.loginViewController = [[StashLoginViewController alloc] initWithNibName:@"Login View" bundle:nil windowController:self];
+	self.issuesViewController = [[StashIssuesViewController alloc] initWithNibName:@"Issues View" bundle:nil windowController:self];
+	
+	StashRootMode rootMode = [[StashNetworkManager sharedNetworkManager] isAuthenticated] ? StashRootModeIssues : StashRootModeLogin;
+	[self setRootMode:rootMode animated:FALSE];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeAuthorized:) name:StashDidBecomeAuthorizedNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didResignAuthorization:) name:StashDidResignAuthorizationNotification object:nil];
 }
 
 
-
-- (void)setStashRootMode:(StashRootMode)rootMode animated:(BOOL)animated
+- (void)setRootMode:(StashRootMode)rootMode animated:(BOOL)animated
 {
-
+	if(_rootMode == rootMode)
+		return;
+	
+	
+	NSString *animationDirectiong = rootMode > _rootMode ? kCATransitionFromRight : kCATransitionFromLeft;
+	StashViewController *destinationViewController = [self viewControllerForMode:rootMode];
+	
+	[(StashTexturedWindow *)self.window setContentViewController:destinationViewController animated:animated animationDirecton:animationDirectiong];
+	
+	[self willChangeValueForKey:@"rootMode"];
+	_rootMode = rootMode;
+	[self didChangeValueForKey:@"rootMode"];
 }
 
+
+- (StashViewController *)viewControllerForMode:(StashRootMode)mode
+{
+	if(mode == StashRootModeLogin) {
+		return self.loginViewController;
+	}
+	
+	return self.issuesViewController;
+}
+
+
+#pragma mark - Update to match the current authorization state
+
+- (void)didBecomeAuthorized:(NSNotification *)notification
+{
+	[self setRootMode:StashRootModeIssues animated:TRUE];
+}
+
+
+- (void)didResignAuthorization:(NSNotification *)notification
+{
+	[self setRootMode:StashRootModeLogin animated:TRUE];
+}
 
 @end
+
+
+

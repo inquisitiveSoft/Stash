@@ -24,6 +24,12 @@
 }
 
 
+- (void)viewWillAppear:(BOOL)animated
+{
+	self.userInterfaceElementsEnabled = TRUE;
+}
+
+
 - (IBAction)login:(id)sender
 {
 	self.userInterfaceElementsEnabled = FALSE;
@@ -33,27 +39,8 @@
 	
 	[sharedNetworkManager setUsername:self.usernameTextField.stringValue andPassword:self.passwordTextField.stringValue];
 	[sharedNetworkManager requestOAuthTokens:^(BOOL success, id result) {
-		if(success) {
-//			[loginViewController.windowController setStashRootMode:StashRootModeIssues animated:TRUE];
-		} else {
+		if(!success) {
 			loginViewController.userInterfaceElementsEnabled = TRUE;
-		}
-	}];
-}
-
-
-- (IBAction)listAuthentications:(id)sender {	
-	[[StashNetworkManager sharedNetworkManager] getRequest:@{
-		StashRestRequestURL : @"issues",
-		
-		StashRestRequestSuccessBlock : ^(NSURLRequest *request, NSHTTPURLResponse *response, id json) {
-			// Remove the authorizations data from the keychain
-			qLog(@"json: %@", json);
-		},
-		
-		StashRestRequestFailureBlock : ^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-			// Remove the authorizations data from the keychain
-			qLog(@"error: %@", error);
 		}
 	}];
 }

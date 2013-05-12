@@ -7,6 +7,9 @@ extern NSString * const StashRestRequestSuccessBlock;
 extern NSString * const StashRestRequestFailureBlock;
 extern NSString * const StashRestRequestShouldUseBasicAuthentication;
 
+// Notifications
+extern NSString * const StashDidBecomeAuthorizedNotification;
+extern NSString * const StashDidResignAuthorizationNotification;
 
 typedef void (^ AFRequestSuccessBlock)(NSURLRequest *request, NSHTTPURLResponse *response, id JSON);
 typedef void (^ AFRequestFailureBlock)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON);
@@ -18,13 +21,13 @@ typedef void (^ AFRequestResultBlock)(BOOL success, id result);
 
 + (id)sharedNetworkManager;
 
-@property (readonly, getter = isLinked) BOOL linked;
+@property (readonly, getter = isAuthenticated) BOOL authenticated;
 
 - (void)setUsername:(NSString *)username andPassword:(NSString *)password;
 - (void)requestOAuthTokens:(AFRequestResultBlock)resultBlock;
 
 - (BOOL)setAuthorizationToken:(NSString *)token withIdentifier:(NSString *)identifier error:(NSError **)error;
-- (void)removeAuthentication:(NSError **)error;
+- (BOOL)removeAuthentication:(NSError **)error;
 
 - (void)performSync;
 - (void)getRequest:(NSDictionary *)attributes;

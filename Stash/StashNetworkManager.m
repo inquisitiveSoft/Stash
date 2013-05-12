@@ -12,6 +12,11 @@ NSString * const StashRestRequestSuccessBlock = @"StashRestRequestSuccessBlock";
 NSString * const StashRestRequestFailureBlock = @"StashRestRequestFailureBlock";
 NSString * const StashRestRequestShouldUseBasicAuthentication = @"StashRestRequestShouldUseBasicAuthentication";
 
+// Notifications
+NSString * const StashDidBecomeAuthorizedNotification = @"StashDidBecomeAuthorizedNotification";
+NSString * const StashDidResignAuthorizationNotification = @"StashDidResignAuthorizationNotification";
+
+
 NSString * const StashRestRequestMethod = @"StashRestRequestMethod";
 NSString * const StashRestRequestMethodGET = @"GET";
 NSString * const StashRestRequestMethodPOST = @"POST";
@@ -31,7 +36,7 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 
 @property (strong) NSData *username, *password;
 @property (strong, nonatomic) NSString *baseURLString;
-@property (readwrite, getter = isLinked) BOOL linked;
+@property (readwrite, getter = isAuthenticated) BOOL authenticated;
 
 @end
 
@@ -66,10 +71,17 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 	self = [super init];
 	
 	if(self) {
-		self.baseURLString = @"https://api.github.com/";
+		[self setup];
 	}
 	
 	return self;
+}
+
+
+- (void)setup
+{
+	self.baseURLString = @"https://api.github.com/";
+	self.authenticated = [[self authorizationToken] length] > 0;
 }
 
 
@@ -117,11 +129,17 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 		result = SecItemUpdate((__bridge CFDictionaryRef)authorizationAttributes, (__bridge CFDictionaryRef)authorizationAttributes);
 	}
 	
-	if(result == errSecSuccess) {
+	BOOL success = result == errSecSuccess;
+	
+	if(success) {
 		self.username = nil;
 		self.password = nil;
-		self.linked = TRUE;
+		self.authenticated = TRUE;
+		
+		[[NSNotificationCenter defaultCenter] postNotificationName:StashDidBecomeAuthorizedNotification object:nil];
 	} else {
+		self.authenticated = FALSE;
+		
 		NSString *errorMessage = (__bridge_transfer NSString *)SecCopyErrorMessageString(result, NULL);
 		
 		if(error != NULL) {
@@ -132,7 +150,8 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 			qLog(@"There was an error storing the OAuth token in the Keychain: %@", errorMessage);
 	}
 	
-	return (result == errSecSuccess);
+	
+	return success;
 }
 
 
@@ -141,7 +160,7 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 	NSError *error = nil;
 	NSString *authorizationToken = [self authorizationObjectForKey:StashRestRequestOAuthTokenKey error:&error];
 	
-	if(!authorizationToken) {
+	if(!authorizationToken && error) {
 		qLog(@"There was an error reading the authorizationToken: '%@'", error);
 	}
 	
@@ -241,7 +260,7 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 }
 
 
-- (void)removeAuthentication:(NSError **)error
+- (BOOL)removeAuthentication:(NSError **)error
 {
 	// Remove the authorizations data from the keychain
 	NSDictionary *matchingAttributes = @{
@@ -250,11 +269,14 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 	};
 	
 	OSStatus result = SecItemDelete((__bridge CFDictionaryRef)matchingAttributes);
-	BOOL success = result != errSecSuccess;
+	BOOL success = result == errSecSuccess;
 	
 	if(success) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:StashDidResignAuthorizationNotification object:nil];
+	} else
 		qLog(@"Couldn't remove the authorization data from the keychain: %@", error);
-	}
+	
+	return success;
 }
 
 
@@ -343,22 +365,6 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 	
 	
 	AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:urlRequest success:successBlock failure:failureBlock];
-	
-	[operation setRedirectResponseBlock:^NSURLRequest *(NSURLConnection *connection, NSURLRequest *request, NSURLResponse *redirectResponse) {
-	
-			qLog(@"redirect: %@", [request valueForHTTPHeaderField:@"Authorization"]);
-            return request;
-
-        NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:request.URL cachePolicy:request.cachePolicy timeoutInterval:request.timeoutInterval];
-        NSString *authValue = [NSString stringWithFormat:@"bearer %@", [self authorizationToken]];
-        [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
-
-		qLog(@"redirect: %@", request);
-        return  urlRequest;
-
-    }];
-
-	
 	[operation start];
 }
 

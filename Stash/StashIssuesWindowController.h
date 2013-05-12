@@ -2,6 +2,7 @@
 #import "XSWindowController.h"
 
 typedef enum StashRootMode : NSUInteger {
+	StashRootModeUnknown,
 	StashRootModeLogin,
 	StashRootModeIssues
 } StashRootMode;
@@ -9,8 +10,8 @@ typedef enum StashRootMode : NSUInteger {
 
 @interface StashIssuesWindowController : XSWindowController
 
-@property (readonly) StashRootMode rootMode;
-- (void)setStashRootMode:(StashRootMode)rootMode animated:(BOOL)animated;
+@property (readonly, nonatomic) StashRootMode rootMode;
+- (void)setRootMode:(StashRootMode)rootMode animated:(BOOL)animated;
 
 
 

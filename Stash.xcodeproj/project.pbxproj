@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A7EB131173FA46400AF5916 /* StashIssuesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EB12F173FA46400AF5916 /* StashIssuesViewController.m */; };
+		4A7EB135173FA48400AF5916 /* Issues View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A7EB133173FA48400AF5916 /* Issues View.xib */; };
+		4A7EB137173FA82800AF5916 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7EB136173FA82800AF5916 /* QuartzCore.framework */; };
+		4A7EB139173FAA3200AF5916 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7EB138173FAA3200AF5916 /* SystemConfiguration.framework */; };
+		4A7EB13F173FACEB00AF5916 /* StashView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EB13E173FACEB00AF5916 /* StashView.m */; };
+		4A7EB142173FB19E00AF5916 /* NSView+ConstraintAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EB141173FB19E00AF5916 /* NSView+ConstraintAdditions.m */; };
+		4A7EB147173FD9E800AF5916 /* StashDrawingFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EB146173FD9E800AF5916 /* StashDrawingFunctions.m */; };
 		4AD190B9173DE4B100D3F24E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AD190B8173DE4B100D3F24E /* Cocoa.framework */; };
 		4AD190C3173DE4B100D3F24E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AD190C1173DE4B100D3F24E /* InfoPlist.strings */; };
 		4AD190C5173DE4B100D3F24E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD190C4173DE4B100D3F24E /* main.m */; };
@@ -36,6 +43,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4A7EB12E173FA46400AF5916 /* StashIssuesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashIssuesViewController.h; sourceTree = "<group>"; };
+		4A7EB12F173FA46400AF5916 /* StashIssuesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashIssuesViewController.m; sourceTree = "<group>"; };
+		4A7EB134173FA48400AF5916 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/Issues View.xib"; sourceTree = "<group>"; };
+		4A7EB136173FA82800AF5916 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		4A7EB138173FAA3200AF5916 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4A7EB13D173FACEB00AF5916 /* StashView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashView.h; sourceTree = "<group>"; };
+		4A7EB13E173FACEB00AF5916 /* StashView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashView.m; sourceTree = "<group>"; };
+		4A7EB140173FB19E00AF5916 /* NSView+ConstraintAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+ConstraintAdditions.h"; sourceTree = "<group>"; };
+		4A7EB141173FB19E00AF5916 /* NSView+ConstraintAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+ConstraintAdditions.m"; sourceTree = "<group>"; };
+		4A7EB145173FD9E800AF5916 /* StashDrawingFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashDrawingFunctions.h; sourceTree = "<group>"; };
+		4A7EB146173FD9E800AF5916 /* StashDrawingFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashDrawingFunctions.m; sourceTree = "<group>"; };
 		4AD190B5173DE4B100D3F24E /* Stash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AD190B8173DE4B100D3F24E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4AD190BB173DE4B100D3F24E /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -96,6 +114,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A7EB139173FAA3200AF5916 /* SystemConfiguration.framework in Frameworks */,
+				4A7EB137173FA82800AF5916 /* QuartzCore.framework in Frameworks */,
 				4AD190D6173DE4C000D3F24E /* Security.framework in Frameworks */,
 				4AD190B9173DE4B100D3F24E /* Cocoa.framework in Frameworks */,
 			);
@@ -104,6 +124,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A7EB143173FB1A300AF5916 /* Categories & Functions */ = {
+			isa = PBXGroup;
+			children = (
+				4A7EB140173FB19E00AF5916 /* NSView+ConstraintAdditions.h */,
+				4A7EB141173FB19E00AF5916 /* NSView+ConstraintAdditions.m */,
+				4A7EB145173FD9E800AF5916 /* StashDrawingFunctions.h */,
+				4A7EB146173FD9E800AF5916 /* StashDrawingFunctions.m */,
+			);
+			name = "Categories & Functions";
+			sourceTree = "<group>";
+		};
+		4A7EB144173FB7A200AF5916 /* Issues View */ = {
+			isa = PBXGroup;
+			children = (
+				4A7EB12E173FA46400AF5916 /* StashIssuesViewController.h */,
+				4A7EB12F173FA46400AF5916 /* StashIssuesViewController.m */,
+				4A7EB133173FA48400AF5916 /* Issues View.xib */,
+			);
+			name = "Issues View";
+			sourceTree = "<group>";
+		};
 		4AD190AC173DE4B100D3F24E = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +166,8 @@
 		4AD190B7173DE4B100D3F24E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4A7EB138173FAA3200AF5916 /* SystemConfiguration.framework */,
+				4A7EB136173FA82800AF5916 /* QuartzCore.framework */,
 				4AD190D5173DE4C000D3F24E /* Security.framework */,
 				4AD190B8173DE4B100D3F24E /* Cocoa.framework */,
 				4AD190BA173DE4B100D3F24E /* Other Frameworks */,
@@ -150,6 +193,7 @@
 				4AD19114173DE7A600D3F24E /* Network Manager */,
 				4AD19113173DE79600D3F24E /* Issues Window */,
 				4AD19115173DE7DC00D3F24E /* Status Item */,
+				4A7EB143173FB1A300AF5916 /* Categories & Functions */,
 				4AD190BF173DE4B100D3F24E /* Supporting Files */,
 			);
 			path = Stash;
@@ -231,6 +275,7 @@
 				4AD190DA173DE6F100D3F24E /* StashIssuesWindowController.m */,
 				4AD1911A173DE8A400D3F24E /* UI Elements */,
 				4AD19119173DE80100D3F24E /* Login View */,
+				4A7EB144173FB7A200AF5916 /* Issues View */,
 			);
 			name = "Issues Window";
 			sourceTree = "<group>";
@@ -272,6 +317,8 @@
 				4AD190E4173DE6F100D3F24E /* StashTexturedWindowView.m */,
 				4AD190E5173DE6F100D3F24E /* StashViewController.h */,
 				4AD190E6173DE6F100D3F24E /* StashViewController.m */,
+				4A7EB13D173FACEB00AF5916 /* StashView.h */,
+				4A7EB13E173FACEB00AF5916 /* StashView.m */,
 			);
 			name = "UI Elements";
 			sourceTree = "<group>";
@@ -332,6 +379,7 @@
 				4AD190C9173DE4B100D3F24E /* Credits.rtf in Resources */,
 				4AD190CF173DE4B100D3F24E /* Main Menu.xib in Resources */,
 				4AD19118173DE7FE00D3F24E /* Login View.xib in Resources */,
+				4A7EB135173FA48400AF5916 /* Issues View.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,12 +410,24 @@
 				4AD1910B173DE75100D3F24E /* qLog.m in Sources */,
 				4AD19111173DE77A00D3F24E /* XSViewController.m in Sources */,
 				4AD19112173DE77A00D3F24E /* XSWindowController.m in Sources */,
+				4A7EB131173FA46400AF5916 /* StashIssuesViewController.m in Sources */,
+				4A7EB13F173FACEB00AF5916 /* StashView.m in Sources */,
+				4A7EB142173FB19E00AF5916 /* NSView+ConstraintAdditions.m in Sources */,
+				4A7EB147173FD9E800AF5916 /* StashDrawingFunctions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		4A7EB133173FA48400AF5916 /* Issues View.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4A7EB134173FA48400AF5916 /* en */,
+			);
+			name = "Issues View.xib";
+			sourceTree = "<group>";
+		};
 		4AD190C1173DE4B100D3F24E /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
