@@ -13,8 +13,7 @@
 
 - (void)awakeFromNib
 {
-	StashView *view = (StashView *)self.view;
-	view.backgroundColor = [NSColor colorWithDeviceHue:0.144 saturation:0.209 brightness:0.952 alpha:1.000];
+//	StashView *view = (StashView *)self.view;
 }
 
 

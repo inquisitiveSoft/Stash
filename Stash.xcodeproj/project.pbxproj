@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A52158A174060FE0007CE0C /* Status Item Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A521589174060FE0007CE0C /* Status Item Icon.png */; };
+		4A52158C174061130007CE0C /* Status Item Icon - Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A52158B174061130007CE0C /* Status Item Icon - Highlighted.png */; };
 		4A7EB131173FA46400AF5916 /* StashIssuesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EB12F173FA46400AF5916 /* StashIssuesViewController.m */; };
 		4A7EB135173FA48400AF5916 /* Issues View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A7EB133173FA48400AF5916 /* Issues View.xib */; };
 		4A7EB137173FA82800AF5916 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7EB136173FA82800AF5916 /* QuartzCore.framework */; };
@@ -43,6 +45,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4A521589174060FE0007CE0C /* Status Item Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Status Item Icon.png"; path = "Resources/Images/Status Item Icon.png"; sourceTree = SOURCE_ROOT; };
+		4A52158B174061130007CE0C /* Status Item Icon - Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Status Item Icon - Highlighted.png"; path = "Resources/Images/Status Item Icon - Highlighted.png"; sourceTree = SOURCE_ROOT; };
 		4A7EB12E173FA46400AF5916 /* StashIssuesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashIssuesViewController.h; sourceTree = "<group>"; };
 		4A7EB12F173FA46400AF5916 /* StashIssuesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashIssuesViewController.m; sourceTree = "<group>"; };
 		4A7EB134173FA48400AF5916 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/Issues View.xib"; sourceTree = "<group>"; };
@@ -191,8 +195,8 @@
 				4AD190CA173DE4B100D3F24E /* StashAppDelegate.h */,
 				4AD190CB173DE4B100D3F24E /* StashAppDelegate.m */,
 				4AD19114173DE7A600D3F24E /* Network Manager */,
-				4AD19113173DE79600D3F24E /* Issues Window */,
 				4AD19115173DE7DC00D3F24E /* Status Item */,
+				4AD19113173DE79600D3F24E /* Issues Window */,
 				4A7EB143173FB1A300AF5916 /* Categories & Functions */,
 				4AD190BF173DE4B100D3F24E /* Supporting Files */,
 			);
@@ -294,6 +298,8 @@
 			children = (
 				4AD190DF173DE6F100D3F24E /* StashStatusItemController.h */,
 				4AD190E0173DE6F100D3F24E /* StashStatusItemController.m */,
+				4A521589174060FE0007CE0C /* Status Item Icon.png */,
+				4A52158B174061130007CE0C /* Status Item Icon - Highlighted.png */,
 			);
 			name = "Status Item";
 			sourceTree = "<group>";
@@ -380,6 +386,8 @@
 				4AD190CF173DE4B100D3F24E /* Main Menu.xib in Resources */,
 				4AD19118173DE7FE00D3F24E /* Login View.xib in Resources */,
 				4A7EB135173FA48400AF5916 /* Issues View.xib in Resources */,
+				4A52158A174060FE0007CE0C /* Status Item Icon.png in Resources */,
+				4A52158C174061130007CE0C /* Status Item Icon - Highlighted.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

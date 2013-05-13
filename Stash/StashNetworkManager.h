@@ -24,7 +24,7 @@ typedef void (^ AFRequestResultBlock)(BOOL success, id result);
 @property (readonly, getter = isAuthenticated) BOOL authenticated;
 
 - (void)setUsername:(NSString *)username andPassword:(NSString *)password;
-- (void)requestOAuthTokens:(AFRequestResultBlock)resultBlock;
+- (void)requestOAuthToken:(AFRequestResultBlock)resultBlock;
 
 - (BOOL)setAuthorizationToken:(NSString *)token withIdentifier:(NSString *)identifier error:(NSError **)error;
 - (BOOL)removeAuthentication:(NSError **)error;

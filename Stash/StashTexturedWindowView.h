@@ -5,6 +5,6 @@
 @interface StashTexturedWindowView : NSView
 
 @property (readonly) CGFloat innerCornerRadius;
-@property (readonly) NSEdgeInsets contentInsets;
+@property (readonly) NSEdgeInsets contentInsets, shadowInsets;
 
 @end

@@ -8,7 +8,11 @@ typedef enum StashRootMode : NSUInteger {
 } StashRootMode;
 
 
-@interface StashIssuesWindowController : XSWindowController
+@interface StashIssuesWindowController : XSWindowController <NSWindowDelegate>
+
+
+- (void)displayWindow:(BOOL)animated;
+- (void)hideWindow:(BOOL)animated;
 
 @property (readonly, nonatomic) StashRootMode rootMode;
 - (void)setRootMode:(StashRootMode)rootMode animated:(BOOL)animated;

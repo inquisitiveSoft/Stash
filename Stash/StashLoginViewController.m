@@ -38,7 +38,7 @@
 	StashNetworkManager *sharedNetworkManager = [StashNetworkManager sharedNetworkManager];
 	
 	[sharedNetworkManager setUsername:self.usernameTextField.stringValue andPassword:self.passwordTextField.stringValue];
-	[sharedNetworkManager requestOAuthTokens:^(BOOL success, id result) {
+	[sharedNetworkManager requestOAuthToken:^(BOOL success, id result) {
 		if(!success) {
 			loginViewController.userInterfaceElementsEnabled = TRUE;
 		}

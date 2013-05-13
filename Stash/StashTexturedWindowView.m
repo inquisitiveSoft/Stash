@@ -13,7 +13,7 @@
 
 
 @implementation StashTexturedWindowView
-@synthesize innerCornerRadius = innerCornerRadius, contentInsets = contentInsets;
+@synthesize innerCornerRadius = innerCornerRadius, contentInsets = contentInsets, shadowInsets = shadowInsets_;
 
 
 - (id)initWithFrame:(NSRect)frame
@@ -21,9 +21,9 @@
 	self = [super initWithFrame:frame];
 	
 	if(self) {
-		arrowSize = CGSizeMake(24.0f, 12.0f);
+		arrowSize = CGSizeMake(22.0f, 11.0f);
 		
-		cornerRadius = 6.0f;
+		cornerRadius = 5.0f;
 		contentPadding = 1.0f;
 		innerCornerRadius = roundf(cornerRadius - ceilf(contentPadding / 2));
 		
@@ -31,7 +31,6 @@
 		shadowOffset = CGSizeMake(0.0, 3.0);
 		shadowInsets = NSEdgeInsetsMake(shadowRadius - shadowOffset.height, shadowRadius - shadowOffset.width, shadowRadius + shadowOffset.height, shadowRadius + shadowOffset.width);
 		contentInsets = NSEdgeInsetsMake(arrowSize.height + contentPadding + shadowInsets.top, contentPadding + shadowInsets.left, contentPadding + shadowInsets.bottom, contentPadding + shadowInsets.right);
-		
 	}
 	
 	return self;
@@ -44,16 +43,22 @@
 }
 
 
+- (CGRect)arrowRect
+{
+	CGRect arrowRect = CGRectZero;
+	arrowRect.origin.x = (self.bounds.size.width - arrowSize.width) / 2.0;
+	arrowRect.origin.y = shadowInsets.top;
+	arrowRect.size = arrowSize;
+	return arrowRect;
+}
+
+
 - (void)drawRect:(NSRect)dirtyRect
 {
 
 	// Gather variables so as to be nicely copy and pastable into a custom view
 	CGRect bounds = self.bounds;
-	
-	CGRect arrowRect = CGRectZero;
-	arrowRect.origin.x = (bounds.size.width - arrowSize.width) / 2.0;
-	arrowRect.origin.y = shadowInsets.top;
-	arrowRect.size = arrowSize;
+	CGRect arrowRect = [self arrowRect];
 	
 	NSEdgeInsets arrowInsets = NSEdgeInsetsMake(arrowSize.height, 0.0, 0.0, 0.0);
 	CGRect outlineRect = StashNSEdgeInsetsInsetRect(StashNSEdgeInsetsInsetRect(bounds, arrowInsets), shadowInsets);

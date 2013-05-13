@@ -41,7 +41,6 @@ NSString * const StashPreviousContentViewController = @"StashPreviousContentView
 		containerView.layer.masksToBounds = TRUE;
 		containerView.layer.cornerRadius = windowBackgroundView.innerCornerRadius;
 		[containerView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
-		containerView.layer.backgroundColor = [[NSColor blueColor] CGColor];
 		[windowBackgroundView addSubview:containerView];
 		self.containerView = containerView;
 
@@ -64,6 +63,7 @@ NSString * const StashPreviousContentViewController = @"StashPreviousContentView
 {
 	return StashNSEdgeInsetsInsetRect(frameRect, self.windowBackgroundView.contentInsets);
 }
+
 
 
 - (void)setContentView:(NSView *)contentView
@@ -127,6 +127,19 @@ NSString * const StashPreviousContentViewController = @"StashPreviousContentView
 }
 
 
+- (void)setAttachmentPosition:(CGPoint)attachmentPosition
+{
+	_attachmentPosition = attachmentPosition;
+	
+	CGRect windowFrame = self.frame;
+	windowFrame.origin.x = _attachmentPosition.x - (windowFrame.size.width / 2);
+	windowFrame.origin.y = _attachmentPosition.y - windowFrame.size.height + self.windowBackgroundView.shadowInsets.top + 7.0;
+	
+	self.level = NSStatusWindowLevel;
+	[self setFrame:windowFrame display:TRUE];
+}
+
+
 - (void)animationDidStop:(CAAnimation *)transition finished:(BOOL)finished
 {
 	StashViewController *previousContentViewController = objc_getAssociatedObject(transition, (__bridge const void *)StashPreviousContentViewController);
@@ -137,6 +150,12 @@ NSString * const StashPreviousContentViewController = @"StashPreviousContentView
 
 
 - (BOOL)canBecomeKeyWindow
+{
+    return YES;
+}
+
+
+- (BOOL)canBecomeMainWindow
 {
     return YES;
 }

@@ -43,9 +43,9 @@
 
 - (void)setup
 {
-	CGRect windowFrame = NSMakeRect(0.0, 0.0, 372.0, 464.0);
+	CGRect windowFrame = NSMakeRect(0.0, 0.0, 300.0, 400.0);
 	StashTexturedWindow *window = [[StashTexturedWindow alloc] initWithContentRect:windowFrame styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:TRUE];
-	[window center];
+	window.delegate = self;
 	self.window = window;
 	
 	self.loginViewController = [[StashLoginViewController alloc] initWithNibName:@"Login View" bundle:nil windowController:self];
@@ -56,6 +56,19 @@
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeAuthorized:) name:StashDidBecomeAuthorizedNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didResignAuthorization:) name:StashDidResignAuthorizationNotification object:nil];
+}
+
+
+
+- (void)displayWindow:(BOOL)animated
+{
+	[self.window makeKeyAndOrderFront:nil];
+}
+
+
+- (void)hideWindow:(BOOL)animated
+{
+	[self.window orderOut:nil];
 }
 
 
@@ -98,6 +111,15 @@
 {
 	[self setRootMode:StashRootModeLogin animated:TRUE];
 }
+
+
+#pragma mark - NSWindowDelegate methods
+
+- (void)windowDidResignKey:(NSNotification *)notification
+{
+	[self hideWindow:TRUE];
+}
+
 
 @end
 
