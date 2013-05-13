@@ -105,7 +105,6 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 		return FALSE;
 	}
 	
-	qLog(@"identifier: %@", identifier);
 	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:@{
 		StashOAuthTokenKey : token,
 		StashOAuthIdentifierKey : identifier
@@ -175,8 +174,12 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 	NSError *error = nil;
 	NSNumber *authorizationIdentifier = [self authorizationObjectForKey:StashOAuthIdentifierKey error:&error];
 	
-	if(![authorizationIdentifier isKindOfClass:[NSNumber class]]) {
-		qLog(@"There was an error reading the authorizationIdentifier number: %@ %@ '%@'", authorizationIdentifier, [authorizationIdentifier class], error);
+	if(authorizationIdentifier) {
+		if(![authorizationIdentifier isKindOfClass:[NSNumber class]]) {
+			qLog(@"authorizationIdentifier is expected to be an NSNumber, rather than an: %@ of %@ class", authorizationIdentifier, [authorizationIdentifier class]);
+		}
+	} else if(error) {
+		qLog(@"There was an error reading the authorizationIdentifier: %@", error);
 	}
 	
 	return authorizationIdentifier;
@@ -245,26 +248,26 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 		return;
 	}
 	
-	NSString *tokenIdentifier = [self authorizationIdentifier];
-//	
-//	if([tokenIdentifier length] > 0) {
-//		[self requestExistingOAuthTokenForIdentifier:tokenIdentifier resultBlock:resultBlock];
-//	} else {
+	NSNumber *tokenIdentifier = [self authorizationIdentifier];
+	
+	if(tokenIdentifier) {
+		[self requestExistingOAuthTokenForIdentifier:tokenIdentifier resultBlock:resultBlock];
+	} else {
 		[self requestNewOAuthToken:resultBlock];
-//	}
+	}
 }
 
 
-- (void)requestExistingOAuthTokenForIdentifier:(NSString *)tokenIdentifier resultBlock:(AFRequestResultBlock)resultBlock
+- (void)requestExistingOAuthTokenForIdentifier:(NSNumber *)tokenIdentifier resultBlock:(AFRequestResultBlock)resultBlock
 {
-	if([tokenIdentifier length] == 0) {
+	if(![tokenIdentifier isKindOfClass:[NSNumber class]]) {
 		qError(@"Requires a tokenIdentifier");
 		return;
 	}
 	
 	__weak StashNetworkManager *networkManager = self;
 	
-	[self getRequest:@{
+	[self postRequest:@{
 		StashRestRequestURL : [NSString stringWithFormat:@"authorizations/%@", tokenIdentifier],
 		
 		StashRestRequestBody : @{
@@ -279,6 +282,7 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 				NSString *authorizationIdentifier = [json objectForKey:StashOAuthIdentifierKey];
 				
 				NSError *error = nil;
+				qLog(@"existing token for id: %@", authorizationIdentifier);
 				success = [networkManager setAuthorizationToken:authorizationToken withIdentifier:authorizationIdentifier error:&error];
 				
 				if(!success && error) {
@@ -375,6 +379,7 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 	BOOL success = result == errSecSuccess;
 	
 	if(success) {
+		self.authenticated = FALSE;
 		[[NSNotificationCenter defaultCenter] postNotificationName:StashDidResignAuthorizationNotification object:nil];
 	} else {
 		qLog(@"Couldn't remove the authorization data from the keychain: %@", error);
@@ -460,6 +465,11 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 		// Add the basic authentication header
 		[urlRequest setValue:[self basicAuthenticationHeader] forHTTPHeaderField:@"Authorization"];
 	}
+
+
+	[urlRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+//	[urlRequest setValue:@"en-gb" forHTTPHeaderField:@"Accept-Language"];
+//	[urlRequest setValue:@"gzip, deflate" forHTTPHeaderField:@"Accept-Encoding"];
 	
 	AFRequestSuccessBlock successBlock = [attributes objectForKey:StashRestRequestSuccessBlock];
 	AFRequestFailureBlock failureBlock = [attributes objectForKey:StashRestRequestFailureBlock];
