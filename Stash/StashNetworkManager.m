@@ -297,6 +297,11 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 		
 		StashRestRequestFailureBlock : ^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
 			qLog(@"failure: %@, %@, %@, %@", request, response, error, JSON);
+			
+			if(response.statusCode == 404) {
+				qLog(@"Recieved 404. Trying to create a new token");
+				[self requestNewOAuthToken:resultBlock];
+			}
 		},
 		
 		StashRestRequestShouldUseBasicAuthentication : @(TRUE)
@@ -455,6 +460,7 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 		}
 	}
 	
+	[urlRequest setValue:[self userAgentString] forHTTPHeaderField:@"User-Agent"];
 	urlRequest.HTTPBody = requestBody;
 	
 	if(![[attributes objectForKey:StashRestRequestShouldUseBasicAuthentication] boolValue]) {
@@ -489,6 +495,12 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 	authenticationString = [NSString stringWithFormat:@"Basic %@", authenticationString];
 	
 	return authenticationString;
+}
+
+
+- (NSString *)userAgentString
+{
+	return @"Stash/0.2";
 }
 
 
