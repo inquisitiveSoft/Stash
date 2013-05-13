@@ -16,6 +16,10 @@
 //	StashView *view = (StashView *)self.view;
 }
 
+- (IBAction)loadIssues:(id)sender {
+	[[StashNetworkManager sharedNetworkManager] pullIssues];
+}
+
 
 - (IBAction)resignAuthentication:(id)sender {
 	NSError *error = nil;

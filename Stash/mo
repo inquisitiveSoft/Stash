@@ -1,0 +1,4 @@
+#!/bin/sh
+
+DIR=$( cd "$( dirname "$0" )" && pwd )
+mogenerator --template-var arc=true -m "$DIR/Issues Model.xcdatamodeld/Issues Model.xcdatamodel" -O $DIR

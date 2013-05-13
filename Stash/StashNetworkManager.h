@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 
 
-extern NSString * const StashRestRequestURL;
+extern NSString * const StashRestRequestPath;
 extern NSString * const StashRestRequestBody;
 extern NSString * const StashRestRequestSuccessBlock;
 extern NSString * const StashRestRequestFailureBlock;
@@ -30,8 +30,6 @@ typedef void (^ AFRequestResultBlock)(BOOL success, id result);
 - (BOOL)removeAuthentication:(NSError **)error;
 
 - (void)performSync;
-- (void)getRequest:(NSDictionary *)attributes;
-- (void)postRequest:(NSDictionary *)attributes;
-- (void)deleteRequest:(NSDictionary *)attributes;
+- (void)pullIssues;
 
 @end

@@ -42,6 +42,21 @@
 		4AD19111173DE77A00D3F24E /* XSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD1910E173DE77A00D3F24E /* XSViewController.m */; };
 		4AD19112173DE77A00D3F24E /* XSWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD19110173DE77A00D3F24E /* XSWindowController.m */; };
 		4AD19118173DE7FE00D3F24E /* Login View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AD19116173DE7FE00D3F24E /* Login View.xib */; };
+		4AFFA9CF1740DD3000935AA9 /* StashHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9CE1740DD3000935AA9 /* StashHTTPClient.m */; };
+		4AFFA9D31740E46F00935AA9 /* Issues Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9D11740E46F00935AA9 /* Issues Model.xcdatamodeld */; };
+		4AFFA9E11740F36C00935AA9 /* _StashAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9D61740F36C00935AA9 /* _StashAccount.m */; };
+		4AFFA9E21740F36C00935AA9 /* _StashIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9D81740F36C00935AA9 /* _StashIssue.m */; };
+		4AFFA9E31740F36C00935AA9 /* _StashLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9DA1740F36C00935AA9 /* _StashLabel.m */; };
+		4AFFA9E41740F36C00935AA9 /* _StashMilestone.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9DC1740F36C00935AA9 /* _StashMilestone.m */; };
+		4AFFA9E51740F36C00935AA9 /* _StashRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9DE1740F36C00935AA9 /* _StashRepository.m */; };
+		4AFFA9E61740F36C00935AA9 /* _StashUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9E01740F36C00935AA9 /* _StashUsers.m */; };
+		4AFFA9F31740F38500935AA9 /* StashAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9E81740F38500935AA9 /* StashAccount.m */; };
+		4AFFA9F41740F38500935AA9 /* StashIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9EA1740F38500935AA9 /* StashIssue.m */; };
+		4AFFA9F51740F38500935AA9 /* StashLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9EC1740F38500935AA9 /* StashLabel.m */; };
+		4AFFA9F61740F38500935AA9 /* StashMilestone.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9EE1740F38500935AA9 /* StashMilestone.m */; };
+		4AFFA9F71740F38500935AA9 /* StashRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9F01740F38500935AA9 /* StashRepository.m */; };
+		4AFFA9F81740F38500935AA9 /* StashUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9F21740F38500935AA9 /* StashUsers.m */; };
+		4AFFA9FC1740F3FB00935AA9 /* StashModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9FB1740F3FB00935AA9 /* StashModelController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,6 +126,35 @@
 		4AD1910F173DE77A00D3F24E /* XSWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XSWindowController.h; path = Submodules/XSControllers/XSWindowController.h; sourceTree = SOURCE_ROOT; };
 		4AD19110173DE77A00D3F24E /* XSWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XSWindowController.m; path = Submodules/XSControllers/XSWindowController.m; sourceTree = SOURCE_ROOT; };
 		4AD19117173DE7FE00D3F24E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/Login View.xib"; sourceTree = "<group>"; };
+		4AFFA9CD1740DD3000935AA9 /* StashHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashHTTPClient.h; sourceTree = "<group>"; };
+		4AFFA9CE1740DD3000935AA9 /* StashHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashHTTPClient.m; sourceTree = "<group>"; };
+		4AFFA9D21740E46F00935AA9 /* Issues Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Issues Model.xcdatamodel"; sourceTree = "<group>"; };
+		4AFFA9D51740F36C00935AA9 /* _StashAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _StashAccount.h; sourceTree = "<group>"; };
+		4AFFA9D61740F36C00935AA9 /* _StashAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _StashAccount.m; sourceTree = "<group>"; };
+		4AFFA9D71740F36C00935AA9 /* _StashIssue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _StashIssue.h; sourceTree = "<group>"; };
+		4AFFA9D81740F36C00935AA9 /* _StashIssue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _StashIssue.m; sourceTree = "<group>"; };
+		4AFFA9D91740F36C00935AA9 /* _StashLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _StashLabel.h; sourceTree = "<group>"; };
+		4AFFA9DA1740F36C00935AA9 /* _StashLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _StashLabel.m; sourceTree = "<group>"; };
+		4AFFA9DB1740F36C00935AA9 /* _StashMilestone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _StashMilestone.h; sourceTree = "<group>"; };
+		4AFFA9DC1740F36C00935AA9 /* _StashMilestone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _StashMilestone.m; sourceTree = "<group>"; };
+		4AFFA9DD1740F36C00935AA9 /* _StashRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _StashRepository.h; sourceTree = "<group>"; };
+		4AFFA9DE1740F36C00935AA9 /* _StashRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _StashRepository.m; sourceTree = "<group>"; };
+		4AFFA9DF1740F36C00935AA9 /* _StashUsers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _StashUsers.h; sourceTree = "<group>"; };
+		4AFFA9E01740F36C00935AA9 /* _StashUsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _StashUsers.m; sourceTree = "<group>"; };
+		4AFFA9E71740F38500935AA9 /* StashAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashAccount.h; sourceTree = "<group>"; };
+		4AFFA9E81740F38500935AA9 /* StashAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashAccount.m; sourceTree = "<group>"; };
+		4AFFA9E91740F38500935AA9 /* StashIssue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashIssue.h; sourceTree = "<group>"; };
+		4AFFA9EA1740F38500935AA9 /* StashIssue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashIssue.m; sourceTree = "<group>"; };
+		4AFFA9EB1740F38500935AA9 /* StashLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashLabel.h; sourceTree = "<group>"; };
+		4AFFA9EC1740F38500935AA9 /* StashLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashLabel.m; sourceTree = "<group>"; };
+		4AFFA9ED1740F38500935AA9 /* StashMilestone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashMilestone.h; sourceTree = "<group>"; };
+		4AFFA9EE1740F38500935AA9 /* StashMilestone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashMilestone.m; sourceTree = "<group>"; };
+		4AFFA9EF1740F38500935AA9 /* StashRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashRepository.h; sourceTree = "<group>"; };
+		4AFFA9F01740F38500935AA9 /* StashRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashRepository.m; sourceTree = "<group>"; };
+		4AFFA9F11740F38500935AA9 /* StashUsers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashUsers.h; sourceTree = "<group>"; };
+		4AFFA9F21740F38500935AA9 /* StashUsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashUsers.m; sourceTree = "<group>"; };
+		4AFFA9FA1740F3FB00935AA9 /* StashModelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashModelController.h; sourceTree = "<group>"; };
+		4AFFA9FB1740F3FB00935AA9 /* StashModelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashModelController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +238,7 @@
 			children = (
 				4AD190CA173DE4B100D3F24E /* StashAppDelegate.h */,
 				4AD190CB173DE4B100D3F24E /* StashAppDelegate.m */,
+				4AFFA9D01740E42C00935AA9 /* Issues Store */,
 				4AD19114173DE7A600D3F24E /* Network Manager */,
 				4AD19115173DE7DC00D3F24E /* Status Item */,
 				4AD19113173DE79600D3F24E /* Issues Window */,
@@ -289,6 +334,8 @@
 			children = (
 				4AD190DD173DE6F100D3F24E /* StashNetworkManager.h */,
 				4AD190DE173DE6F100D3F24E /* StashNetworkManager.m */,
+				4AFFA9CD1740DD3000935AA9 /* StashHTTPClient.h */,
+				4AFFA9CE1740DD3000935AA9 /* StashHTTPClient.m */,
 			);
 			name = "Network Manager";
 			sourceTree = "<group>";
@@ -327,6 +374,56 @@
 				4A7EB13E173FACEB00AF5916 /* StashView.m */,
 			);
 			name = "UI Elements";
+			sourceTree = "<group>";
+		};
+		4AFFA9D01740E42C00935AA9 /* Issues Store */ = {
+			isa = PBXGroup;
+			children = (
+				4AFFA9D11740E46F00935AA9 /* Issues Model.xcdatamodeld */,
+				4AFFA9FA1740F3FB00935AA9 /* StashModelController.h */,
+				4AFFA9FB1740F3FB00935AA9 /* StashModelController.m */,
+				4AFFA9F91740F3A600935AA9 /* Custom Managed Object Classes */,
+				4AFFA9D41740F35E00935AA9 /* Generated Managed Object Classes */,
+			);
+			name = "Issues Store";
+			sourceTree = "<group>";
+		};
+		4AFFA9D41740F35E00935AA9 /* Generated Managed Object Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4AFFA9D51740F36C00935AA9 /* _StashAccount.h */,
+				4AFFA9D61740F36C00935AA9 /* _StashAccount.m */,
+				4AFFA9D71740F36C00935AA9 /* _StashIssue.h */,
+				4AFFA9D81740F36C00935AA9 /* _StashIssue.m */,
+				4AFFA9D91740F36C00935AA9 /* _StashLabel.h */,
+				4AFFA9DA1740F36C00935AA9 /* _StashLabel.m */,
+				4AFFA9DB1740F36C00935AA9 /* _StashMilestone.h */,
+				4AFFA9DC1740F36C00935AA9 /* _StashMilestone.m */,
+				4AFFA9DD1740F36C00935AA9 /* _StashRepository.h */,
+				4AFFA9DE1740F36C00935AA9 /* _StashRepository.m */,
+				4AFFA9DF1740F36C00935AA9 /* _StashUsers.h */,
+				4AFFA9E01740F36C00935AA9 /* _StashUsers.m */,
+			);
+			name = "Generated Managed Object Classes";
+			sourceTree = "<group>";
+		};
+		4AFFA9F91740F3A600935AA9 /* Custom Managed Object Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4AFFA9E71740F38500935AA9 /* StashAccount.h */,
+				4AFFA9E81740F38500935AA9 /* StashAccount.m */,
+				4AFFA9EF1740F38500935AA9 /* StashRepository.h */,
+				4AFFA9F01740F38500935AA9 /* StashRepository.m */,
+				4AFFA9E91740F38500935AA9 /* StashIssue.h */,
+				4AFFA9EA1740F38500935AA9 /* StashIssue.m */,
+				4AFFA9EB1740F38500935AA9 /* StashLabel.h */,
+				4AFFA9EC1740F38500935AA9 /* StashLabel.m */,
+				4AFFA9ED1740F38500935AA9 /* StashMilestone.h */,
+				4AFFA9EE1740F38500935AA9 /* StashMilestone.m */,
+				4AFFA9F11740F38500935AA9 /* StashUsers.h */,
+				4AFFA9F21740F38500935AA9 /* StashUsers.m */,
+			);
+			name = "Custom Managed Object Classes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -422,6 +519,21 @@
 				4A7EB13F173FACEB00AF5916 /* StashView.m in Sources */,
 				4A7EB142173FB19E00AF5916 /* NSView+ConstraintAdditions.m in Sources */,
 				4A7EB147173FD9E800AF5916 /* StashDrawingFunctions.m in Sources */,
+				4AFFA9CF1740DD3000935AA9 /* StashHTTPClient.m in Sources */,
+				4AFFA9D31740E46F00935AA9 /* Issues Model.xcdatamodeld in Sources */,
+				4AFFA9E11740F36C00935AA9 /* _StashAccount.m in Sources */,
+				4AFFA9E21740F36C00935AA9 /* _StashIssue.m in Sources */,
+				4AFFA9E31740F36C00935AA9 /* _StashLabel.m in Sources */,
+				4AFFA9E41740F36C00935AA9 /* _StashMilestone.m in Sources */,
+				4AFFA9E51740F36C00935AA9 /* _StashRepository.m in Sources */,
+				4AFFA9E61740F36C00935AA9 /* _StashUsers.m in Sources */,
+				4AFFA9F31740F38500935AA9 /* StashAccount.m in Sources */,
+				4AFFA9F41740F38500935AA9 /* StashIssue.m in Sources */,
+				4AFFA9F51740F38500935AA9 /* StashLabel.m in Sources */,
+				4AFFA9F61740F38500935AA9 /* StashMilestone.m in Sources */,
+				4AFFA9F71740F38500935AA9 /* StashRepository.m in Sources */,
+				4AFFA9F81740F38500935AA9 /* StashUsers.m in Sources */,
+				4AFFA9FC1740F3FB00935AA9 /* StashModelController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -580,6 +692,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		4AFFA9D11740E46F00935AA9 /* Issues Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4AFFA9D21740E46F00935AA9 /* Issues Model.xcdatamodel */,
+			);
+			currentVersion = 4AFFA9D21740E46F00935AA9 /* Issues Model.xcdatamodel */;
+			path = "Issues Model.xcdatamodeld";
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 4AD190AD173DE4B100D3F24E /* Project object */;
 }
