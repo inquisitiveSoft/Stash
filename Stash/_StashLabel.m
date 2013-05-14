@@ -4,6 +4,7 @@
 #import "_StashLabel.h"
 
 const struct StashLabelAttributes StashLabelAttributes = {
+	.color = @"color",
 	.identifier = @"identifier",
 	.name = @"name",
 };
@@ -50,6 +51,13 @@ const struct StashLabelFetchedProperties StashLabelFetchedProperties = {
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic color;
+
+
 
 
 

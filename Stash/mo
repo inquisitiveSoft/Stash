@@ -2,3 +2,5 @@
 
 DIR=$( cd "$( dirname "$0" )" && pwd )
 mogenerator --template-var arc=true -m "$DIR/Issues Model.xcdatamodeld/Issues Model.xcdatamodel" -O $DIR
+
+rm -rf ~/Library/Containers/com.inquisitiveSoftware.Stash

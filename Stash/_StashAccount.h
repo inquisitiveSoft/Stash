@@ -5,9 +5,10 @@
 
 
 extern const struct StashAccountAttributes {
-	__unsafe_unretained NSString *avatarURL;
+	__unsafe_unretained NSString *accountURLString;
+	__unsafe_unretained NSString *avatarURLString;
+	__unsafe_unretained NSString *dateStampOfLastSync;
 	__unsafe_unretained NSString *identifier;
-	__unsafe_unretained NSString *timeOfLastSync;
 	__unsafe_unretained NSString *username;
 } StashAccountAttributes;
 
@@ -19,6 +20,7 @@ extern const struct StashAccountFetchedProperties {
 } StashAccountFetchedProperties;
 
 @class StashRepository;
+
 
 
 
@@ -38,11 +40,31 @@ extern const struct StashAccountFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSString* avatarURL;
+@property (nonatomic, strong) NSString* accountURLString;
 
 
 
-//- (BOOL)validateAvatarURL:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateAccountURLString:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSString* avatarURLString;
+
+
+
+//- (BOOL)validateAvatarURLString:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSDate* dateStampOfLastSync;
+
+
+
+//- (BOOL)validateDateStampOfLastSync:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -57,16 +79,6 @@ extern const struct StashAccountFetchedProperties {
 - (void)setIdentifierValue:(int64_t)value_;
 
 //- (BOOL)validateIdentifier:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
-@property (nonatomic, strong) NSDate* timeOfLastSync;
-
-
-
-//- (BOOL)validateTimeOfLastSync:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -104,8 +116,20 @@ extern const struct StashAccountFetchedProperties {
 @interface _StashAccount (CoreDataGeneratedPrimitiveAccessors)
 
 
-- (NSString*)primitiveAvatarURL;
-- (void)setPrimitiveAvatarURL:(NSString*)value;
+- (NSString*)primitiveAccountURLString;
+- (void)setPrimitiveAccountURLString:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveAvatarURLString;
+- (void)setPrimitiveAvatarURLString:(NSString*)value;
+
+
+
+
+- (NSDate*)primitiveDateStampOfLastSync;
+- (void)setPrimitiveDateStampOfLastSync:(NSDate*)value;
 
 
 
@@ -115,12 +139,6 @@ extern const struct StashAccountFetchedProperties {
 
 - (int64_t)primitiveIdentifierValue;
 - (void)setPrimitiveIdentifierValue:(int64_t)value_;
-
-
-
-
-- (NSDate*)primitiveTimeOfLastSync;
-- (void)setPrimitiveTimeOfLastSync:(NSDate*)value;
 
 
 

@@ -4,9 +4,10 @@
 #import "_StashAccount.h"
 
 const struct StashAccountAttributes StashAccountAttributes = {
-	.avatarURL = @"avatarURL",
+	.accountURLString = @"accountURLString",
+	.avatarURLString = @"avatarURLString",
+	.dateStampOfLastSync = @"dateStampOfLastSync",
 	.identifier = @"identifier",
-	.timeOfLastSync = @"timeOfLastSync",
 	.username = @"username",
 };
 
@@ -55,7 +56,21 @@ const struct StashAccountFetchedProperties StashAccountFetchedProperties = {
 
 
 
-@dynamic avatarURL;
+@dynamic accountURLString;
+
+
+
+
+
+
+@dynamic avatarURLString;
+
+
+
+
+
+
+@dynamic dateStampOfLastSync;
 
 
 
@@ -83,13 +98,6 @@ const struct StashAccountFetchedProperties StashAccountFetchedProperties = {
 - (void)setPrimitiveIdentifierValue:(int64_t)value_ {
 	[self setPrimitiveIdentifier:[NSNumber numberWithLongLong:value_]];
 }
-
-
-
-
-
-@dynamic timeOfLastSync;
-
 
 
 

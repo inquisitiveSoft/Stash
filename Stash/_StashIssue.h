@@ -2,7 +2,7 @@
 // Make changes to StashIssue.h instead.
 
 #import <CoreData/CoreData.h>
-
+#import "StashItem.h"
 
 extern const struct StashIssueAttributes {
 	__unsafe_unretained NSString *assignee;
@@ -42,7 +42,7 @@ extern const struct StashIssueFetchedProperties {
 @interface StashIssueID : NSManagedObjectID {}
 @end
 
-@interface _StashIssue : NSManagedObject {}
+@interface _StashIssue : StashItem {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;

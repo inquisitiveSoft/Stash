@@ -16,6 +16,13 @@
 		4A7EB13F173FACEB00AF5916 /* StashView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EB13E173FACEB00AF5916 /* StashView.m */; };
 		4A7EB142173FB19E00AF5916 /* NSView+ConstraintAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EB141173FB19E00AF5916 /* NSView+ConstraintAdditions.m */; };
 		4A7EB147173FD9E800AF5916 /* StashDrawingFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EB146173FD9E800AF5916 /* StashDrawingFunctions.m */; };
+		4AB88B3C1741D9D50085D8A7 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AD190BC173DE4B100D3F24E /* CoreData.framework */; };
+		4AB88B411741DA2F0085D8A7 /* _StashItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB88B3E1741DA2F0085D8A7 /* _StashItem.m */; };
+		4AB88B421741DA2F0085D8A7 /* StashItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB88B401741DA2F0085D8A7 /* StashItem.m */; };
+		4AB88B4317423C4F0085D8A7 /* Issues Model.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = 4AFFA9D11740E46F00935AA9 /* Issues Model.xcdatamodeld */; };
+		4AB88B461742545B0085D8A7 /* AFHTTPRequestOperation+StashAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB88B451742545B0085D8A7 /* AFHTTPRequestOperation+StashAdditions.m */; };
+		4AB88B4817425E080085D8A7 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB88B4717425E080085D8A7 /* libicucore.dylib */; };
+		4AB88B4C17425E280085D8A7 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB88B4B17425E280085D8A7 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4AD190B9173DE4B100D3F24E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AD190B8173DE4B100D3F24E /* Cocoa.framework */; };
 		4AD190C3173DE4B100D3F24E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AD190C1173DE4B100D3F24E /* InfoPlist.strings */; };
 		4AD190C5173DE4B100D3F24E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD190C4173DE4B100D3F24E /* main.m */; };
@@ -56,7 +63,7 @@
 		4AFFA9F61740F38500935AA9 /* StashMilestone.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9EE1740F38500935AA9 /* StashMilestone.m */; };
 		4AFFA9F71740F38500935AA9 /* StashRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9F01740F38500935AA9 /* StashRepository.m */; };
 		4AFFA9F81740F38500935AA9 /* StashUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9F21740F38500935AA9 /* StashUsers.m */; };
-		4AFFA9FC1740F3FB00935AA9 /* StashModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9FB1740F3FB00935AA9 /* StashModelController.m */; };
+		4AFFA9FC1740F3FB00935AA9 /* StashIssuesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9FB1740F3FB00935AA9 /* StashIssuesManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +80,15 @@
 		4A7EB141173FB19E00AF5916 /* NSView+ConstraintAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+ConstraintAdditions.m"; sourceTree = "<group>"; };
 		4A7EB145173FD9E800AF5916 /* StashDrawingFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashDrawingFunctions.h; sourceTree = "<group>"; };
 		4A7EB146173FD9E800AF5916 /* StashDrawingFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashDrawingFunctions.m; sourceTree = "<group>"; };
+		4AB88B3D1741DA2F0085D8A7 /* _StashItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _StashItem.h; sourceTree = "<group>"; };
+		4AB88B3E1741DA2F0085D8A7 /* _StashItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _StashItem.m; sourceTree = "<group>"; };
+		4AB88B3F1741DA2F0085D8A7 /* StashItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashItem.h; sourceTree = "<group>"; };
+		4AB88B401741DA2F0085D8A7 /* StashItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashItem.m; sourceTree = "<group>"; };
+		4AB88B441742545B0085D8A7 /* AFHTTPRequestOperation+StashAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPRequestOperation+StashAdditions.h"; sourceTree = "<group>"; };
+		4AB88B451742545B0085D8A7 /* AFHTTPRequestOperation+StashAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFHTTPRequestOperation+StashAdditions.m"; sourceTree = "<group>"; };
+		4AB88B4717425E080085D8A7 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		4AB88B4A17425E280085D8A7 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegexKitLite.h; path = Submodules/RegexKitLite/RegexKitLite.h; sourceTree = SOURCE_ROOT; };
+		4AB88B4B17425E280085D8A7 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegexKitLite.m; path = Submodules/RegexKitLite/RegexKitLite.m; sourceTree = SOURCE_ROOT; };
 		4AD190B5173DE4B100D3F24E /* Stash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AD190B8173DE4B100D3F24E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4AD190BB173DE4B100D3F24E /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -153,8 +169,8 @@
 		4AFFA9F01740F38500935AA9 /* StashRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashRepository.m; sourceTree = "<group>"; };
 		4AFFA9F11740F38500935AA9 /* StashUsers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashUsers.h; sourceTree = "<group>"; };
 		4AFFA9F21740F38500935AA9 /* StashUsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashUsers.m; sourceTree = "<group>"; };
-		4AFFA9FA1740F3FB00935AA9 /* StashModelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashModelController.h; sourceTree = "<group>"; };
-		4AFFA9FB1740F3FB00935AA9 /* StashModelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashModelController.m; sourceTree = "<group>"; };
+		4AFFA9FA1740F3FB00935AA9 /* StashIssuesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashIssuesManager.h; sourceTree = "<group>"; };
+		4AFFA9FB1740F3FB00935AA9 /* StashIssuesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashIssuesManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,9 +178,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AB88B4817425E080085D8A7 /* libicucore.dylib in Frameworks */,
 				4A7EB139173FAA3200AF5916 /* SystemConfiguration.framework in Frameworks */,
 				4A7EB137173FA82800AF5916 /* QuartzCore.framework in Frameworks */,
 				4AD190D6173DE4C000D3F24E /* Security.framework in Frameworks */,
+				4AB88B3C1741D9D50085D8A7 /* CoreData.framework in Frameworks */,
 				4AD190B9173DE4B100D3F24E /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -193,11 +211,20 @@
 			name = "Issues View";
 			sourceTree = "<group>";
 		};
+		4AB88B4917425E170085D8A7 /* RegexKitLite */ = {
+			isa = PBXGroup;
+			children = (
+				4AB88B4A17425E280085D8A7 /* RegexKitLite.h */,
+				4AB88B4B17425E280085D8A7 /* RegexKitLite.m */,
+			);
+			name = RegexKitLite;
+			sourceTree = "<group>";
+		};
 		4AD190AC173DE4B100D3F24E = {
 			isa = PBXGroup;
 			children = (
 				4AD190BE173DE4B100D3F24E /* Stash */,
-				4AD190D8173DE55D00D3F24E /* Submodules */,
+				4AD190D8173DE55D00D3F24E /* Other Sources */,
 				4AD190B7173DE4B100D3F24E /* Frameworks */,
 				4AD190B6173DE4B100D3F24E /* Products */,
 			);
@@ -214,10 +241,12 @@
 		4AD190B7173DE4B100D3F24E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4AB88B4717425E080085D8A7 /* libicucore.dylib */,
 				4A7EB138173FAA3200AF5916 /* SystemConfiguration.framework */,
 				4A7EB136173FA82800AF5916 /* QuartzCore.framework */,
 				4AD190D5173DE4C000D3F24E /* Security.framework */,
 				4AD190B8173DE4B100D3F24E /* Cocoa.framework */,
+				4AD190BC173DE4B100D3F24E /* CoreData.framework */,
 				4AD190BA173DE4B100D3F24E /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -227,7 +256,6 @@
 			isa = PBXGroup;
 			children = (
 				4AD190BB173DE4B100D3F24E /* AppKit.framework */,
-				4AD190BC173DE4B100D3F24E /* CoreData.framework */,
 				4AD190BD173DE4B100D3F24E /* Foundation.framework */,
 			);
 			name = "Other Frameworks";
@@ -262,14 +290,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		4AD190D8173DE55D00D3F24E /* Submodules */ = {
+		4AD190D8173DE55D00D3F24E /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				4AB88B4917425E170085D8A7 /* RegexKitLite */,
 				4AD1910C173DE75F00D3F24E /* XSControllers */,
 				4AD19108173DE73600D3F24E /* SYMLFoundation */,
 				4AD19107173DE72100D3F24E /* AFNetworking */,
 			);
-			name = Submodules;
+			name = "Other Sources";
 			path = Stash;
 			sourceTree = "<group>";
 		};
@@ -336,6 +365,8 @@
 				4AD190DE173DE6F100D3F24E /* StashNetworkManager.m */,
 				4AFFA9CD1740DD3000935AA9 /* StashHTTPClient.h */,
 				4AFFA9CE1740DD3000935AA9 /* StashHTTPClient.m */,
+				4AB88B441742545B0085D8A7 /* AFHTTPRequestOperation+StashAdditions.h */,
+				4AB88B451742545B0085D8A7 /* AFHTTPRequestOperation+StashAdditions.m */,
 			);
 			name = "Network Manager";
 			sourceTree = "<group>";
@@ -380,8 +411,8 @@
 			isa = PBXGroup;
 			children = (
 				4AFFA9D11740E46F00935AA9 /* Issues Model.xcdatamodeld */,
-				4AFFA9FA1740F3FB00935AA9 /* StashModelController.h */,
-				4AFFA9FB1740F3FB00935AA9 /* StashModelController.m */,
+				4AFFA9FA1740F3FB00935AA9 /* StashIssuesManager.h */,
+				4AFFA9FB1740F3FB00935AA9 /* StashIssuesManager.m */,
 				4AFFA9F91740F3A600935AA9 /* Custom Managed Object Classes */,
 				4AFFA9D41740F35E00935AA9 /* Generated Managed Object Classes */,
 			);
@@ -395,6 +426,8 @@
 				4AFFA9D61740F36C00935AA9 /* _StashAccount.m */,
 				4AFFA9D71740F36C00935AA9 /* _StashIssue.h */,
 				4AFFA9D81740F36C00935AA9 /* _StashIssue.m */,
+				4AB88B3D1741DA2F0085D8A7 /* _StashItem.h */,
+				4AB88B3E1741DA2F0085D8A7 /* _StashItem.m */,
 				4AFFA9D91740F36C00935AA9 /* _StashLabel.h */,
 				4AFFA9DA1740F36C00935AA9 /* _StashLabel.m */,
 				4AFFA9DB1740F36C00935AA9 /* _StashMilestone.h */,
@@ -410,6 +443,8 @@
 		4AFFA9F91740F3A600935AA9 /* Custom Managed Object Classes */ = {
 			isa = PBXGroup;
 			children = (
+				4AB88B3F1741DA2F0085D8A7 /* StashItem.h */,
+				4AB88B401741DA2F0085D8A7 /* StashItem.m */,
 				4AFFA9E71740F38500935AA9 /* StashAccount.h */,
 				4AFFA9E81740F38500935AA9 /* StashAccount.m */,
 				4AFFA9EF1740F38500935AA9 /* StashRepository.h */,
@@ -485,6 +520,7 @@
 				4A7EB135173FA48400AF5916 /* Issues View.xib in Resources */,
 				4A52158A174060FE0007CE0C /* Status Item Icon.png in Resources */,
 				4A52158C174061130007CE0C /* Status Item Icon - Highlighted.png in Resources */,
+				4AB88B4317423C4F0085D8A7 /* Issues Model.xcdatamodeld in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -533,7 +569,11 @@
 				4AFFA9F61740F38500935AA9 /* StashMilestone.m in Sources */,
 				4AFFA9F71740F38500935AA9 /* StashRepository.m in Sources */,
 				4AFFA9F81740F38500935AA9 /* StashUsers.m in Sources */,
-				4AFFA9FC1740F3FB00935AA9 /* StashModelController.m in Sources */,
+				4AFFA9FC1740F3FB00935AA9 /* StashIssuesManager.m in Sources */,
+				4AB88B411741DA2F0085D8A7 /* _StashItem.m in Sources */,
+				4AB88B421741DA2F0085D8A7 /* StashItem.m in Sources */,
+				4AB88B461742545B0085D8A7 /* AFHTTPRequestOperation+StashAdditions.m in Sources */,
+				4AB88B4C17425E280085D8A7 /* RegexKitLite.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

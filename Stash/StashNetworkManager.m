@@ -1,14 +1,20 @@
 #import "StashNetworkManager.h"
+
 #import <Security/Security.h>
+#import "RegexKitLite.h"
 
 #import "AFNetworking.h"
+#import "StashIssuesManager.h"
 #import "StashHTTPClient.h"
 #import "qLog.h"
+
+#import "AFHTTPRequestOperation+StashAdditions.h"
 
 
 #define GITHUB_CLIENT_ID @"6e5a15de184327604f1d"
 #define GITHUB_CLIENT_SECRET @"b33b8a9e8eddc2ac92db733621d0b013e85cfde5"
 
+NSString * const StashDefaultGitHubAPILocation = @"https://api.github.com/";
 
 NSString * const StashRestRequestPath = @"StashRestRequestPath";
 NSString * const StashRestRequestBody = @"StashRestRequestBody";
@@ -31,6 +37,7 @@ NSString * const StashOAuthIdentifierKey = @"id";
 
 NSString * const StashOAuthKeychainIdentifier = @"com.inquisitiveSoftware.Stash.OAuthToken";
 NSString * const StashKeychainError = @"StashKeychainError";
+NSString * const StashRequestUnxpectedFormatError = @"StashRequestUnxpectedFormatError";
 
 static NSString *StashBase64EncodedStringFromString(NSString *string);
 
@@ -39,8 +46,8 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 @interface StashNetworkManager ()
 
 @property (strong) AFHTTPClient *httpClient;
-@property (strong) NSData *username, *password;
 @property (readwrite, getter = isAuthenticated) BOOL authenticated;
+@property NSDictionary *api;
 
 @end
 
@@ -84,7 +91,7 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 
 - (void)setup
 {
-	NSURL *baseURL = [NSURL URLWithString:@"https://api.github.com/"];
+	NSURL *baseURL = [NSURL URLWithString:StashDefaultGitHubAPILocation];
 	
 	StashHTTPClient *httpClient = [[StashHTTPClient alloc] initWithBaseURL:baseURL];
 	self.httpClient = httpClient; 
@@ -98,108 +105,68 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 		[httpClient setAuthorizationHeaderWithToken:authorizationToken];
 		self.authenticated = TRUE;
 	}
-}
-
-
-
-#pragma mark - Authentication details
-
-- (void)setUsername:(NSString *)username andPassword:(NSString *)password
-{
-//	self.username = XORData([username dataUsingEncoding:NSUTF8StringEncoding]);
-//	self.password = XORData([password dataUsingEncoding:NSUTF8StringEncoding]);
-	[self.httpClient setAuthorizationHeaderWithUsername:username password:password];
-}
-
-
-- (BOOL)setAuthorizationToken:(NSString *)token withIdentifier:(NSString *)identifier error:(NSError **)error
-{
-	if(!token || !identifier) {
-		qLog(@"Requires token and identifier: %@: %@", identifier, token);
-		return FALSE;
-	}
-	
-	[self.httpClient setAuthorizationHeaderWithToken:token];
-	
-	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:@{
-		StashOAuthTokenKey : token,
-		StashOAuthIdentifierKey : identifier
-	} options:0 error:error];
-	
-	if(!jsonData) {
-		qLog(@"Couldn't create jsonData from token and identifier: %@", error);
-		return FALSE;
-	}
 	
 	
-	NSDictionary *authorizationAttributes = @{
-		(id)kSecClass : (id)kSecClassGenericPassword,
-		(id)kSecAttrService : StashOAuthKeychainIdentifier,
-		(id)kSecValueData : jsonData,
-		(id)kSecAttrLabel : @"GitHub OAuth token for Stash"
-	};
-	
-	// First try adding the token
-	OSStatus result = SecItemAdd((__bridge CFDictionaryRef)authorizationAttributes, NULL);
-	
-	if(result != errSecSuccess) {
-		// If that returns an error then it's likely that it's because it
-		// has already been set, so try to update the existing item
-		result = SecItemUpdate((__bridge CFDictionaryRef)authorizationAttributes, (__bridge CFDictionaryRef)authorizationAttributes);
-	}
-	
-	BOOL success = result == errSecSuccess;
-	self.authenticated = success;
-	
-	if(success) {
-		self.username = nil;
-		self.password = nil;
+	// Load the latest api endpoints
+	[self.httpClient getPath:nil parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *result) {
+		self.api = result;
 		
-		[[NSNotificationCenter defaultCenter] postNotificationName:StashDidBecomeAuthorizedNotification object:nil];
-	} else {
-		NSString *errorMessage = (__bridge_transfer NSString *)SecCopyErrorMessageString(result, NULL);
-		
-		if(error != NULL) {
-			*error = [NSError errorWithDomain:StashKeychainError code:result userInfo:@{ NSLocalizedDescriptionKey : errorMessage }];
-		} else
-			qLog(@"There was an error storing the OAuth token in the Keychain: %@", errorMessage);
-	}
-	
-	
-	return success;
+		if(self.authenticated) {
+			[self performSync];
+		}
+	} failure:NULL];
 }
 
+
+- (NSString *)apiForKey:(NSString *)apiKey
+{
+	if(![apiKey length])
+		return @"";
+	
+	NSString *apiPath = [self.api objectForKey:apiKey];
+	
+	NSString *pattern = [NSString stringWithFormat:@"^%@([A-Za-z0-9/-_]*)", StashDefaultGitHubAPILocation];
+	apiPath = [apiPath stringByMatching:pattern capture:1];
+	
+	return apiPath;
+}
 
 
 #pragma mark - Requesting and validating authorizations
 
 
-- (void)requestOAuthToken:(AFRequestResultBlock)resultBlock
+- (void)requestOAuthTokenForUsername:(NSString *)username password:(NSString *)password success:(AFRequestSuccessBlock)successBlock failure:(AFRequestFailureBlock)failureBlock
 {
 	if([self isAuthenticated]) {
 		qLog(@"StashNetworkManager is already authenticated");
 		return;
 	}
 	
-	NSNumber *tokenIdentifier = [self authorizationIdentifier];
+	if([username length] == 0 || [password length] || 0) {
+		qLog(@"Requires both a username (%@) and password (%@)", username, password);
+	}
 	
-	if(tokenIdentifier) {
-		[self requestExistingOAuthTokenForIdentifier:tokenIdentifier resultBlock:resultBlock];
+	[self.httpClient setAuthorizationHeaderWithUsername:username password:password];
+	StashAccount *account = [self.issuesManager accountForUsername:username];
+	NSNumber *existingTokenIdentifier = account.identifier;
+	
+	if(existingTokenIdentifier) {
+		[self requestExistingOAuthTokenForIdentifier:existingTokenIdentifier success:successBlock failure:failureBlock];
 	} else {
-		[self requestNewOAuthToken:resultBlock];
+		[self requestNewOAuthToken:successBlock failure:failureBlock];
 	}
 }
 
 
-- (void)requestExistingOAuthTokenForIdentifier:(NSNumber *)tokenIdentifier resultBlock:(AFRequestResultBlock)resultBlock
+- (void)requestExistingOAuthTokenForIdentifier:(NSNumber *)tokenIdentifier success:(AFRequestSuccessBlock)successBlock failure:(AFRequestFailureBlock)failureBlock
 {
 	if(![tokenIdentifier isKindOfClass:[NSNumber class]]) {
 		qError(@"Requires a tokenIdentifier");
 		return;
 	}
 	
-	__weak StashNetworkManager *networkManager = self;
-	NSString *requestPath = [NSString stringWithFormat:@"authorizations/%@", tokenIdentifier];
+	
+	NSString *requestPath = [NSString stringWithFormat:@"%@/%@", self.api[@"authorizations_url"], tokenIdentifier];
 	
 	[self.httpClient getPath:requestPath parameters:@{
 		@"client_id" : GITHUB_CLIENT_ID,
@@ -209,103 +176,87 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 		
 		if([json isKindOfClass:[NSDictionary class]]) {
 			NSString *authorizationToken = [json objectForKey:StashOAuthTokenKey];
-			NSString *authorizationIdentifier = [json objectForKey:StashOAuthIdentifierKey];
+			NSNumber *authorizationIdentifier = [json objectForKey:StashOAuthIdentifierKey];
 			
 			NSError *error = nil;
 			printf("Found existing token for id: %ld", [authorizationIdentifier integerValue]);
-			success = [networkManager setAuthorizationToken:authorizationToken withIdentifier:authorizationIdentifier error:&error];
+			success = [self setAuthorizationToken:authorizationToken withIdentifier:authorizationIdentifier error:&error];
 			
 			if(!success && error) {
 				qLog(@"There was an error writing to the Keychain: %@", error);
 			}
 		}
 		
-		if(resultBlock) {
-			resultBlock(success, nil);
+		if(successBlock) {
+			successBlock(httpOperation, json);
 		}
 	} failure:^(AFHTTPRequestOperation *httpOperation, NSError *error) {
 		if(httpOperation.response.statusCode == 404) {
-			qLog(@"Recieved 404. It's likely the previous token was deleted from the applications list. Requesting a new token");
-			[self requestNewOAuthToken:resultBlock];
-		} else {
-			qLog(@"failure: %@", httpOperation, error);
+			qLog(@"Recieved 404 while looking for an existing token. It's likely the previous token was deleted from the applications list. Requesting a new token");
+			[self requestNewOAuthToken:successBlock failure:failureBlock];
+		} else if(failureBlock) {
+			failureBlock(httpOperation, error);
 		}
 	}];
 }
 
 
-- (void)requestNewOAuthToken:(AFRequestResultBlock)resultBlock
+- (void)requestNewOAuthToken:(AFRequestSuccessBlock)successBlock failure:(AFRequestFailureBlock)failureBlock
 {
-	__weak StashNetworkManager *networkManager = self;
-	
-	[self.httpClient postPath:@"authorizations" parameters:@{
+	[self.httpClient postPath:self.api[@"authorizations_url"] parameters:@{
 		@"scopes" : @[@"user", @"public_repo", @"repo", @"notifications"],
 		@"client_id" : GITHUB_CLIENT_ID,
 		@"client_secret" : GITHUB_CLIENT_SECRET
-	} success:^(AFHTTPRequestOperation *httpOperation, id json) {
+	} success:^(AFHTTPRequestOperation *httpOperation, NSDictionary *json) {
 		BOOL success = FALSE;
 		
 		if([json isKindOfClass:[NSDictionary class]]) {
 			NSString *authorizationToken = [json objectForKey:StashOAuthTokenKey];
-			NSString *authorizationIdentifier = [json objectForKey:StashOAuthIdentifierKey];
+			NSNumber *authorizationIdentifier = [json objectForKey:StashOAuthIdentifierKey];
 			
 			NSError *error = nil;
-			success = [networkManager setAuthorizationToken:authorizationToken withIdentifier:authorizationIdentifier error:&error];
+			success = [self setAuthorizationToken:authorizationToken withIdentifier:authorizationIdentifier error:&error];
 			
-			if(!success && error) {
+			if(success)
+				[self performSync];
+			else if(error)
 				qLog(@"There was an error writing to the Keychain: %@", error);
-			}
 		}
 		
-		if(resultBlock) {
-			resultBlock(success, nil);
+		if(successBlock) {
+			successBlock(httpOperation, json);
 		}
-	} failure:^(AFHTTPRequestOperation *httpOperation, NSError *error) {
-		AFJSONRequestOperation *operation = (AFJSONRequestOperation *)httpOperation;
-		qLog(@"failure: %d", operation.hasAcceptableStatusCode);
-	}];
+	} failure:failureBlock];
 }
+
 
 
 - (BOOL)removeAuthentication:(NSError **)error
 {
 	// Remove the authorization token from the keychain
-	// Leaving the tokens identifier to reuse it in the future, if possible
 	NSDictionary *matchingAttributes = @{
 		(id)kSecClass : (id)kSecClassGenericPassword,
 		(id)kSecAttrService : StashOAuthKeychainIdentifier
 	};
 	
-	OSStatus result = -1;
-	NSString *tokenIdentifier = [self authorizationObjectForKey:StashOAuthIdentifierKey error:NULL];
-	
-	if(tokenIdentifier) {
-		// If a tokenIdentifier exists, update the keychain items data to only include the indentifier
-		NSData *jsonData = [NSJSONSerialization dataWithJSONObject:@{
-			StashOAuthIdentifierKey : tokenIdentifier
-		} options:0 error:error];
-		
-		if(jsonData) {
-			NSDictionary *updatedAttributes = @{
-				(id)kSecValueData : jsonData
-			};
-
-			result = SecItemUpdate((__bridge CFDictionaryRef)matchingAttributes, (__bridge CFDictionaryRef)updatedAttributes);
-		} else
-			qLog(@"Couldn't create json data from identifier: '%@' %@", tokenIdentifier, error);
-	} else {
-		// Otherwise attempt to remove the keychain item
-		result = SecItemDelete((__bridge CFDictionaryRef)matchingAttributes);
-	}
-	
-	
+	OSStatus result = SecItemDelete((__bridge CFDictionaryRef)matchingAttributes);
 	BOOL success = result == errSecSuccess;
 	
 	if(success) {
 		self.authenticated = FALSE;
 		[[NSNotificationCenter defaultCenter] postNotificationName:StashDidResignAuthorizationNotification object:nil];
 	} else {
-		qLog(@"Couldn't remove the authorization data from the keychain: %@", error);
+		NSString *errorMessage = NSLocalizedString(@"Couldn't remove the authorization data from the keychain", @"Failed to remove from keychain");
+		NSString *errorReason = (__bridge_transfer NSString *)SecCopyErrorMessageString(result, NULL);
+		
+		if(error != NULL) {
+			*error = [NSError errorWithDomain:StashKeychainError code:result userInfo:@{
+				NSLocalizedDescriptionKey : errorMessage,
+				NSLocalizedFailureReasonErrorKey : errorReason
+			}];
+		} else
+			qLog(@"%@: %@", errorMessage, errorReason);
+
 	}
 	
 	return success;
@@ -315,25 +266,93 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 
 #pragma mark - 
 
+
 - (void)performSync
-{
-}
-
-
-- (void)pullIssues
 {
 	//		Get /user/repos
 	//			for each get
-	//				
-	//				issues
-	//		
-	[self.httpClient getPath:@"/repos/inquisitiveSoft/Syml/issues" parameters:nil success:^(AFHTTPRequestOperation *operation, id json) {
-		qLog(@"%@", json);
+	//				issues, milestones, label, users
+	//            per_page=100
+//	[NSString stringWithFormat:@"repos/%@/%@/issues&per_page=100", username, repositoryName];
+
+	[self updateUserInfo:^(AFHTTPRequestOperation *operation, NSDictionary *response) {
+		// Test the date stamps to see if there have been changes on the server
+		NSDate *dateStampOfLastSync = self.issuesManager.currentAccount.dateStampOfLastSync;
+		NSDate *dateOfLastModification = [operation dateOfLastModification];
+		
+		BOOL hasChangesToPull = !(dateStampOfLastSync && dateOfLastModification && [dateOfLastModification timeIntervalSinceDate:dateStampOfLastSync] < 0);
+		
+		if(hasChangesToPull) {
+			[self pullChanges:^(AFHTTPRequestOperation *operation, id responseObject) {
+				
+			} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+				
+			}];
+		}
+		
+		self.issuesManager.currentAccount.dateStampOfLastSync = [operation dateStamp];
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		qLog(@"Couldn't retrieve issues: %@", error);
+		
 	}];
 }
 
+
+- (void)updateUserInfo:(AFRequestSuccessBlock)successBlock failure:(AFRequestFailureBlock)failureBlock
+{
+	[self.httpClient getPath:self.api[@"current_user_url"] parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *response) {
+		[self.issuesManager updateAccountDetailsWithJSON:response];
+		
+		if(successBlock)
+			successBlock(operation, response);
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		qLog(@"Couldn't retrieve user info: %@", error);
+		
+		if(failureBlock)
+			failureBlock(operation, error);
+	}];
+}
+
+
+- (void)pullChanges:(AFRequestSuccessBlock)successBlock failure:(AFRequestFailureBlock)failureBlock
+{
+	// Request repos
+	[self.httpClient getPath:[self apiForKey:@"current_user_repositories_url"] parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *response) {
+		NSInteger numberOfIssues = [response count];
+		NSData *jsonData = [NSJSONSerialization dataWithJSONObject:response options:NSJSONWritingPrettyPrinted error:nil];
+		qLog(@"count %d - '%@'", numberOfIssues, [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+		
+		if(successBlock) {
+			successBlock(operation, response);
+		}
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		qLog(@"Couldn't retrieve repos: %@", error);
+		
+		if(failureBlock) {
+			failureBlock(operation, error);
+		}
+	}];
+}
+
+
+
+//- (void)requestUsersRepos:(AFRequestSuccessBlock)successBlock failure:(AFRequestFailureBlock)failureBlock
+//{
+//	[self.httpClient getPath:self.api[@"current_user_repositories_url"] parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *response) {
+//		NSInteger numberOfIssues = [response count];
+//		NSData *jsonData = [NSJSONSerialization dataWithJSONObject:response options:NSJSONWritingPrettyPrinted error:nil];
+//		qLog(@"count %d - '%@'", numberOfIssues, [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+//		
+//		if(successBlock) {
+//			successBlock(operation, response);
+//		}
+//	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//		qLog(@"Couldn't retrieve repos: %@", error);
+//		
+//		if(failureBlock) {
+//			failureBlock(operation, error);
+//		}
+//	}];
+//}
 
 
 
@@ -424,6 +443,67 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 	
 	return authorizationObject;
 }
+
+
+#pragma mark - Handling authentication details
+
+
+- (BOOL)setAuthorizationToken:(NSString *)token withIdentifier:(NSNumber *)identifier error:(NSError **)error
+{
+	if(!token || !identifier) {
+		qLog(@"Requires token and identifier: %@: %@", identifier, token);
+		return FALSE;
+	}
+	
+	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:@{
+		StashOAuthTokenKey : token,
+		StashOAuthIdentifierKey : identifier
+	} options:0 error:error];
+	
+	if(!jsonData) {
+		qLog(@"Couldn't create jsonData from token and identifier: %@", error);
+		return FALSE;
+	}
+	
+	
+	NSDictionary *authorizationAttributes = @{
+		(id)kSecClass : (id)kSecClassGenericPassword,
+		(id)kSecAttrService : StashOAuthKeychainIdentifier,
+		(id)kSecValueData : jsonData,
+		(id)kSecAttrLabel : @"GitHub OAuth token for Stash"
+	};
+	
+	// First try adding the token
+	OSStatus result = SecItemAdd((__bridge CFDictionaryRef)authorizationAttributes, NULL);
+	
+	if(result != errSecSuccess) {
+		// If that returns an error then it's likely that it's because it
+		// has already been set, so try to update the existing item
+		result = SecItemUpdate((__bridge CFDictionaryRef)authorizationAttributes, (__bridge CFDictionaryRef)authorizationAttributes);
+	}
+	
+	BOOL success = result == errSecSuccess;
+	self.authenticated = success;
+	
+	if(success) {
+		[self.httpClient setAuthorizationHeaderWithToken:token];
+		[[NSNotificationCenter defaultCenter] postNotificationName:StashDidBecomeAuthorizedNotification object:nil];
+		
+		StashAccount *account = [self.issuesManager accountForIdentifier:identifier create:TRUE];
+		self.issuesManager.currentAccount = account;
+	} else {
+		NSString *errorMessage = (__bridge_transfer NSString *)SecCopyErrorMessageString(result, NULL);
+		
+		if(error != NULL) {
+			*error = [NSError errorWithDomain:StashKeychainError code:result userInfo:@{ NSLocalizedDescriptionKey : errorMessage }];
+		} else
+			qLog(@"There was an error storing the OAuth token in the Keychain: %@", errorMessage);
+	}
+	
+	
+	return success;
+}
+
 
 
 @end

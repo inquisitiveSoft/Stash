@@ -2,9 +2,10 @@
 // Make changes to StashLabel.h instead.
 
 #import <CoreData/CoreData.h>
-
+#import "StashItem.h"
 
 extern const struct StashLabelAttributes {
+	__unsafe_unretained NSString *color;
 	__unsafe_unretained NSString *identifier;
 	__unsafe_unretained NSString *name;
 } StashLabelAttributes;
@@ -23,14 +24,25 @@ extern const struct StashLabelFetchedProperties {
 
 
 
+
 @interface StashLabelID : NSManagedObjectID {}
 @end
 
-@interface _StashLabel : NSManagedObject {}
+@interface _StashLabel : StashItem {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (StashLabelID*)objectID;
+
+
+
+
+
+@property (nonatomic, strong) NSString* color;
+
+
+
+//- (BOOL)validateColor:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -92,6 +104,12 @@ extern const struct StashLabelFetchedProperties {
 @end
 
 @interface _StashLabel (CoreDataGeneratedPrimitiveAccessors)
+
+
+- (NSString*)primitiveColor;
+- (void)setPrimitiveColor:(NSString*)value;
+
+
 
 
 - (NSNumber*)primitiveIdentifier;

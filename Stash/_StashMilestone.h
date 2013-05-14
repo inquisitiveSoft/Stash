@@ -2,7 +2,7 @@
 // Make changes to StashMilestone.h instead.
 
 #import <CoreData/CoreData.h>
-
+#import "StashItem.h"
 
 extern const struct StashMilestoneAttributes {
 	__unsafe_unretained NSString *body;
@@ -34,7 +34,7 @@ extern const struct StashMilestoneFetchedProperties {
 @interface StashMilestoneID : NSManagedObjectID {}
 @end
 
-@interface _StashMilestone : NSManagedObject {}
+@interface _StashMilestone : StashItem {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;

@@ -4,7 +4,7 @@
 @implementation StashHTTPClient
 
 - (void)setAuthorizationHeaderWithToken:(NSString *)token {
-    [self setDefaultHeader:@"Authorization" value:[NSString stringWithFormat:@"token %@", token]];
+	[self setDefaultHeader:@"Authorization" value:[NSString stringWithFormat:@"token %@", token]];
 }
 
 @end

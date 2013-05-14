@@ -1,5 +1,7 @@
 #import <Foundation/Foundation.h>
+#import "AFHTTPRequestOperation.h"
 
+@class StashIssuesManager;
 
 extern NSString * const StashRestRequestPath;
 extern NSString * const StashRestRequestBody;
@@ -11,25 +13,20 @@ extern NSString * const StashRestRequestShouldUseBasicAuthentication;
 extern NSString * const StashDidBecomeAuthorizedNotification;
 extern NSString * const StashDidResignAuthorizationNotification;
 
-typedef void (^ AFRequestSuccessBlock)(NSURLRequest *request, NSHTTPURLResponse *response, id JSON);
-typedef void (^ AFRequestFailureBlock)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON);
-typedef void (^ AFRequestResultBlock)(BOOL success, id result);
-
+typedef void (^ AFRequestSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
+typedef void (^ AFRequestFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
 
 
 @interface StashNetworkManager : NSObject
 
 + (id)sharedNetworkManager;
 
+@property (weak) StashIssuesManager *issuesManager;
 @property (readonly, getter = isAuthenticated) BOOL authenticated;
 
-- (void)setUsername:(NSString *)username andPassword:(NSString *)password;
-- (void)requestOAuthToken:(AFRequestResultBlock)resultBlock;
-
-- (BOOL)setAuthorizationToken:(NSString *)token withIdentifier:(NSString *)identifier error:(NSError **)error;
+- (void)requestOAuthTokenForUsername:(NSString *)username password:(NSString *)password success:(AFRequestSuccessBlock)successBlock failure:(AFRequestFailureBlock)failureBlock;
 - (BOOL)removeAuthentication:(NSError **)error;
 
 - (void)performSync;
-- (void)pullIssues;
 
 @end

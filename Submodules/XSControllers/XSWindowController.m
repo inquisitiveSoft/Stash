@@ -46,10 +46,12 @@
 
 - (id)initWithWindowNibName:(NSString *)nibName
 {
-	if(![super initWithWindowNibName:nibName])
-		return nil;
+	self = [super initWithWindowNibName:nibName];
 	
-	self.viewControllers = [NSMutableArray array];
+	if(self) {
+		self.viewControllers = [NSMutableArray array];
+	}
+	
 	return self;
 }
 

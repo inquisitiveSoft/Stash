@@ -2,7 +2,7 @@
 // Make changes to StashUsers.h instead.
 
 #import <CoreData/CoreData.h>
-
+#import "StashItem.h"
 
 extern const struct StashUsersAttributes {
 	__unsafe_unretained NSString *avatarURL;
@@ -26,7 +26,7 @@ extern const struct StashUsersFetchedProperties {
 @interface StashUsersID : NSManagedObjectID {}
 @end
 
-@interface _StashUsers : NSManagedObject {}
+@interface _StashUsers : StashItem {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;

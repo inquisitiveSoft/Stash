@@ -17,7 +17,7 @@
 }
 
 - (IBAction)loadIssues:(id)sender {
-	[[StashNetworkManager sharedNetworkManager] pullIssues];
+	[[StashNetworkManager sharedNetworkManager] performSync];
 }
 
 

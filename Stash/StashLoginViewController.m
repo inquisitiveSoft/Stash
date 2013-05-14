@@ -32,17 +32,21 @@
 
 - (IBAction)login:(id)sender
 {
-	self.userInterfaceElementsEnabled = FALSE;
+	NSString *username = self.usernameTextField.stringValue;
+	NSString *password = self.passwordTextField.stringValue;
 	
-	__weak StashLoginViewController *loginViewController = self;
-	StashNetworkManager *sharedNetworkManager = [StashNetworkManager sharedNetworkManager];
-	
-	[sharedNetworkManager setUsername:self.usernameTextField.stringValue andPassword:self.passwordTextField.stringValue];
-	[sharedNetworkManager requestOAuthToken:^(BOOL success, id result) {
-		if(!success) {
+	if([username length] == 0) {
+		// Present an error
+	} else if ([password length] == 0) {
+		// Present an error, highlight the password field
+	} else {
+		self.userInterfaceElementsEnabled = FALSE;
+		
+		__weak StashLoginViewController *loginViewController = self;
+		[[StashNetworkManager sharedNetworkManager] requestOAuthTokenForUsername:username password:password success:NULL failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 			loginViewController.userInterfaceElementsEnabled = TRUE;
-		}
-	}];
+		}];
+	}
 }
 
 
