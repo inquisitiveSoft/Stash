@@ -15,6 +15,7 @@
 #define GITHUB_CLIENT_SECRET @"b33b8a9e8eddc2ac92db733621d0b013e85cfde5"
 
 NSString * const StashDefaultGitHubAPILocation = @"https://api.github.com/";
+NSString * const StashGitHubPerPageParameter = @"per_page";
 
 NSString * const StashRestRequestPath = @"StashRestRequestPath";
 NSString * const StashRestRequestBody = @"StashRestRequestBody";
@@ -26,7 +27,7 @@ NSString * const StashRestRequestShouldUseBasicAuthentication = @"StashRestReque
 NSString * const StashDidBecomeAuthorizedNotification = @"StashDidBecomeAuthorizedNotification";
 NSString * const StashDidResignAuthorizationNotification = @"StashDidResignAuthorizationNotification";
 
-
+//
 NSString * const StashRestRequestMethod = @"StashRestRequestMethod";
 NSString * const StashRestRequestMethodGET = @"GET";
 NSString * const StashRestRequestMethodPOST = @"POST";
@@ -118,15 +119,79 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 }
 
 
+/*
+{
+    "current_user_url": "https://api.github.com/user",
+    "authorizations_url": "https://api.github.com/authorizations",
+    "emails_url": "https://api.github.com/user/emails",
+    "emojis_url": "https://api.github.com/emojis",
+    "events_url": "https://api.github.com/events",
+    "following_url": "https://api.github.com/user/following{/target}",
+    "gists_url": "https://api.github.com/gists{/gist_id}",
+    "hub_url": "https://api.github.com/hub",
+    "issue_search_url": "https://api.github.com/legacy/issues/search/{owner}/{repo}/{state}/{keyword}",
+    "issues_url": "https://api.github.com/issues",
+    "keys_url": "https://api.github.com/user/keys",
+    "notifications_url": "https://api.github.com/notifications",
+    "organization_repositories_url": "https://api.github.com/orgs/{org}/repos/{?type,page,per_page,sort}",
+    "organization_url": "https://api.github.com/orgs/{org}",
+    "public_gists_url": "https://api.github.com/gists/public",
+    "rate_limit_url": "https://api.github.com/rate_limit",
+    "repository_url": "https://api.github.com/repos/{owner}/{repo}",
+    "repository_search_url": "https://api.github.com/legacy/repos/search/{keyword}{?language,start_page}",
+    "current_user_repositories_url": "https://api.github.com/user/repos{?type,page,per_page,sort}",
+    "starred_url": "https://api.github.com/user/starred{/owner}{/repo}",
+    "starred_gists_url": "https://api.github.com/gists/starred",
+    "team_url": "https://api.github.com/teams",
+    "user_url": "https://api.github.com/users/{user}",
+    "user_organizations_url": "https://api.github.com/user/orgs",
+    "user_repositories_url": "https://api.github.com/users/{user}/repos{?type,page,per_page,sort}",
+    "user_search_url": "https://api.github.com/legacy/user/search/{keyword}"
+}
+*/
+
+
 - (NSString *)apiForKey:(NSString *)apiKey
+{
+	return [self apiForKey:apiKey parameters:nil];
+}
+
+
+- (NSString *)apiForKey:(NSString *)apiKey parameters:(NSDictionary *)parameters
 {
 	if(![apiKey length])
 		return @"";
 	
-	NSString *apiPath = [self.api objectForKey:apiKey];
+	NSString *originalPath = [self.api objectForKey:apiKey];
 	
-	NSString *pattern = [NSString stringWithFormat:@"^%@([A-Za-z0-9/-_]*)", StashDefaultGitHubAPILocation];
-	apiPath = [apiPath stringByMatching:pattern capture:1];
+	NSString *pattern = [NSString stringWithFormat:@"^%@([A-Za-z0-9/_-]*)(\\{\\?(.*)\\})?", StashDefaultGitHubAPILocation];
+	__block NSMutableString *apiPath = [[originalPath stringByMatching:pattern capture:1] mutableCopy];
+
+	NSArray *validParameters = [[originalPath stringByMatching:pattern capture:3] componentsSeparatedByString:@","];
+	
+	// If the allowed parameters include the per_page then set it at 100
+	if([validParameters containsObject:StashGitHubPerPageParameter] && ![parameters objectForKey:StashGitHubPerPageParameter]) {
+		NSMutableDictionary *modifiedParameters = [parameters mutableCopy];
+		[modifiedParameters setObject:@(100) forKey:StashGitHubPerPageParameter];
+		parameters = modifiedParameters;
+	}
+	
+	if([parameters count]) {
+		__block BOOL isFirstParameter = TRUE;
+		
+		[parameters enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
+			if([validParameters containsObject:key]) {
+				NSString *prefix = @"";
+				if(isFirstParameter) {
+					prefix = @"?";
+				} else {
+					prefix = @"&";
+				}
+				
+				[apiPath appendFormat:@"%@%@=%@", prefix, key, value];
+			}
+		}];
+	}
 	
 	return apiPath;
 }
@@ -231,39 +296,6 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 
 
 
-- (BOOL)removeAuthentication:(NSError **)error
-{
-	// Remove the authorization token from the keychain
-	NSDictionary *matchingAttributes = @{
-		(id)kSecClass : (id)kSecClassGenericPassword,
-		(id)kSecAttrService : StashOAuthKeychainIdentifier
-	};
-	
-	OSStatus result = SecItemDelete((__bridge CFDictionaryRef)matchingAttributes);
-	BOOL success = result == errSecSuccess;
-	
-	if(success) {
-		self.authenticated = FALSE;
-		[[NSNotificationCenter defaultCenter] postNotificationName:StashDidResignAuthorizationNotification object:nil];
-	} else {
-		NSString *errorMessage = NSLocalizedString(@"Couldn't remove the authorization data from the keychain", @"Failed to remove from keychain");
-		NSString *errorReason = (__bridge_transfer NSString *)SecCopyErrorMessageString(result, NULL);
-		
-		if(error != NULL) {
-			*error = [NSError errorWithDomain:StashKeychainError code:result userInfo:@{
-				NSLocalizedDescriptionKey : errorMessage,
-				NSLocalizedFailureReasonErrorKey : errorReason
-			}];
-		} else
-			qLog(@"%@: %@", errorMessage, errorReason);
-
-	}
-	
-	return success;
-}
-
-
-
 #pragma mark - 
 
 
@@ -273,53 +305,41 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 	//			for each get
 	//				issues, milestones, label, users
 	//            per_page=100
-//	[NSString stringWithFormat:@"repos/%@/%@/issues&per_page=100", username, repositoryName];
-
-	[self updateUserInfo:^(AFHTTPRequestOperation *operation, NSDictionary *response) {
+	
+	// Fetch the user info
+	StashAccount *currentAccount = self.issuesManager.currentAccount;
+	
+	[self.httpClient getPath:self.api[@"current_user_url"] parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *response) {
 		// Test the date stamps to see if there have been changes on the server
-		NSDate *dateStampOfLastSync = self.issuesManager.currentAccount.dateStampOfLastSync;
+		NSDate *dateStampOfLastSync = currentAccount.dateStampOfLastSync;
 		NSDate *dateOfLastModification = [operation dateOfLastModification];
 		
 		BOOL hasChangesToPull = !(dateStampOfLastSync && dateOfLastModification && [dateOfLastModification timeIntervalSinceDate:dateStampOfLastSync] < 0);
 		
 		if(hasChangesToPull) {
+			[self.issuesManager updateAccountDetailsWithJSON:response];
+			
 			[self pullChanges:^(AFHTTPRequestOperation *operation, id responseObject) {
-				
+				// Push changes
 			} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 				
 			}];
 		}
 		
-		self.issuesManager.currentAccount.dateStampOfLastSync = [operation dateStamp];
+		currentAccount.dateStampOfLastSync = [operation dateStamp];
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		
-	}];
-}
-
-
-- (void)updateUserInfo:(AFRequestSuccessBlock)successBlock failure:(AFRequestFailureBlock)failureBlock
-{
-	[self.httpClient getPath:self.api[@"current_user_url"] parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *response) {
-		[self.issuesManager updateAccountDetailsWithJSON:response];
-		
-		if(successBlock)
-			successBlock(operation, response);
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		qLog(@"Couldn't retrieve user info: %@", error);
-		
-		if(failureBlock)
-			failureBlock(operation, error);
 	}];
 }
 
 
 - (void)pullChanges:(AFRequestSuccessBlock)successBlock failure:(AFRequestFailureBlock)failureBlock
 {
-	// Request repos
-	[self.httpClient getPath:[self apiForKey:@"current_user_repositories_url"] parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *response) {
+	// Request repos	
+	[self.httpClient getPath:[self apiForKey:@"current_user_repositories_url"] parameters:0 success:^(AFHTTPRequestOperation *operation, NSDictionary *response) {
 		NSInteger numberOfIssues = [response count];
 		NSData *jsonData = [NSJSONSerialization dataWithJSONObject:response options:NSJSONWritingPrettyPrinted error:nil];
-		qLog(@"count %d - '%@'", numberOfIssues, [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+//		qLog(@"count %d - '%@'", numberOfIssues, [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
 		
 		if(successBlock) {
 			successBlock(operation, response);
@@ -445,9 +465,6 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 }
 
 
-#pragma mark - Handling authentication details
-
-
 - (BOOL)setAuthorizationToken:(NSString *)token withIdentifier:(NSNumber *)identifier error:(NSError **)error
 {
 	if(!token || !identifier) {
@@ -504,6 +521,37 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 	return success;
 }
 
+
+- (BOOL)removeAuthentication:(NSError **)error
+{
+	// Remove the authorization token from the keychain
+	NSDictionary *matchingAttributes = @{
+		(id)kSecClass : (id)kSecClassGenericPassword,
+		(id)kSecAttrService : StashOAuthKeychainIdentifier
+	};
+	
+	OSStatus result = SecItemDelete((__bridge CFDictionaryRef)matchingAttributes);
+	BOOL success = result == errSecSuccess;
+	
+	if(success) {
+		self.authenticated = FALSE;
+		[[NSNotificationCenter defaultCenter] postNotificationName:StashDidResignAuthorizationNotification object:nil];
+	} else {
+		NSString *errorMessage = NSLocalizedString(@"Couldn't remove the authorization data from the keychain", @"Failed to remove from keychain");
+		NSString *errorReason = (__bridge_transfer NSString *)SecCopyErrorMessageString(result, NULL);
+		
+		if(error != NULL) {
+			*error = [NSError errorWithDomain:StashKeychainError code:result userInfo:@{
+				NSLocalizedDescriptionKey : errorMessage,
+				NSLocalizedFailureReasonErrorKey : errorReason
+			}];
+		} else
+			qLog(@"%@: %@", errorMessage, errorReason);
+
+	}
+	
+	return success;
+}
 
 
 @end
