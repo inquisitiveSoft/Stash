@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "StashHTTPClient.h"
 #import "AFHTTPRequestOperation.h"
 
 @class StashIssuesManager;
@@ -12,9 +13,6 @@ extern NSString * const StashRestRequestShouldUseBasicAuthentication;
 // Notifications
 extern NSString * const StashDidBecomeAuthorizedNotification;
 extern NSString * const StashDidResignAuthorizationNotification;
-
-typedef void (^ AFRequestSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
-typedef void (^ AFRequestFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
 
 
 @interface StashNetworkManager : NSObject

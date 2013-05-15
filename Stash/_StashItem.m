@@ -4,12 +4,11 @@
 #import "_StashItem.h"
 
 const struct StashItemAttributes StashItemAttributes = {
-	.hasLocalChanges = @"hasLocalChanges",
 };
 
 const struct StashItemRelationships StashItemRelationships = {
 	.changedVersion = @"changedVersion",
-	.synchronizedVersion = @"synchronizedVersion",
+	.syncedVersion = @"syncedVersion",
 };
 
 const struct StashItemFetchedProperties StashItemFetchedProperties = {
@@ -41,40 +40,9 @@ const struct StashItemFetchedProperties StashItemFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"hasLocalChangesValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"hasLocalChanges"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-		return keyPaths;
-	}
 
 	return keyPaths;
 }
-
-
-
-
-@dynamic hasLocalChanges;
-
-
-
-- (BOOL)hasLocalChangesValue {
-	NSNumber *result = [self hasLocalChanges];
-	return [result boolValue];
-}
-
-- (void)setHasLocalChangesValue:(BOOL)value_ {
-	[self setHasLocalChanges:[NSNumber numberWithBool:value_]];
-}
-
-- (BOOL)primitiveHasLocalChangesValue {
-	NSNumber *result = [self primitiveHasLocalChanges];
-	return [result boolValue];
-}
-
-- (void)setPrimitiveHasLocalChangesValue:(BOOL)value_ {
-	[self setPrimitiveHasLocalChanges:[NSNumber numberWithBool:value_]];
-}
-
 
 
 
@@ -83,7 +51,7 @@ const struct StashItemFetchedProperties StashItemFetchedProperties = {
 
 	
 
-@dynamic synchronizedVersion;
+@dynamic syncedVersion;
 
 	
 

@@ -2,17 +2,16 @@
 // Make changes to StashLabel.h instead.
 
 #import <CoreData/CoreData.h>
-#import "StashItem.h"
+
 
 extern const struct StashLabelAttributes {
 	__unsafe_unretained NSString *color;
-	__unsafe_unretained NSString *identifier;
 	__unsafe_unretained NSString *name;
 } StashLabelAttributes;
 
 extern const struct StashLabelRelationships {
 	__unsafe_unretained NSString *issues;
-	__unsafe_unretained NSString *repository;
+	__unsafe_unretained NSString *repo;
 } StashLabelRelationships;
 
 extern const struct StashLabelFetchedProperties {
@@ -24,11 +23,10 @@ extern const struct StashLabelFetchedProperties {
 
 
 
-
 @interface StashLabelID : NSManagedObjectID {}
 @end
 
-@interface _StashLabel : StashItem {}
+@interface _StashLabel : NSManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
@@ -43,20 +41,6 @@ extern const struct StashLabelFetchedProperties {
 
 
 //- (BOOL)validateColor:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
-@property (nonatomic, strong) NSNumber* identifier;
-
-
-
-@property int64_t identifierValue;
-- (int64_t)identifierValue;
-- (void)setIdentifierValue:(int64_t)value_;
-
-//- (BOOL)validateIdentifier:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -79,9 +63,9 @@ extern const struct StashLabelFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSSet *repository;
+@property (nonatomic, strong) StashRepo *repo;
 
-- (NSMutableSet*)repositorySet;
+//- (BOOL)validateRepo:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -96,11 +80,6 @@ extern const struct StashLabelFetchedProperties {
 - (void)addIssuesObject:(StashIssue*)value_;
 - (void)removeIssuesObject:(StashIssue*)value_;
 
-- (void)addRepository:(NSSet*)value_;
-- (void)removeRepository:(NSSet*)value_;
-- (void)addRepositoryObject:(StashRepo*)value_;
-- (void)removeRepositoryObject:(StashRepo*)value_;
-
 @end
 
 @interface _StashLabel (CoreDataGeneratedPrimitiveAccessors)
@@ -108,15 +87,6 @@ extern const struct StashLabelFetchedProperties {
 
 - (NSString*)primitiveColor;
 - (void)setPrimitiveColor:(NSString*)value;
-
-
-
-
-- (NSNumber*)primitiveIdentifier;
-- (void)setPrimitiveIdentifier:(NSNumber*)value;
-
-- (int64_t)primitiveIdentifierValue;
-- (void)setPrimitiveIdentifierValue:(int64_t)value_;
 
 
 
@@ -133,8 +103,8 @@ extern const struct StashLabelFetchedProperties {
 
 
 
-- (NSMutableSet*)primitiveRepository;
-- (void)setPrimitiveRepository:(NSMutableSet*)value;
+- (StashRepo*)primitiveRepo;
+- (void)setPrimitiveRepo:(StashRepo*)value;
 
 
 @end

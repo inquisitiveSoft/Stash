@@ -8,9 +8,10 @@ const struct StashIssueAttributes StashIssueAttributes = {
 	.body = @"body",
 	.creationDate = @"creationDate",
 	.identifier = @"identifier",
-	.issueNumber = @"issueNumber",
 	.modificationDate = @"modificationDate",
+	.number = @"number",
 	.state = @"state",
+	.syncedState = @"syncedState",
 	.title = @"title",
 	.url = @"url",
 };
@@ -18,7 +19,7 @@ const struct StashIssueAttributes StashIssueAttributes = {
 const struct StashIssueRelationships StashIssueRelationships = {
 	.labels = @"labels",
 	.milestones = @"milestones",
-	.repository = @"repository",
+	.repo = @"repo",
 };
 
 const struct StashIssueFetchedProperties StashIssueFetchedProperties = {
@@ -50,8 +51,13 @@ const struct StashIssueFetchedProperties StashIssueFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"issueNumberValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"issueNumber"];
+	if ([key isEqualToString:@"identifierValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"identifier"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"numberValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"number"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
@@ -92,29 +98,22 @@ const struct StashIssueFetchedProperties StashIssueFetchedProperties = {
 
 
 
-
-
-
-@dynamic issueNumber;
-
-
-
-- (int64_t)issueNumberValue {
-	NSNumber *result = [self issueNumber];
+- (int64_t)identifierValue {
+	NSNumber *result = [self identifier];
 	return [result longLongValue];
 }
 
-- (void)setIssueNumberValue:(int64_t)value_ {
-	[self setIssueNumber:[NSNumber numberWithLongLong:value_]];
+- (void)setIdentifierValue:(int64_t)value_ {
+	[self setIdentifier:[NSNumber numberWithLongLong:value_]];
 }
 
-- (int64_t)primitiveIssueNumberValue {
-	NSNumber *result = [self primitiveIssueNumber];
+- (int64_t)primitiveIdentifierValue {
+	NSNumber *result = [self primitiveIdentifier];
 	return [result longLongValue];
 }
 
-- (void)setPrimitiveIssueNumberValue:(int64_t)value_ {
-	[self setPrimitiveIssueNumber:[NSNumber numberWithLongLong:value_]];
+- (void)setPrimitiveIdentifierValue:(int64_t)value_ {
+	[self setPrimitiveIdentifier:[NSNumber numberWithLongLong:value_]];
 }
 
 
@@ -123,6 +122,32 @@ const struct StashIssueFetchedProperties StashIssueFetchedProperties = {
 
 @dynamic modificationDate;
 
+
+
+
+
+
+@dynamic number;
+
+
+
+- (int64_t)numberValue {
+	NSNumber *result = [self number];
+	return [result longLongValue];
+}
+
+- (void)setNumberValue:(int64_t)value_ {
+	[self setNumber:[NSNumber numberWithLongLong:value_]];
+}
+
+- (int64_t)primitiveNumberValue {
+	NSNumber *result = [self primitiveNumber];
+	return [result longLongValue];
+}
+
+- (void)setPrimitiveNumberValue:(int64_t)value_ {
+	[self setPrimitiveNumber:[NSNumber numberWithLongLong:value_]];
+}
 
 
 
@@ -149,6 +174,13 @@ const struct StashIssueFetchedProperties StashIssueFetchedProperties = {
 - (void)setPrimitiveStateValue:(int16_t)value_ {
 	[self setPrimitiveState:[NSNumber numberWithShort:value_]];
 }
+
+
+
+
+
+@dynamic syncedState;
+
 
 
 
@@ -194,17 +226,8 @@ const struct StashIssueFetchedProperties StashIssueFetchedProperties = {
 }
 	
 
-@dynamic repository;
+@dynamic repo;
 
-	
-- (NSMutableSet*)repositorySet {
-	[self willAccessValueForKey:@"repository"];
-  
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"repository"];
-  
-	[self didAccessValueForKey:@"repository"];
-	return result;
-}
 	
 
 

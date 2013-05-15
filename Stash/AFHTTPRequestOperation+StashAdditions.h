@@ -2,6 +2,8 @@
 
 @interface AFHTTPRequestOperation (StashAdditions)
 
++ (NSDateFormatter *)dateFormatter;
+
 - (NSDate *)dateStamp;
 - (NSDate *)dateOfLastModification;
 

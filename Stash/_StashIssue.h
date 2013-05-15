@@ -2,16 +2,17 @@
 // Make changes to StashIssue.h instead.
 
 #import <CoreData/CoreData.h>
-#import "StashItem.h"
+
 
 extern const struct StashIssueAttributes {
 	__unsafe_unretained NSString *assignee;
 	__unsafe_unretained NSString *body;
 	__unsafe_unretained NSString *creationDate;
 	__unsafe_unretained NSString *identifier;
-	__unsafe_unretained NSString *issueNumber;
 	__unsafe_unretained NSString *modificationDate;
+	__unsafe_unretained NSString *number;
 	__unsafe_unretained NSString *state;
+	__unsafe_unretained NSString *syncedState;
 	__unsafe_unretained NSString *title;
 	__unsafe_unretained NSString *url;
 } StashIssueAttributes;
@@ -19,7 +20,7 @@ extern const struct StashIssueAttributes {
 extern const struct StashIssueRelationships {
 	__unsafe_unretained NSString *labels;
 	__unsafe_unretained NSString *milestones;
-	__unsafe_unretained NSString *repository;
+	__unsafe_unretained NSString *repo;
 } StashIssueRelationships;
 
 extern const struct StashIssueFetchedProperties {
@@ -39,10 +40,11 @@ extern const struct StashIssueFetchedProperties {
 
 
 
+
 @interface StashIssueID : NSManagedObjectID {}
 @end
 
-@interface _StashIssue : StashItem {}
+@interface _StashIssue : NSManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
@@ -82,25 +84,15 @@ extern const struct StashIssueFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSString* identifier;
+@property (nonatomic, strong) NSNumber* identifier;
 
 
+
+@property int64_t identifierValue;
+- (int64_t)identifierValue;
+- (void)setIdentifierValue:(int64_t)value_;
 
 //- (BOOL)validateIdentifier:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
-@property (nonatomic, strong) NSNumber* issueNumber;
-
-
-
-@property int64_t issueNumberValue;
-- (int64_t)issueNumberValue;
-- (void)setIssueNumberValue:(int64_t)value_;
-
-//- (BOOL)validateIssueNumber:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -116,6 +108,20 @@ extern const struct StashIssueFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSNumber* number;
+
+
+
+@property int64_t numberValue;
+- (int64_t)numberValue;
+- (void)setNumberValue:(int64_t)value_;
+
+//- (BOOL)validateNumber:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
 @property (nonatomic, strong) NSNumber* state;
 
 
@@ -125,6 +131,16 @@ extern const struct StashIssueFetchedProperties {
 - (void)setStateValue:(int16_t)value_;
 
 //- (BOOL)validateState:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSData* syncedState;
+
+
+
+//- (BOOL)validateSyncedState:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -164,9 +180,9 @@ extern const struct StashIssueFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSSet *repository;
+@property (nonatomic, strong) StashRepo *repo;
 
-- (NSMutableSet*)repositorySet;
+//- (BOOL)validateRepo:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -185,11 +201,6 @@ extern const struct StashIssueFetchedProperties {
 - (void)removeMilestones:(NSSet*)value_;
 - (void)addMilestonesObject:(StashMilestone*)value_;
 - (void)removeMilestonesObject:(StashMilestone*)value_;
-
-- (void)addRepository:(NSSet*)value_;
-- (void)removeRepository:(NSSet*)value_;
-- (void)addRepositoryObject:(StashRepo*)value_;
-- (void)removeRepositoryObject:(StashRepo*)value_;
 
 @end
 
@@ -214,17 +225,11 @@ extern const struct StashIssueFetchedProperties {
 
 
 
-- (NSString*)primitiveIdentifier;
-- (void)setPrimitiveIdentifier:(NSString*)value;
+- (NSNumber*)primitiveIdentifier;
+- (void)setPrimitiveIdentifier:(NSNumber*)value;
 
-
-
-
-- (NSNumber*)primitiveIssueNumber;
-- (void)setPrimitiveIssueNumber:(NSNumber*)value;
-
-- (int64_t)primitiveIssueNumberValue;
-- (void)setPrimitiveIssueNumberValue:(int64_t)value_;
+- (int64_t)primitiveIdentifierValue;
+- (void)setPrimitiveIdentifierValue:(int64_t)value_;
 
 
 
@@ -235,11 +240,26 @@ extern const struct StashIssueFetchedProperties {
 
 
 
+- (NSNumber*)primitiveNumber;
+- (void)setPrimitiveNumber:(NSNumber*)value;
+
+- (int64_t)primitiveNumberValue;
+- (void)setPrimitiveNumberValue:(int64_t)value_;
+
+
+
+
 - (NSNumber*)primitiveState;
 - (void)setPrimitiveState:(NSNumber*)value;
 
 - (int16_t)primitiveStateValue;
 - (void)setPrimitiveStateValue:(int16_t)value_;
+
+
+
+
+- (NSData*)primitiveSyncedState;
+- (void)setPrimitiveSyncedState:(NSData*)value;
 
 
 
@@ -267,8 +287,8 @@ extern const struct StashIssueFetchedProperties {
 
 
 
-- (NSMutableSet*)primitiveRepository;
-- (void)setPrimitiveRepository:(NSMutableSet*)value;
+- (StashRepo*)primitiveRepo;
+- (void)setPrimitiveRepo:(StashRepo*)value;
 
 
 @end

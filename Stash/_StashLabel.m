@@ -5,13 +5,12 @@
 
 const struct StashLabelAttributes StashLabelAttributes = {
 	.color = @"color",
-	.identifier = @"identifier",
 	.name = @"name",
 };
 
 const struct StashLabelRelationships StashLabelRelationships = {
 	.issues = @"issues",
-	.repository = @"repository",
+	.repo = @"repo",
 };
 
 const struct StashLabelFetchedProperties StashLabelFetchedProperties = {
@@ -43,11 +42,6 @@ const struct StashLabelFetchedProperties StashLabelFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"identifierValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"identifier"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-		return keyPaths;
-	}
 
 	return keyPaths;
 }
@@ -57,32 +51,6 @@ const struct StashLabelFetchedProperties StashLabelFetchedProperties = {
 
 @dynamic color;
 
-
-
-
-
-
-@dynamic identifier;
-
-
-
-- (int64_t)identifierValue {
-	NSNumber *result = [self identifier];
-	return [result longLongValue];
-}
-
-- (void)setIdentifierValue:(int64_t)value_ {
-	[self setIdentifier:[NSNumber numberWithLongLong:value_]];
-}
-
-- (int64_t)primitiveIdentifierValue {
-	NSNumber *result = [self primitiveIdentifier];
-	return [result longLongValue];
-}
-
-- (void)setPrimitiveIdentifierValue:(int64_t)value_ {
-	[self setPrimitiveIdentifier:[NSNumber numberWithLongLong:value_]];
-}
 
 
 
@@ -108,17 +76,8 @@ const struct StashLabelFetchedProperties StashLabelFetchedProperties = {
 }
 	
 
-@dynamic repository;
+@dynamic repo;
 
-	
-- (NSMutableSet*)repositorySet {
-	[self willAccessValueForKey:@"repository"];
-  
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"repository"];
-  
-	[self didAccessValueForKey:@"repository"];
-	return result;
-}
 	
 
 

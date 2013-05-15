@@ -20,7 +20,12 @@
 - (StashAccount *)accountForTokenIdentifier:(NSNumber *)authorizationIdentifier create:(BOOL)create;
 - (StashAccount *)accountForIdentifier:(NSNumber *)identifier;
 - (StashAccount *)accountForUsername:(NSString *)username;
+- (StashRepo *)repoForIdentfier:(NSNumber *)identifier account:(StashAccount *)account create:(BOOL)create;
 
-- (void)updateReposforAccount:(StashAccount *)account withArray:(NSArray *)newRepos;
+- (NSArray *)fetchObjectsOfEntityName:(NSString *)entityName matching:(id)predicate, ...;
+- (id)objectOfEntityName:(NSString *)entityName matching:(id)predicate, ...;
+
+- (NSArray *)updateReposforAccount:(StashAccount *)account withArray:(NSArray *)reposArray;
+- (NSArray *)updateIssuesforRepo:(StashRepo *)repo withArray:(NSArray *)issuesArray;
 
 @end

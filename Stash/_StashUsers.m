@@ -5,12 +5,11 @@
 
 const struct StashUsersAttributes StashUsersAttributes = {
 	.avatarURL = @"avatarURL",
-	.identifier = @"identifier",
 	.name = @"name",
 };
 
 const struct StashUsersRelationships StashUsersRelationships = {
-	.repository = @"repository",
+	.repo = @"repo",
 };
 
 const struct StashUsersFetchedProperties StashUsersFetchedProperties = {
@@ -42,11 +41,6 @@ const struct StashUsersFetchedProperties StashUsersFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"identifierValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"identifier"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-		return keyPaths;
-	}
 
 	return keyPaths;
 }
@@ -61,32 +55,6 @@ const struct StashUsersFetchedProperties StashUsersFetchedProperties = {
 
 
 
-@dynamic identifier;
-
-
-
-- (int64_t)identifierValue {
-	NSNumber *result = [self identifier];
-	return [result longLongValue];
-}
-
-- (void)setIdentifierValue:(int64_t)value_ {
-	[self setIdentifier:[NSNumber numberWithLongLong:value_]];
-}
-
-- (int64_t)primitiveIdentifierValue {
-	NSNumber *result = [self primitiveIdentifier];
-	return [result longLongValue];
-}
-
-- (void)setPrimitiveIdentifierValue:(int64_t)value_ {
-	[self setPrimitiveIdentifier:[NSNumber numberWithLongLong:value_]];
-}
-
-
-
-
-
 @dynamic name;
 
 
@@ -94,7 +62,7 @@ const struct StashUsersFetchedProperties StashUsersFetchedProperties = {
 
 
 
-@dynamic repository;
+@dynamic repo;
 
 	
 

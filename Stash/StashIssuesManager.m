@@ -1,4 +1,8 @@
 #import "StashIssuesManager.h"
+
+
+#import "NSJSONSerialization+PrettyPrint.h"
+#import "NSDictionary+Verification.h"
 #import "qLog.h"
 
 
@@ -102,7 +106,7 @@ NSString * const StashCurrentAccountIdentifierKey = @"StashCurrentAccountURIKey"
 
 
 
-#pragma mark - Nice fetching for Core Data
+#pragma mark - Fetching Core Data objects
 
 
 - (NSArray *)fetchObjectsOfEntityName:(NSString *)entityName matching:(id)predicate, ...
@@ -234,50 +238,118 @@ NSString * const StashCurrentAccountIdentifierKey = @"StashCurrentAccountURIKey"
 }
 
 
-- (void)updateReposforAccount:(StashAccount *)account withArray:(NSArray *)newRepos
+- (StashRepo *)repoForIdentfier:(NSNumber *)identifier account:(StashAccount *)account create:(BOOL)create
 {
-	// Since we can't edit any of a repos info
-	// just replace the existing set entirely
-	NSMutableSet *newRepoIdentifiers = [[NSMutableSet alloc] initWithCapacity:[newRepos count]];
-	
-	for(NSDictionary *repoDictionary in newRepos) {
-		NSNumber *identifier = repoDictionary[@"id"];
-		
-		if(!identifier) {
-			qLog(@"Couldn't read the repos id from the dictionary: %@", repoDictionary);
-			continue;
-		} else
-			[newRepoIdentifiers addObject:identifier];
-		
-		StashRepo *repo = [self repoForIdentfier:identifier create:TRUE];
-		repo.account = account;
-		repo.name = repoDictionary[@"name"];
-	}
-	
-	
-	// Remove repos that aren't present in newRepos
-	for(StashAccount *repo in account.repos) {
-		NSNumber *identifier = repo.identifier;
-		
-		if(!identifier || ![newRepoIdentifiers containsObject:identifier]) {
-			[self.mainManagedObjectContext deleteObject:repo];
-		}
-	}
-}
-
-
-
-- (StashRepo *)repoForIdentfier:(NSNumber *)identifier create:(BOOL)create
-{
-	StashRepo *repository = [self objectOfEntityName:[StashRepo entityName] matching:@"identifier = %@", identifier];
+	StashRepo *repository = [self objectOfEntityName:[StashRepo entityName] matching:@"account = %@ AND identifier = %@", account, identifier];
 	
 	if(!repository && create) {
 		// Create a new repository
 		repository = [StashRepo insertInManagedObjectContext:self.mainManagedObjectContext];
 		repository.identifier = identifier;
+		repository.account = account;
 	}
 	
 	return repository;
+}
+
+
+- (StashIssue *)issueForIdentfier:(NSNumber *)identifier repo:(StashRepo *)repo create:(BOOL)create existingIssue:(BOOL *)existingIssue
+{
+	StashIssue *issue = [self objectOfEntityName:[StashIssue entityName] matching:@"repo = %@ AND identifier = %@", repo, identifier];
+	BOOL isExisting = TRUE;
+	
+	if(!issue && create) {
+		// Create a new repository
+		issue = [StashIssue insertInManagedObjectContext:self.mainManagedObjectContext];
+		issue.identifier = identifier;
+		issue.repo = repo;
+		isExisting = FALSE;
+	}
+	
+	if(existingIssue != NULL)
+		*existingIssue = isExisting;
+	
+	return issue;
+}
+
+
+
+
+#pragma mark - Update content
+
+
+- (NSArray *)updateReposforAccount:(StashAccount *)account withArray:(NSArray *)reposArray
+{
+	// Since we can't edit any of a repos info it's fine
+	// to replace the existing set of repos entirely
+	NSMutableArray *repos = [[NSMutableArray alloc] initWithCapacity:[reposArray count]];
+	qLog(@"reposArray.count: %d", reposArray.count);
+	
+	for(NSDictionary *repoDictionary in reposArray) {
+		NSError *error = nil;
+		if([repoDictionary validatesAgainstExpectations:@{
+			@"id"		: [NSNumber class],
+			@"name"	: [NSString class],
+		} error:&error]) {
+			StashRepo *repo = [self repoForIdentfier:repoDictionary[@"id"] account:account create:TRUE];
+			repo.name = repoDictionary[@"name"];
+			[repos addObject:repo];
+		} else if(error)
+			qLog(@"repoDictionary failed validation: %@", error);
+	}
+	
+	
+	// Remove repos that aren't present in reposArray
+	for(StashAccount *repo in account.repos) {
+		if(![repos containsObject:repo]) {
+			[self.mainManagedObjectContext deleteObject:repo];
+		}
+	}
+	
+	return repos;
+}
+
+
+- (NSArray *)updateIssuesforRepo:(StashRepo *)repo withArray:(NSArray *)issuesArray
+{
+	NSMutableArray *issues = [[NSMutableArray alloc] initWithCapacity:[issuesArray count]];
+	NSMutableArray *issuesNeedingManualMerge = [[NSMutableArray alloc] init];
+	
+	NSDate *dateStampOfLastSync = repo.account.dateStampOfLastSync;
+	
+	if([issuesArray count]) {
+		for(NSDictionary *issueProperties in issuesArray) {
+			NSError *error = nil;
+			if([issueProperties validatesAgainstExpectations:@{
+				@"id"			: [NSNumber class],
+				@"number"		: [NSNumber class],
+				@"title"		: [NSString class],
+				@"body"			: [NSString class],
+				@"state"		: [NSString class],
+				@"url"			: [NSString class],
+				@"updated_at"	: [NSString class]
+			} error:&error]) {
+				BOOL existingIssue = FALSE;
+				StashIssue *issue = [self issueForIdentfier:issueProperties[@"id"] repo:repo create:TRUE existingIssue:&existingIssue];
+				
+				NSString *dateString = [issueProperties objectForKey:@"updated_at"];
+				NSDate *modificationDate = [[StashIssue dateFormatter] dateFromString:dateString];
+				
+				qLog(@"timeIntervalSinceDate: %d", [modificationDate timeIntervalSinceDate:dateStampOfLastSync]);
+//				if([modificationDate timeIntervalSinceDate:dateStampOfLastSync]) {
+//					qLog(@"<#%@#>", <#variable#>);
+//				}
+				
+//				if(![issue updateIssueWithProperties:issueProperties])
+//					[issuesNeedingManualMerge addObject:issue];
+				
+				[issues addObject:issue];
+			} else if(error)
+				qLog(@"issueProperties dictionary failed validation: %@", error);
+		}
+	}
+	
+	return issues;
 }
 
 

@@ -7,14 +7,13 @@ const struct StashMilestoneAttributes StashMilestoneAttributes = {
 	.body = @"body",
 	.creationDate = @"creationDate",
 	.dueDate = @"dueDate",
-	.identifier = @"identifier",
 	.modificationDate = @"modificationDate",
 	.title = @"title",
 };
 
 const struct StashMilestoneRelationships StashMilestoneRelationships = {
 	.issues = @"issues",
-	.repository = @"repository",
+	.repo = @"repo",
 };
 
 const struct StashMilestoneFetchedProperties StashMilestoneFetchedProperties = {
@@ -46,11 +45,6 @@ const struct StashMilestoneFetchedProperties StashMilestoneFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"identifierValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"identifier"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-		return keyPaths;
-	}
 
 	return keyPaths;
 }
@@ -74,32 +68,6 @@ const struct StashMilestoneFetchedProperties StashMilestoneFetchedProperties = {
 
 @dynamic dueDate;
 
-
-
-
-
-
-@dynamic identifier;
-
-
-
-- (int64_t)identifierValue {
-	NSNumber *result = [self identifier];
-	return [result longLongValue];
-}
-
-- (void)setIdentifierValue:(int64_t)value_ {
-	[self setIdentifier:[NSNumber numberWithLongLong:value_]];
-}
-
-- (int64_t)primitiveIdentifierValue {
-	NSNumber *result = [self primitiveIdentifier];
-	return [result longLongValue];
-}
-
-- (void)setPrimitiveIdentifierValue:(int64_t)value_ {
-	[self setPrimitiveIdentifier:[NSNumber numberWithLongLong:value_]];
-}
 
 
 
@@ -132,7 +100,7 @@ const struct StashMilestoneFetchedProperties StashMilestoneFetchedProperties = {
 }
 	
 
-@dynamic repository;
+@dynamic repo;
 
 	
 

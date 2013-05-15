@@ -5,12 +5,11 @@
 
 
 extern const struct StashItemAttributes {
-	__unsafe_unretained NSString *hasLocalChanges;
 } StashItemAttributes;
 
 extern const struct StashItemRelationships {
 	__unsafe_unretained NSString *changedVersion;
-	__unsafe_unretained NSString *synchronizedVersion;
+	__unsafe_unretained NSString *syncedVersion;
 } StashItemRelationships;
 
 extern const struct StashItemFetchedProperties {
@@ -18,7 +17,6 @@ extern const struct StashItemFetchedProperties {
 
 @class StashItem;
 @class StashItem;
-
 
 
 @interface StashItemID : NSManagedObjectID {}
@@ -34,20 +32,6 @@ extern const struct StashItemFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSNumber* hasLocalChanges;
-
-
-
-@property BOOL hasLocalChangesValue;
-- (BOOL)hasLocalChangesValue;
-- (void)setHasLocalChangesValue:(BOOL)value_;
-
-//- (BOOL)validateHasLocalChanges:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
 @property (nonatomic, strong) StashItem *changedVersion;
 
 //- (BOOL)validateChangedVersion:(id*)value_ error:(NSError**)error_;
@@ -55,9 +39,9 @@ extern const struct StashItemFetchedProperties {
 
 
 
-@property (nonatomic, strong) StashItem *synchronizedVersion;
+@property (nonatomic, strong) StashItem *syncedVersion;
 
-//- (BOOL)validateSynchronizedVersion:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateSyncedVersion:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -72,23 +56,14 @@ extern const struct StashItemFetchedProperties {
 @interface _StashItem (CoreDataGeneratedPrimitiveAccessors)
 
 
-- (NSNumber*)primitiveHasLocalChanges;
-- (void)setPrimitiveHasLocalChanges:(NSNumber*)value;
-
-- (BOOL)primitiveHasLocalChangesValue;
-- (void)setPrimitiveHasLocalChangesValue:(BOOL)value_;
-
-
-
-
 
 - (StashItem*)primitiveChangedVersion;
 - (void)setPrimitiveChangedVersion:(StashItem*)value;
 
 
 
-- (StashItem*)primitiveSynchronizedVersion;
-- (void)setPrimitiveSynchronizedVersion:(StashItem*)value;
+- (StashItem*)primitiveSyncedVersion;
+- (void)setPrimitiveSyncedVersion:(StashItem*)value;
 
 
 @end

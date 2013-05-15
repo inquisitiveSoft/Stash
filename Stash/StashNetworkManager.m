@@ -11,6 +11,8 @@
 #import "AFHTTPRequestOperation+StashAdditions.h"
 #import "NSURLRequest+TokenIdentifier.h"
 #import "NSURL+Parameters.h"
+#import "NSJSONSerialization+PrettyPrint.h"
+
 
 #define GITHUB_CLIENT_ID @"6e5a15de184327604f1d"
 #define GITHUB_CLIENT_SECRET @"b33b8a9e8eddc2ac92db733621d0b013e85cfde5"
@@ -156,50 +158,48 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 */
 
 
-- (NSString *)apiForKey:(NSString *)apiKey
-{
-	return [self apiForKey:apiKey parameters:nil];
-}
-
-
-- (NSString *)apiForKey:(NSString *)apiKey parameters:(NSDictionary *)parameters
+- (NSString *)apiPathForKey:(NSString *)apiKey
 {
 	if(![apiKey length])
-		return @"";
+		return nil;
 	
 	NSString *originalPath = [self.api objectForKey:apiKey];
 	
+	//	^https://api.github.com/([A-Za-z0-9/_-]*)(\{\?(.*)\})?
 	NSString *pattern = [NSString stringWithFormat:@"^%@([A-Za-z0-9/_-]*)(\\{\\?(.*)\\})?", StashDefaultGitHubAPILocation];
 	NSString *apiPath = [originalPath stringByMatching:pattern capture:1];
-	
-//	NSArray *validParameters = [[originalPath stringByMatching:pattern capture:3] componentsSeparatedByString:@","];
-//	
-//	// If the allowed parameters include the per_page then set it at 100
-//	if([validParameters containsObject:StashGitHubPerPageParameter] && ![parameters objectForKey:StashGitHubPerPageParameter]) {
-//		NSMutableDictionary *modifiedParameters = [parameters mutableCopy];
-//		[modifiedParameters setObject:@(10) forKey:StashGitHubPerPageParameter];
-//		parameters = modifiedParameters;
-//	}
-//	
-//	if([parameters count]) {
-//		__block BOOL isFirstParameter = TRUE;
-//		
-//		[parameters enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
-//			if([validParameters containsObject:key]) {
-//				NSString *prefix = @"";
-//				if(isFirstParameter) {
-//					prefix = @"?";
-//				} else {
-//					prefix = @"&";
-//				}
-//				
-//				[apiPath appendFormat:@"%@%@=%@", prefix, key, value];
-//			}
-//		}];
-//	}
-	
+		
 	return apiPath;
 }
+
+
+- (NSDictionary *)defaultParametersForAPIKey:(NSString *)apiKey
+{
+	if(![apiKey length])
+		return nil;
+	
+	NSString *originalPath = [self.api objectForKey:apiKey];
+	NSString *pattern = [NSString stringWithFormat:@"^%@([A-Za-z0-9/_-]*)(\\{\\?(.*)\\})?", StashDefaultGitHubAPILocation];
+	NSArray *validParameters = [[originalPath stringByMatching:pattern capture:3] componentsSeparatedByString:@","];
+	NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+	
+	// If the allowed parameters include the per_page then set it at 100
+	if([validParameters containsObject:StashGitHubPerPageParameter]) {
+		parameters[StashGitHubPerPageParameter] = @(10);
+	}
+		
+	return parameters;
+}
+
+
+- (StashAccount *)accountForOperation:(AFHTTPRequestOperation *)operation
+{
+	NSNumber *tokenIdentifier = operation.request.tokenIdentifier;
+	StashAccount *account = [self.issuesManager accountForTokenIdentifier:tokenIdentifier create:TRUE];
+	
+	return account;
+}
+
 
 
 #pragma mark - Requesting and validating authorizations
@@ -312,7 +312,7 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 	
 	// Fetch the user info
 	StashAccount *currentAccount = self.issuesManager.currentAccount;
-	
+		
 	[self.httpClient getPath:self.api[@"current_user_url"] parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *response) {
 		// Test the date stamps to see if there have been changes on the server
 		NSDate *dateStampOfLastSync = currentAccount.dateStampOfLastSync;
@@ -328,7 +328,7 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 			self.issuesManager.currentAccount = account;
 			
 			[self pullChanges:^(AFHTTPRequestOperation *operation, id responseObject) {
-				// Push changes
+				// Pull changes
 				
 			} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 				
@@ -344,20 +344,48 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 
 - (void)pullChanges:(AFRequestSuccessBlock)successBlock failure:(AFRequestFailureBlock)failureBlock
 {
-	[self requestReposWithParameters:nil success:successBlock failure:failureBlock attachedObject:nil];
+	AFOperationGroup *group = [[AFOperationGroup alloc] initWithCompletionBlock:^(NSArray *operations) {
+		NSArray *repos = [self.issuesManager fetchObjectsOfEntityName:[StashRepo entityName] matching:nil];
+		qLog(@"repos: %d", repos.count);
+		
+		for(StashRepo *repo in repos) {
+			printf("%s\n", [[NSString stringWithFormat:@"	%@", repo.name] UTF8String]);
+			
+			for(StashIssue *issue in repo.issues) {
+				printf("%s\n", [[NSString stringWithFormat:@"		#%@ %@", issue.number, issue.title] UTF8String]);
+			}
+		}
+	}];
+
+	[self requestReposWithParameters:nil previousContent:nil group:group success:^(AFHTTPRequestOperation *operation, NSArray *combinedContent) {
+		// Otherwise parse the combined content
+		NSArray *repos = [self.issuesManager updateReposforAccount:[self accountForOperation:operation] withArray:combinedContent];
+		
+		for(StashRepo *repo in repos) {
+			// Request the open issues
+//			[self requestMilestonesForRepo:repo success:successBlock failure:failureBlock];
+//			[self requestLabelsForRepo:repo success:successBlock failure:failureBlock];
+//			[self requestUsersForRepo:repo success:successBlock failure:failureBlock];
+			[self requestIssuesForRepo:repo group:group success:successBlock failure:failureBlock];
+		}
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		qLog(@"Failed to load repos: %@ - %@", operation.request.URL, error);
+		
+		if(failureBlock) {
+			failureBlock(operation, error);
+		}
+	}];
 }
 
 
-- (void)requestReposWithParameters:(NSDictionary *)parameters success:(AFRequestSuccessBlock)successBlock failure:(AFRequestFailureBlock)failureBlock attachedObject:(id)attachedObject
+- (void)requestReposWithParameters:(NSDictionary *)parameters previousContent:(id)previousContent group:(AFOperationGroup *)group success:(AFRequestSuccessBlock)successBlock failure:(AFRequestFailureBlock)failureBlock
 {
 	// Request repos
-	if(!parameters) {
-		parameters = @{
-			@"per_page": @(10)	// To test paging
-		};
-	}
+	NSString *key = @"current_user_repositories_url";
+	NSString *path = [self apiPathForKey:key];
+	parameters = parameters ? : [self defaultParametersForAPIKey:key];
 	
-	[self.httpClient getPath:[self apiForKey:@"current_user_repositories_url"] parameters:parameters attachedObject:attachedObject success:^(AFHTTPRequestOperation *operation, NSArray *reposArray) {
+	[self.httpClient getPath:path parameters:parameters attachedObject:previousContent group:group success:^(AFHTTPRequestOperation *operation, NSArray *reposArray) {
 		// Append the previous pages content with the newly loaded content
 		NSArray *combinedContent = reposArray;
 		NSArray *previousContent = operation.request.attachedObject;
@@ -370,18 +398,13 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 		
 		if([nextLinkURLString length]) {
 			NSDictionary *parsedParameters = [NSURL dictionaryWithURLParametersFromString:nextLinkURLString];
-			[self requestReposWithParameters:parsedParameters success:successBlock failure:failureBlock attachedObject:combinedContent];
+			[self requestReposWithParameters:parsedParameters previousContent:combinedContent group:group success:successBlock failure:failureBlock];
 		} else {
-			// Otherwise parse the combined content
-			[self.issuesManager updateReposforAccount:[self accountForOperation:operation] withArray:reposArray];
-			
 			if(successBlock) {
-				successBlock(operation, reposArray);
+				successBlock(operation, combinedContent);
 			}
 		}
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		qLog(@"Couldn't retrieve repos: %@", error);
-		
 		if(failureBlock) {
 			failureBlock(operation, error);
 		}
@@ -389,12 +412,76 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 }
 
 
-- (StashAccount *)accountForOperation:(AFHTTPRequestOperation *)operation
+
+
+
+#pragma mark - Requesting issues
+
+
+- (void)requestIssuesForRepo:(StashRepo *)repo group:(AFOperationGroup *)group success:(AFRequestSuccessBlock)successBlock failure:(AFRequestFailureBlock)failureBlock
 {
-	NSNumber *tokenIdentifier = operation.request.tokenIdentifier;
-	StashAccount *account = [self.issuesManager accountForTokenIdentifier:tokenIdentifier create:TRUE];
+	// Load the open issues for the repo
+	NSDictionary *openPatameters = @{ @"state" : @"open" };
+	[self requestIssuesForRepo:repo withParameters:openPatameters previousContent:nil group:group success:^(AFHTTPRequestOperation *operation, NSArray *issuesArray) {
+		// Load the closed issues for the repo
+		NSDictionary *closedPatameters = @{ @"state" : @"closed" };
+		[self requestIssuesForRepo:repo withParameters:closedPatameters previousContent:issuesArray group:group success:^(AFHTTPRequestOperation *operation, NSArray *issuesArray) {
+			NSArray *issues = [self.issuesManager updateIssuesforRepo:repo withArray:issuesArray];
+			
+//			qLog(nil);
+//			for(StashIssue *issue in issues) {
+//				printf("%s\n", [[NSString stringWithFormat:@"	%@	#%@ %@", issue.repo.name, issue.number, issue.title] UTF8String]);
+//			}
+			
+			if(successBlock) {
+				successBlock(operation, issues);
+			}
+		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+			
+		}];
+		
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		// A 410 error signifies that the repo has issues switched off
+		if(operation.response.statusCode != 410) {
+			qLog(@"Couldn't retrieve issues: %@", error);
+			
+			if(failureBlock) {
+				failureBlock(operation, error);
+			}
+		}
+	}];
+}
+
+
+- (void)requestIssuesForRepo:(StashRepo *)repo withParameters:(NSDictionary *)parameters previousContent:(id)previousContent group:(AFOperationGroup *)group success:(AFRequestSuccessBlock)successBlock failure:(AFRequestSuccessBlock)failureBlock
+{	
+	NSString *path = [NSString stringWithFormat:@"repos/%@/%@/issues", repo.account.username, repo.name];
 	
-	return account;
+	[self.httpClient getPath:path parameters:parameters attachedObject:previousContent group:(AFOperationGroup *)group success:^(AFHTTPRequestOperation *operation, NSArray *reposArray) {
+		// Append the previous pages content with the newly loaded content
+		NSArray *combinedContent = reposArray;
+		NSArray *previousContent = operation.request.attachedObject;
+		
+		if(previousContent)
+			combinedContent = [previousContent arrayByAddingObjectsFromArray:combinedContent];
+		
+		// If the returned header contains a 'next' url then continue to load that content
+		NSString *nextLinkURLString = [operation linkElements][@"next"];
+		
+		if([nextLinkURLString length]) {
+			NSDictionary *parsedParameters = [NSURL dictionaryWithURLParametersFromString:nextLinkURLString];
+			[self requestIssuesForRepo:repo withParameters:parsedParameters previousContent:combinedContent group:group success:successBlock failure:failureBlock];
+		} else {
+			// Otherwise parse the combined content
+			if(successBlock) {
+				successBlock(operation, combinedContent);
+			}
+		}
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		if(failureBlock) {
+			failureBlock(operation, error);
+		}
+	}];
 }
 
 
@@ -438,7 +525,7 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 	if([tokenKey length] == 0) {
 		return nil;
 	}
-
+	
 	NSDictionary *matchingAttributes = @{
 		(id)kSecClass : (id)kSecClassGenericPassword,
 		(id)kSecAttrService : StashOAuthKeychainIdentifier,

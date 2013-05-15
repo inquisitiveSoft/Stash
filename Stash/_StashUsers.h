@@ -2,16 +2,15 @@
 // Make changes to StashUsers.h instead.
 
 #import <CoreData/CoreData.h>
-#import "StashItem.h"
+
 
 extern const struct StashUsersAttributes {
 	__unsafe_unretained NSString *avatarURL;
-	__unsafe_unretained NSString *identifier;
 	__unsafe_unretained NSString *name;
 } StashUsersAttributes;
 
 extern const struct StashUsersRelationships {
-	__unsafe_unretained NSString *repository;
+	__unsafe_unretained NSString *repo;
 } StashUsersRelationships;
 
 extern const struct StashUsersFetchedProperties {
@@ -22,11 +21,10 @@ extern const struct StashUsersFetchedProperties {
 
 
 
-
 @interface StashUsersID : NSManagedObjectID {}
 @end
 
-@interface _StashUsers : StashItem {}
+@interface _StashUsers : NSManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
@@ -46,20 +44,6 @@ extern const struct StashUsersFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSNumber* identifier;
-
-
-
-@property int64_t identifierValue;
-- (int64_t)identifierValue;
-- (void)setIdentifierValue:(int64_t)value_;
-
-//- (BOOL)validateIdentifier:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
 @property (nonatomic, strong) NSString* name;
 
 
@@ -70,9 +54,9 @@ extern const struct StashUsersFetchedProperties {
 
 
 
-@property (nonatomic, strong) StashRepo *repository;
+@property (nonatomic, strong) StashRepo *repo;
 
-//- (BOOL)validateRepository:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateRepo:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -93,15 +77,6 @@ extern const struct StashUsersFetchedProperties {
 
 
 
-- (NSNumber*)primitiveIdentifier;
-- (void)setPrimitiveIdentifier:(NSNumber*)value;
-
-- (int64_t)primitiveIdentifierValue;
-- (void)setPrimitiveIdentifierValue:(int64_t)value_;
-
-
-
-
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
 
@@ -109,8 +84,8 @@ extern const struct StashUsersFetchedProperties {
 
 
 
-- (StashRepo*)primitiveRepository;
-- (void)setPrimitiveRepository:(StashRepo*)value;
+- (StashRepo*)primitiveRepo;
+- (void)setPrimitiveRepo:(StashRepo*)value;
 
 
 @end

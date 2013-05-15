@@ -2,20 +2,19 @@
 // Make changes to StashMilestone.h instead.
 
 #import <CoreData/CoreData.h>
-#import "StashItem.h"
+
 
 extern const struct StashMilestoneAttributes {
 	__unsafe_unretained NSString *body;
 	__unsafe_unretained NSString *creationDate;
 	__unsafe_unretained NSString *dueDate;
-	__unsafe_unretained NSString *identifier;
 	__unsafe_unretained NSString *modificationDate;
 	__unsafe_unretained NSString *title;
 } StashMilestoneAttributes;
 
 extern const struct StashMilestoneRelationships {
 	__unsafe_unretained NSString *issues;
-	__unsafe_unretained NSString *repository;
+	__unsafe_unretained NSString *repo;
 } StashMilestoneRelationships;
 
 extern const struct StashMilestoneFetchedProperties {
@@ -30,11 +29,10 @@ extern const struct StashMilestoneFetchedProperties {
 
 
 
-
 @interface StashMilestoneID : NSManagedObjectID {}
 @end
 
-@interface _StashMilestone : StashItem {}
+@interface _StashMilestone : NSManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
@@ -74,20 +72,6 @@ extern const struct StashMilestoneFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSNumber* identifier;
-
-
-
-@property int64_t identifierValue;
-- (int64_t)identifierValue;
-- (void)setIdentifierValue:(int64_t)value_;
-
-//- (BOOL)validateIdentifier:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
 @property (nonatomic, strong) NSDate* modificationDate;
 
 
@@ -115,9 +99,9 @@ extern const struct StashMilestoneFetchedProperties {
 
 
 
-@property (nonatomic, strong) StashRepo *repository;
+@property (nonatomic, strong) StashRepo *repo;
 
-//- (BOOL)validateRepository:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateRepo:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -155,15 +139,6 @@ extern const struct StashMilestoneFetchedProperties {
 
 
 
-- (NSNumber*)primitiveIdentifier;
-- (void)setPrimitiveIdentifier:(NSNumber*)value;
-
-- (int64_t)primitiveIdentifierValue;
-- (void)setPrimitiveIdentifierValue:(int64_t)value_;
-
-
-
-
 - (NSDate*)primitiveModificationDate;
 - (void)setPrimitiveModificationDate:(NSDate*)value;
 
@@ -182,8 +157,8 @@ extern const struct StashMilestoneFetchedProperties {
 
 
 
-- (StashRepo*)primitiveRepository;
-- (void)setPrimitiveRepository:(StashRepo*)value;
+- (StashRepo*)primitiveRepo;
+- (void)setPrimitiveRepo:(StashRepo*)value;
 
 
 @end

@@ -11,8 +11,11 @@
 		4A3CA7B41743376D0060AEE2 /* StashRepo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3CA7B31743376D0060AEE2 /* StashRepo.m */; };
 		4A3CA7B7174342380060AEE2 /* NSURLRequest+TokenIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3CA7B6174342380060AEE2 /* NSURLRequest+TokenIdentifier.m */; };
 		4A3CA7BA1743609A0060AEE2 /* NSURL+Parameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3CA7B91743609A0060AEE2 /* NSURL+Parameters.m */; };
+		4A3CA7BD174378010060AEE2 /* NSJSONSerialization+PrettyPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3CA7BC174378010060AEE2 /* NSJSONSerialization+PrettyPrint.m */; };
+		4A3CA7C01743A1160060AEE2 /* NSDictionary+Verification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3CA7BF1743A1160060AEE2 /* NSDictionary+Verification.m */; };
 		4A52158A174060FE0007CE0C /* Status Item Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A521589174060FE0007CE0C /* Status Item Icon.png */; };
 		4A52158C174061130007CE0C /* Status Item Icon - Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A52158B174061130007CE0C /* Status Item Icon - Highlighted.png */; };
+		4A6B5B7C1743F87200CFC3AB /* AFOperationCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6B5B7B1743F87200CFC3AB /* AFOperationCollection.m */; };
 		4A7EB131173FA46400AF5916 /* StashIssuesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EB12F173FA46400AF5916 /* StashIssuesViewController.m */; };
 		4A7EB135173FA48400AF5916 /* Issues View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A7EB133173FA48400AF5916 /* Issues View.xib */; };
 		4A7EB137173FA82800AF5916 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7EB136173FA82800AF5916 /* QuartzCore.framework */; };
@@ -77,8 +80,14 @@
 		4A3CA7B6174342380060AEE2 /* NSURLRequest+TokenIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLRequest+TokenIdentifier.m"; sourceTree = "<group>"; };
 		4A3CA7B81743609A0060AEE2 /* NSURL+Parameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+Parameters.h"; sourceTree = "<group>"; };
 		4A3CA7B91743609A0060AEE2 /* NSURL+Parameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+Parameters.m"; sourceTree = "<group>"; };
+		4A3CA7BB174378010060AEE2 /* NSJSONSerialization+PrettyPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSJSONSerialization+PrettyPrint.h"; sourceTree = "<group>"; };
+		4A3CA7BC174378010060AEE2 /* NSJSONSerialization+PrettyPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSJSONSerialization+PrettyPrint.m"; sourceTree = "<group>"; };
+		4A3CA7BE1743A1150060AEE2 /* NSDictionary+Verification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Verification.h"; sourceTree = "<group>"; };
+		4A3CA7BF1743A1160060AEE2 /* NSDictionary+Verification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Verification.m"; sourceTree = "<group>"; };
 		4A521589174060FE0007CE0C /* Status Item Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Status Item Icon.png"; path = "Resources/Images/Status Item Icon.png"; sourceTree = SOURCE_ROOT; };
 		4A52158B174061130007CE0C /* Status Item Icon - Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Status Item Icon - Highlighted.png"; path = "Resources/Images/Status Item Icon - Highlighted.png"; sourceTree = SOURCE_ROOT; };
+		4A6B5B7A1743F87200CFC3AB /* AFOperationGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFOperationGroup.h; sourceTree = "<group>"; };
+		4A6B5B7B1743F87200CFC3AB /* AFOperationCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFOperationCollection.m; sourceTree = "<group>"; };
 		4A7EB12E173FA46400AF5916 /* StashIssuesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashIssuesViewController.h; sourceTree = "<group>"; };
 		4A7EB12F173FA46400AF5916 /* StashIssuesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashIssuesViewController.m; sourceTree = "<group>"; };
 		4A7EB134173FA48400AF5916 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/Issues View.xib"; sourceTree = "<group>"; };
@@ -371,12 +380,18 @@
 				4AD190DE173DE6F100D3F24E /* StashNetworkManager.m */,
 				4AFFA9CD1740DD3000935AA9 /* StashHTTPClient.h */,
 				4AFFA9CE1740DD3000935AA9 /* StashHTTPClient.m */,
+				4A6B5B7A1743F87200CFC3AB /* AFOperationGroup.h */,
+				4A6B5B7B1743F87200CFC3AB /* AFOperationCollection.m */,
 				4AB88B441742545B0085D8A7 /* AFHTTPRequestOperation+StashAdditions.h */,
 				4AB88B451742545B0085D8A7 /* AFHTTPRequestOperation+StashAdditions.m */,
 				4A3CA7B5174342380060AEE2 /* NSURLRequest+TokenIdentifier.h */,
 				4A3CA7B6174342380060AEE2 /* NSURLRequest+TokenIdentifier.m */,
 				4A3CA7B81743609A0060AEE2 /* NSURL+Parameters.h */,
 				4A3CA7B91743609A0060AEE2 /* NSURL+Parameters.m */,
+				4A3CA7BB174378010060AEE2 /* NSJSONSerialization+PrettyPrint.h */,
+				4A3CA7BC174378010060AEE2 /* NSJSONSerialization+PrettyPrint.m */,
+				4A3CA7BE1743A1150060AEE2 /* NSDictionary+Verification.h */,
+				4A3CA7BF1743A1160060AEE2 /* NSDictionary+Verification.m */,
 			);
 			name = "Network Manager";
 			sourceTree = "<group>";
@@ -586,6 +601,9 @@
 				4A3CA7B41743376D0060AEE2 /* StashRepo.m in Sources */,
 				4A3CA7B7174342380060AEE2 /* NSURLRequest+TokenIdentifier.m in Sources */,
 				4A3CA7BA1743609A0060AEE2 /* NSURL+Parameters.m in Sources */,
+				4A3CA7BD174378010060AEE2 /* NSJSONSerialization+PrettyPrint.m in Sources */,
+				4A3CA7C01743A1160060AEE2 /* NSDictionary+Verification.m in Sources */,
+				4A6B5B7C1743F87200CFC3AB /* AFOperationCollection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
