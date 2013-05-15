@@ -1,24 +1,24 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to StashRepository.h instead.
+// Make changes to StashRepo.h instead.
 
 #import <CoreData/CoreData.h>
 
 
-extern const struct StashRepositoryAttributes {
+extern const struct StashRepoAttributes {
 	__unsafe_unretained NSString *identifier;
 	__unsafe_unretained NSString *name;
-} StashRepositoryAttributes;
+} StashRepoAttributes;
 
-extern const struct StashRepositoryRelationships {
+extern const struct StashRepoRelationships {
 	__unsafe_unretained NSString *account;
 	__unsafe_unretained NSString *issues;
 	__unsafe_unretained NSString *labels;
 	__unsafe_unretained NSString *milestones;
 	__unsafe_unretained NSString *users;
-} StashRepositoryRelationships;
+} StashRepoRelationships;
 
-extern const struct StashRepositoryFetchedProperties {
-} StashRepositoryFetchedProperties;
+extern const struct StashRepoFetchedProperties {
+} StashRepoFetchedProperties;
 
 @class StashAccount;
 @class StashIssue;
@@ -29,14 +29,14 @@ extern const struct StashRepositoryFetchedProperties {
 
 
 
-@interface StashRepositoryID : NSManagedObjectID {}
+@interface StashRepoID : NSManagedObjectID {}
 @end
 
-@interface _StashRepository : NSManagedObject {}
+@interface _StashRepo : NSManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
-- (StashRepositoryID*)objectID;
+- (StashRepoID*)objectID;
 
 
 
@@ -104,7 +104,7 @@ extern const struct StashRepositoryFetchedProperties {
 
 @end
 
-@interface _StashRepository (CoreDataGeneratedAccessors)
+@interface _StashRepo (CoreDataGeneratedAccessors)
 
 - (void)addIssues:(NSSet*)value_;
 - (void)removeIssues:(NSSet*)value_;
@@ -128,7 +128,7 @@ extern const struct StashRepositoryFetchedProperties {
 
 @end
 
-@interface _StashRepository (CoreDataGeneratedPrimitiveAccessors)
+@interface _StashRepo (CoreDataGeneratedPrimitiveAccessors)
 
 
 - (NSNumber*)primitiveIdentifier;

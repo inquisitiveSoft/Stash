@@ -22,7 +22,7 @@ extern const struct StashMilestoneFetchedProperties {
 } StashMilestoneFetchedProperties;
 
 @class StashIssue;
-@class StashRepository;
+@class StashRepo;
 
 
 
@@ -115,7 +115,7 @@ extern const struct StashMilestoneFetchedProperties {
 
 
 
-@property (nonatomic, strong) StashRepository *repository;
+@property (nonatomic, strong) StashRepo *repository;
 
 //- (BOOL)validateRepository:(id*)value_ error:(NSError**)error_;
 
@@ -182,8 +182,8 @@ extern const struct StashMilestoneFetchedProperties {
 
 
 
-- (StashRepository*)primitiveRepository;
-- (void)setPrimitiveRepository:(StashRepository*)value;
+- (StashRepo*)primitiveRepository;
+- (void)setPrimitiveRepository:(StashRepo*)value;
 
 
 @end

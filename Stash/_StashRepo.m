@@ -1,14 +1,14 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to StashRepository.m instead.
+// Make changes to StashRepo.m instead.
 
-#import "_StashRepository.h"
+#import "_StashRepo.h"
 
-const struct StashRepositoryAttributes StashRepositoryAttributes = {
+const struct StashRepoAttributes StashRepoAttributes = {
 	.identifier = @"identifier",
 	.name = @"name",
 };
 
-const struct StashRepositoryRelationships StashRepositoryRelationships = {
+const struct StashRepoRelationships StashRepoRelationships = {
 	.account = @"account",
 	.issues = @"issues",
 	.labels = @"labels",
@@ -16,30 +16,30 @@ const struct StashRepositoryRelationships StashRepositoryRelationships = {
 	.users = @"users",
 };
 
-const struct StashRepositoryFetchedProperties StashRepositoryFetchedProperties = {
+const struct StashRepoFetchedProperties StashRepoFetchedProperties = {
 };
 
-@implementation StashRepositoryID
+@implementation StashRepoID
 @end
 
-@implementation _StashRepository
+@implementation _StashRepo
 
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
 	NSParameterAssert(moc_);
-	return [NSEntityDescription insertNewObjectForEntityForName:@"StashRepository" inManagedObjectContext:moc_];
+	return [NSEntityDescription insertNewObjectForEntityForName:@"StashRepo" inManagedObjectContext:moc_];
 }
 
 + (NSString*)entityName {
-	return @"StashRepository";
+	return @"StashRepo";
 }
 
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_ {
 	NSParameterAssert(moc_);
-	return [NSEntityDescription entityForName:@"StashRepository" inManagedObjectContext:moc_];
+	return [NSEntityDescription entityForName:@"StashRepo" inManagedObjectContext:moc_];
 }
 
-- (StashRepositoryID*)objectID {
-	return (StashRepositoryID*)[super objectID];
+- (StashRepoID*)objectID {
+	return (StashRepoID*)[super objectID];
 }
 
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {

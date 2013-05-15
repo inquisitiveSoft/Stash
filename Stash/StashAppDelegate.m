@@ -55,7 +55,13 @@
 - (void)applicationDidResignActive:(NSNotification *)notification
 {
 	[self.issuesWindowController.window orderOut:nil];
+	[self.issueManager save];
 }
 
+
+- (void)applicationWillTerminate:(NSNotification *)notification
+{
+	[self.issueManager save];
+}
 
 @end

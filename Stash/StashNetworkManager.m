@@ -9,7 +9,8 @@
 #import "qLog.h"
 
 #import "AFHTTPRequestOperation+StashAdditions.h"
-
+#import "NSURLRequest+TokenIdentifier.h"
+#import "NSURL+Parameters.h"
 
 #define GITHUB_CLIENT_ID @"6e5a15de184327604f1d"
 #define GITHUB_CLIENT_SECRET @"b33b8a9e8eddc2ac92db733621d0b013e85cfde5"
@@ -46,7 +47,7 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 
 @interface StashNetworkManager ()
 
-@property (strong) AFHTTPClient *httpClient;
+@property (strong) StashHTTPClient *httpClient;
 @property (readwrite, getter = isAuthenticated) BOOL authenticated;
 @property NSDictionary *api;
 
@@ -101,9 +102,13 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 	[httpClient setParameterEncoding:AFJSONParameterEncoding];
 	[httpClient setDefaultHeader:@"Accept" value:@"application/json"];
 	
+	NSNumber *authorizationIdentifier = [self authorizationIdentifier];
 	NSString *authorizationToken = [self authorizationToken];
+	
 	if([authorizationToken length]) {
 		[httpClient setAuthorizationHeaderWithToken:authorizationToken];
+		httpClient.currentTokenIdentifier = authorizationIdentifier;
+		
 		self.authenticated = TRUE;
 	}
 	
@@ -165,33 +170,33 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 	NSString *originalPath = [self.api objectForKey:apiKey];
 	
 	NSString *pattern = [NSString stringWithFormat:@"^%@([A-Za-z0-9/_-]*)(\\{\\?(.*)\\})?", StashDefaultGitHubAPILocation];
-	__block NSMutableString *apiPath = [[originalPath stringByMatching:pattern capture:1] mutableCopy];
-
-	NSArray *validParameters = [[originalPath stringByMatching:pattern capture:3] componentsSeparatedByString:@","];
+	NSString *apiPath = [originalPath stringByMatching:pattern capture:1];
 	
-	// If the allowed parameters include the per_page then set it at 100
-	if([validParameters containsObject:StashGitHubPerPageParameter] && ![parameters objectForKey:StashGitHubPerPageParameter]) {
-		NSMutableDictionary *modifiedParameters = [parameters mutableCopy];
-		[modifiedParameters setObject:@(100) forKey:StashGitHubPerPageParameter];
-		parameters = modifiedParameters;
-	}
-	
-	if([parameters count]) {
-		__block BOOL isFirstParameter = TRUE;
-		
-		[parameters enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
-			if([validParameters containsObject:key]) {
-				NSString *prefix = @"";
-				if(isFirstParameter) {
-					prefix = @"?";
-				} else {
-					prefix = @"&";
-				}
-				
-				[apiPath appendFormat:@"%@%@=%@", prefix, key, value];
-			}
-		}];
-	}
+//	NSArray *validParameters = [[originalPath stringByMatching:pattern capture:3] componentsSeparatedByString:@","];
+//	
+//	// If the allowed parameters include the per_page then set it at 100
+//	if([validParameters containsObject:StashGitHubPerPageParameter] && ![parameters objectForKey:StashGitHubPerPageParameter]) {
+//		NSMutableDictionary *modifiedParameters = [parameters mutableCopy];
+//		[modifiedParameters setObject:@(10) forKey:StashGitHubPerPageParameter];
+//		parameters = modifiedParameters;
+//	}
+//	
+//	if([parameters count]) {
+//		__block BOOL isFirstParameter = TRUE;
+//		
+//		[parameters enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
+//			if([validParameters containsObject:key]) {
+//				NSString *prefix = @"";
+//				if(isFirstParameter) {
+//					prefix = @"?";
+//				} else {
+//					prefix = @"&";
+//				}
+//				
+//				[apiPath appendFormat:@"%@%@=%@", prefix, key, value];
+//			}
+//		}];
+//	}
 	
 	return apiPath;
 }
@@ -207,13 +212,12 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 		return;
 	}
 	
-	if([username length] == 0 || [password length] || 0) {
+	if([username length] == 0 || [password length] == 0) {
 		qLog(@"Requires both a username (%@) and password (%@)", username, password);
 	}
 	
 	[self.httpClient setAuthorizationHeaderWithUsername:username password:password];
-	StashAccount *account = [self.issuesManager accountForUsername:username];
-	NSNumber *existingTokenIdentifier = account.identifier;
+	NSNumber *existingTokenIdentifier = [self.issuesManager accountForUsername:username].identifier;
 	
 	if(existingTokenIdentifier) {
 		[self requestExistingOAuthTokenForIdentifier:existingTokenIdentifier success:successBlock failure:failureBlock];
@@ -315,12 +319,17 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 		NSDate *dateOfLastModification = [operation dateOfLastModification];
 		
 		BOOL hasChangesToPull = !(dateStampOfLastSync && dateOfLastModification && [dateOfLastModification timeIntervalSinceDate:dateStampOfLastSync] < 0);
+		hasChangesToPull = TRUE;
 		
 		if(hasChangesToPull) {
-			[self.issuesManager updateAccountDetailsWithJSON:response];
+			// Update the current account
+			StashAccount *account = [self accountForOperation:operation];
+			[account updateAccountDetailsWithDictionary:response];
+			self.issuesManager.currentAccount = account;
 			
 			[self pullChanges:^(AFHTTPRequestOperation *operation, id responseObject) {
 				// Push changes
+				
 			} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 				
 			}];
@@ -335,14 +344,40 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 
 - (void)pullChanges:(AFRequestSuccessBlock)successBlock failure:(AFRequestFailureBlock)failureBlock
 {
-	// Request repos	
-	[self.httpClient getPath:[self apiForKey:@"current_user_repositories_url"] parameters:0 success:^(AFHTTPRequestOperation *operation, NSDictionary *response) {
-		NSInteger numberOfIssues = [response count];
-		NSData *jsonData = [NSJSONSerialization dataWithJSONObject:response options:NSJSONWritingPrettyPrinted error:nil];
-//		qLog(@"count %d - '%@'", numberOfIssues, [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+	[self requestReposWithParameters:nil success:successBlock failure:failureBlock attachedObject:nil];
+}
+
+
+- (void)requestReposWithParameters:(NSDictionary *)parameters success:(AFRequestSuccessBlock)successBlock failure:(AFRequestFailureBlock)failureBlock attachedObject:(id)attachedObject
+{
+	// Request repos
+	if(!parameters) {
+		parameters = @{
+			@"per_page": @(10)	// To test paging
+		};
+	}
+	
+	[self.httpClient getPath:[self apiForKey:@"current_user_repositories_url"] parameters:parameters attachedObject:attachedObject success:^(AFHTTPRequestOperation *operation, NSArray *reposArray) {
+		// Append the previous pages content with the newly loaded content
+		NSArray *combinedContent = reposArray;
+		NSArray *previousContent = operation.request.attachedObject;
 		
-		if(successBlock) {
-			successBlock(operation, response);
+		if(previousContent)
+			combinedContent = [previousContent arrayByAddingObjectsFromArray:combinedContent];
+		
+		// If the returned header contains a 'next' url then load that content
+		NSString *nextLinkURLString = [operation linkElements][@"next"];
+		
+		if([nextLinkURLString length]) {
+			NSDictionary *parsedParameters = [NSURL dictionaryWithURLParametersFromString:nextLinkURLString];
+			[self requestReposWithParameters:parsedParameters success:successBlock failure:failureBlock attachedObject:combinedContent];
+		} else {
+			// Otherwise parse the combined content
+			[self.issuesManager updateReposforAccount:[self accountForOperation:operation] withArray:reposArray];
+			
+			if(successBlock) {
+				successBlock(operation, reposArray);
+			}
 		}
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		qLog(@"Couldn't retrieve repos: %@", error);
@@ -354,25 +389,13 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 }
 
 
-
-//- (void)requestUsersRepos:(AFRequestSuccessBlock)successBlock failure:(AFRequestFailureBlock)failureBlock
-//{
-//	[self.httpClient getPath:self.api[@"current_user_repositories_url"] parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *response) {
-//		NSInteger numberOfIssues = [response count];
-//		NSData *jsonData = [NSJSONSerialization dataWithJSONObject:response options:NSJSONWritingPrettyPrinted error:nil];
-//		qLog(@"count %d - '%@'", numberOfIssues, [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
-//		
-//		if(successBlock) {
-//			successBlock(operation, response);
-//		}
-//	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//		qLog(@"Couldn't retrieve repos: %@", error);
-//		
-//		if(failureBlock) {
-//			failureBlock(operation, error);
-//		}
-//	}];
-//}
+- (StashAccount *)accountForOperation:(AFHTTPRequestOperation *)operation
+{
+	NSNumber *tokenIdentifier = operation.request.tokenIdentifier;
+	StashAccount *account = [self.issuesManager accountForTokenIdentifier:tokenIdentifier create:TRUE];
+	
+	return account;
+}
 
 
 
@@ -385,9 +408,7 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 	NSError *error = nil;
 	NSString *authorizationToken = [self authorizationObjectForKey:StashOAuthTokenKey error:&error];
 	
-	if(authorizationToken) {
-		[self.httpClient setAuthorizationHeaderWithToken:authorizationToken];
-	} else if(error) {
+	if(!authorizationToken && error) {
 		qLog(@"There was an error loading the authorizationToken: '%@'", error);
 	}
 	
@@ -503,10 +524,11 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 	self.authenticated = success;
 	
 	if(success) {
+		self.httpClient.currentTokenIdentifier = identifier;
 		[self.httpClient setAuthorizationHeaderWithToken:token];
 		[[NSNotificationCenter defaultCenter] postNotificationName:StashDidBecomeAuthorizedNotification object:nil];
 		
-		StashAccount *account = [self.issuesManager accountForIdentifier:identifier create:TRUE];
+		StashAccount *account = [self.issuesManager accountForTokenIdentifier:identifier create:TRUE];
 		self.issuesManager.currentAccount = account;
 	} else {
 		NSString *errorMessage = (__bridge_transfer NSString *)SecCopyErrorMessageString(result, NULL);

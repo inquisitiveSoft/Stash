@@ -8,11 +8,13 @@ const struct StashAccountAttributes StashAccountAttributes = {
 	.avatarURLString = @"avatarURLString",
 	.dateStampOfLastSync = @"dateStampOfLastSync",
 	.identifier = @"identifier",
+	.name = @"name",
+	.tokenIdentifier = @"tokenIdentifier",
 	.username = @"username",
 };
 
 const struct StashAccountRelationships StashAccountRelationships = {
-	.repositories = @"repositories",
+	.repos = @"repos",
 };
 
 const struct StashAccountFetchedProperties StashAccountFetchedProperties = {
@@ -46,6 +48,11 @@ const struct StashAccountFetchedProperties StashAccountFetchedProperties = {
 	
 	if ([key isEqualToString:@"identifierValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"identifier"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"tokenIdentifierValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"tokenIdentifier"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
@@ -103,6 +110,39 @@ const struct StashAccountFetchedProperties StashAccountFetchedProperties = {
 
 
 
+@dynamic name;
+
+
+
+
+
+
+@dynamic tokenIdentifier;
+
+
+
+- (int64_t)tokenIdentifierValue {
+	NSNumber *result = [self tokenIdentifier];
+	return [result longLongValue];
+}
+
+- (void)setTokenIdentifierValue:(int64_t)value_ {
+	[self setTokenIdentifier:[NSNumber numberWithLongLong:value_]];
+}
+
+- (int64_t)primitiveTokenIdentifierValue {
+	NSNumber *result = [self primitiveTokenIdentifier];
+	return [result longLongValue];
+}
+
+- (void)setPrimitiveTokenIdentifierValue:(int64_t)value_ {
+	[self setPrimitiveTokenIdentifier:[NSNumber numberWithLongLong:value_]];
+}
+
+
+
+
+
 @dynamic username;
 
 
@@ -110,15 +150,15 @@ const struct StashAccountFetchedProperties StashAccountFetchedProperties = {
 
 
 
-@dynamic repositories;
+@dynamic repos;
 
 	
-- (NSMutableSet*)repositoriesSet {
-	[self willAccessValueForKey:@"repositories"];
+- (NSMutableSet*)reposSet {
+	[self willAccessValueForKey:@"repos"];
   
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"repositories"];
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"repos"];
   
-	[self didAccessValueForKey:@"repositories"];
+	[self didAccessValueForKey:@"repos"];
 	return result;
 }
 	

@@ -27,7 +27,7 @@ extern const struct StashIssueFetchedProperties {
 
 @class StashLabel;
 @class StashMilestone;
-@class StashRepository;
+@class StashRepo;
 
 
 
@@ -188,8 +188,8 @@ extern const struct StashIssueFetchedProperties {
 
 - (void)addRepository:(NSSet*)value_;
 - (void)removeRepository:(NSSet*)value_;
-- (void)addRepositoryObject:(StashRepository*)value_;
-- (void)removeRepositoryObject:(StashRepository*)value_;
+- (void)addRepositoryObject:(StashRepo*)value_;
+- (void)removeRepositoryObject:(StashRepo*)value_;
 
 @end
 

@@ -1,4 +1,5 @@
 #import "AFHTTPRequestOperation+StashAdditions.h"
+#import "RegexKitLite.h"
 
 
 @implementation AFHTTPRequestOperation (StashAdditions)
@@ -41,6 +42,24 @@
 		date = [[AFHTTPRequestOperation dateFormatter] dateFromString:dateString];
 	
 	return date;
+}
+
+
+- (NSDictionary *)linkElements
+{
+	NSString *linkHeaderText = [self.response allHeaderFields][@"Link"];
+	NSArray *linkElementsArray = [linkHeaderText componentsSeparatedByString:@", "];
+	NSMutableDictionary *linkElements = [[NSMutableDictionary alloc] initWithCapacity:[linkElementsArray count]];
+	
+	for(NSString *linkElementString in linkElementsArray) {
+		NSString *pattern = @"<(.*?)>; rel=\"(.*?)\"";
+		NSString *tag = [linkElementString stringByMatching:pattern capture:2];
+		NSString *linkURLString = [linkElementString stringByMatching:pattern capture:1];
+		
+		[linkElements setObject:linkURLString forKey:tag];
+	}
+	
+	return linkElements;
 }
 
 

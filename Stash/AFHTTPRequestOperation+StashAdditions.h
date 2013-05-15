@@ -5,4 +5,6 @@
 - (NSDate *)dateStamp;
 - (NSDate *)dateOfLastModification;
 
+- (NSDictionary *)linkElements;
+
 @end

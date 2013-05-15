@@ -1,5 +1,7 @@
 #import "_StashAccount.h"
 
 @interface StashAccount : _StashAccount {}
-// Custom logic goes here.
+
+- (void)updateAccountDetailsWithDictionary:(NSDictionary *)accountDetails;
+
 @end

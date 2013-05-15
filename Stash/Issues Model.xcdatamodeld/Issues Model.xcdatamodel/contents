@@ -5,8 +5,10 @@
         <attribute name="avatarURLString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dateStampOfLastSync" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="identifier" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tokenIdentifier" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="repositories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StashRepository" inverseName="account" inverseEntity="StashRepository" syncable="YES"/>
+        <relationship name="repos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StashRepo" inverseName="account" inverseEntity="StashRepo" syncable="YES"/>
     </entity>
     <entity name="StashIssue" representedClassName="StashIssue" parentEntity="StashItem" syncable="YES">
         <attribute name="assignee" optional="YES" attributeType="String" syncable="YES"/>
@@ -20,7 +22,7 @@
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="labels" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StashLabel" inverseName="issues" inverseEntity="StashLabel" syncable="YES"/>
         <relationship name="milestones" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StashMilestone" inverseName="issues" inverseEntity="StashMilestone" syncable="YES"/>
-        <relationship name="repository" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StashRepository" inverseName="issues" inverseEntity="StashRepository" syncable="YES"/>
+        <relationship name="repository" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StashRepo" inverseName="issues" inverseEntity="StashRepo" syncable="YES"/>
     </entity>
     <entity name="StashItem" representedClassName="StashItem" isAbstract="YES" syncable="YES">
         <attribute name="hasLocalChanges" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -32,7 +34,7 @@
         <attribute name="identifier" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="issues" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StashIssue" inverseName="labels" inverseEntity="StashIssue" syncable="YES"/>
-        <relationship name="repository" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StashRepository" inverseName="labels" inverseEntity="StashRepository" syncable="YES"/>
+        <relationship name="repository" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StashRepo" inverseName="labels" inverseEntity="StashRepo" syncable="YES"/>
     </entity>
     <entity name="StashMilestone" representedClassName="StashMilestone" parentEntity="StashItem" syncable="YES">
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
@@ -42,12 +44,12 @@
         <attribute name="modificationDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="issues" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StashIssue" inverseName="milestones" inverseEntity="StashIssue" syncable="YES"/>
-        <relationship name="repository" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="StashRepository" inverseName="milestones" inverseEntity="StashRepository" syncable="YES"/>
+        <relationship name="repository" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="StashRepo" inverseName="milestones" inverseEntity="StashRepo" syncable="YES"/>
     </entity>
-    <entity name="StashRepository" representedClassName="StashRepository" syncable="YES">
+    <entity name="StashRepo" representedClassName="StashRepo" syncable="YES">
         <attribute name="identifier" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="account" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="StashAccount" inverseName="repositories" inverseEntity="StashAccount" syncable="YES"/>
+        <relationship name="account" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="StashAccount" inverseName="repos" inverseEntity="StashAccount" syncable="YES"/>
         <relationship name="issues" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StashIssue" inverseName="repository" inverseEntity="StashIssue" syncable="YES"/>
         <relationship name="labels" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StashLabel" inverseName="repository" inverseEntity="StashLabel" syncable="YES"/>
         <relationship name="milestones" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StashMilestone" inverseName="repository" inverseEntity="StashMilestone" syncable="YES"/>
@@ -57,15 +59,15 @@
         <attribute name="avatarURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="identifier" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="repository" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="StashRepository" inverseName="users" inverseEntity="StashRepository" syncable="YES"/>
+        <relationship name="repository" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="StashRepo" inverseName="users" inverseEntity="StashRepo" syncable="YES"/>
     </entity>
     <elements>
-        <element name="StashAccount" positionX="3681" positionY="-882" width="128" height="133"/>
-        <element name="StashIssue" positionX="4176" positionY="-1033" width="128" height="223"/>
-        <element name="StashLabel" positionX="4390" positionY="-891" width="128" height="118"/>
-        <element name="StashMilestone" positionX="4365" positionY="-757" width="128" height="163"/>
-        <element name="StashRepository" positionX="3859" positionY="-832" width="128" height="148"/>
-        <element name="StashUsers" positionX="4338" positionY="-571" width="128" height="103"/>
-        <element name="StashItem" positionX="3958" positionY="-610" width="128" height="88"/>
+        <element name="StashAccount" positionX="-450" positionY="-135" width="128" height="163"/>
+        <element name="StashIssue" positionX="-47" positionY="-297" width="128" height="225"/>
+        <element name="StashItem" positionX="-164" positionY="126" width="128" height="90"/>
+        <element name="StashLabel" positionX="205" positionY="51" width="128" height="120"/>
+        <element name="StashMilestone" positionX="205" positionY="-135" width="128" height="165"/>
+        <element name="StashRepo" positionX="-270" positionY="-114" width="128" height="150"/>
+        <element name="StashUsers" positionX="205" positionY="192" width="128" height="105"/>
     </elements>
 </model>

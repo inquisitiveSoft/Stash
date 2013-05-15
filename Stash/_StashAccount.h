@@ -9,17 +9,21 @@ extern const struct StashAccountAttributes {
 	__unsafe_unretained NSString *avatarURLString;
 	__unsafe_unretained NSString *dateStampOfLastSync;
 	__unsafe_unretained NSString *identifier;
+	__unsafe_unretained NSString *name;
+	__unsafe_unretained NSString *tokenIdentifier;
 	__unsafe_unretained NSString *username;
 } StashAccountAttributes;
 
 extern const struct StashAccountRelationships {
-	__unsafe_unretained NSString *repositories;
+	__unsafe_unretained NSString *repos;
 } StashAccountRelationships;
 
 extern const struct StashAccountFetchedProperties {
 } StashAccountFetchedProperties;
 
-@class StashRepository;
+@class StashRepo;
+
+
 
 
 
@@ -84,6 +88,30 @@ extern const struct StashAccountFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSString* name;
+
+
+
+//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* tokenIdentifier;
+
+
+
+@property int64_t tokenIdentifierValue;
+- (int64_t)tokenIdentifierValue;
+- (void)setTokenIdentifierValue:(int64_t)value_;
+
+//- (BOOL)validateTokenIdentifier:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
 @property (nonatomic, strong) NSString* username;
 
 
@@ -94,9 +122,9 @@ extern const struct StashAccountFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSSet *repositories;
+@property (nonatomic, strong) NSSet *repos;
 
-- (NSMutableSet*)repositoriesSet;
+- (NSMutableSet*)reposSet;
 
 
 
@@ -106,10 +134,10 @@ extern const struct StashAccountFetchedProperties {
 
 @interface _StashAccount (CoreDataGeneratedAccessors)
 
-- (void)addRepositories:(NSSet*)value_;
-- (void)removeRepositories:(NSSet*)value_;
-- (void)addRepositoriesObject:(StashRepository*)value_;
-- (void)removeRepositoriesObject:(StashRepository*)value_;
+- (void)addRepos:(NSSet*)value_;
+- (void)removeRepos:(NSSet*)value_;
+- (void)addReposObject:(StashRepo*)value_;
+- (void)removeReposObject:(StashRepo*)value_;
 
 @end
 
@@ -143,6 +171,21 @@ extern const struct StashAccountFetchedProperties {
 
 
 
+- (NSString*)primitiveName;
+- (void)setPrimitiveName:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitiveTokenIdentifier;
+- (void)setPrimitiveTokenIdentifier:(NSNumber*)value;
+
+- (int64_t)primitiveTokenIdentifierValue;
+- (void)setPrimitiveTokenIdentifierValue:(int64_t)value_;
+
+
+
+
 - (NSString*)primitiveUsername;
 - (void)setPrimitiveUsername:(NSString*)value;
 
@@ -150,8 +193,8 @@ extern const struct StashAccountFetchedProperties {
 
 
 
-- (NSMutableSet*)primitiveRepositories;
-- (void)setPrimitiveRepositories:(NSMutableSet*)value;
+- (NSMutableSet*)primitiveRepos;
+- (void)setPrimitiveRepos:(NSMutableSet*)value;
 
 
 @end

@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 
 #import "StashAccount.h"
-#import "StashRepository.h"
+#import "StashRepo.h"
 #import "StashIssue.h"
 #import "StashMilestone.h"
 #import "StashLabel.h"
@@ -15,11 +15,12 @@
 @property (readonly, retain, nonatomic) NSManagedObjectContext *persistanceSavingManagedObjectContext, *mainManagedObjectContext;
 @property (strong, nonatomic) StashAccount *currentAccount;
 
-- (StashAccount *)accountForIdentifier:(NSNumber *)identifier create:(BOOL)create;
+- (BOOL)save;
+
+- (StashAccount *)accountForTokenIdentifier:(NSNumber *)authorizationIdentifier create:(BOOL)create;
+- (StashAccount *)accountForIdentifier:(NSNumber *)identifier;
 - (StashAccount *)accountForUsername:(NSString *)username;
 
-
-- (void)updateAccountDetailsWithJSON:(NSDictionary *)json;
-
+- (void)updateReposforAccount:(StashAccount *)account withArray:(NSArray *)newRepos;
 
 @end

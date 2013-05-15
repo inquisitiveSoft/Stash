@@ -1,4 +1,5 @@
 #import "StashAccount.h"
+#import "StashRepo.h"
 
 
 @interface StashAccount ()
@@ -10,6 +11,15 @@
 
 @implementation StashAccount
 
-// Custom logic goes here.
+
+- (void)updateAccountDetailsWithDictionary:(NSDictionary *)accountDetails
+{
+	self.identifier = accountDetails[@"id"];
+	self.name = accountDetails[@"name"];
+	self.username = accountDetails[@"login"];
+	self.avatarURLString = accountDetails[@"avatar_url"];
+	self.accountURLString = accountDetails[@"html_url"];
+}
+
 
 @end
