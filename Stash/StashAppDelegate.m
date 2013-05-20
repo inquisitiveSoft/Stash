@@ -13,7 +13,7 @@
 #import "StashIssuesManager.h"
 
 #import "StashStatusItemController.h"
-#import "StashIssuesWindowController.h"
+#import "StashPopoverWindowController.h"
 #import "qLog.h"
 
 
@@ -23,13 +23,20 @@
 @property (strong) StashIssuesManager *issueManager;
 
 @property (strong) StashStatusItemController *statusItemController;
-@property (strong) StashIssuesWindowController *issuesWindowController;
+@property (strong) StashPopoverWindowController *issuesWindowController;
 
 @end
 
 
 
 @implementation StashAppDelegate
+
+
+- (void)applicationWillFinishLaunching:(NSNotification *)notification
+{
+	if([[NSUserDefaults standardUserDefaults] floatForKey:@"NSTextInsertionPointBlinkPeriod"] < 1.0)
+		[[NSUserDefaults standardUserDefaults] setFloat:560.0 forKey:@"NSTextInsertionPointBlinkPeriod"];
+}
 
 
 - (void)awakeFromNib
@@ -39,7 +46,7 @@
 	self.networkManager = [StashNetworkManager sharedNetworkManager];
 	self.networkManager.issuesManager = self.issueManager;
 	
-	self.issuesWindowController = [[StashIssuesWindowController alloc] init];
+	self.issuesWindowController = [[StashPopoverWindowController alloc] init];
 	self.statusItemController = [[StashStatusItemController alloc] init];
 	
 	self.statusItemController.popoverWindowController = self.issuesWindowController;

@@ -217,7 +217,7 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 	}
 	
 	[self.httpClient setAuthorizationHeaderWithUsername:username password:password];
-	NSNumber *existingTokenIdentifier = [self.issuesManager accountForUsername:username].identifier;
+	NSNumber *existingTokenIdentifier = [self.issuesManager accountForUsername:username].tokenIdentifier;
 	
 	if(existingTokenIdentifier) {
 		[self requestExistingOAuthTokenForIdentifier:existingTokenIdentifier success:successBlock failure:failureBlock];
@@ -261,7 +261,7 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 		}
 	} failure:^(AFHTTPRequestOperation *httpOperation, NSError *error) {
 		if(httpOperation.response.statusCode == 404) {
-			qLog(@"Recieved 404 while looking for an existing token. It's likely the previous token was deleted from the applications list. Requesting a new token");
+			qLog(@"Recieved 404 while looking for an existing token: %@. It's likely the previous token was deleted from the applications list. Requesting a new token", tokenIdentifier);
 			[self requestNewOAuthToken:successBlock failure:failureBlock];
 		} else if(failureBlock) {
 			failureBlock(httpOperation, error);
@@ -345,16 +345,16 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 - (void)pullChanges:(AFRequestSuccessBlock)successBlock failure:(AFRequestFailureBlock)failureBlock
 {
 	AFOperationGroup *group = [[AFOperationGroup alloc] initWithCompletionBlock:^(NSArray *operations) {
-		NSArray *repos = [self.issuesManager fetchObjectsOfEntityName:[StashRepo entityName] matching:nil];
-		qLog(@"repos: %d", repos.count);
-		
-		for(StashRepo *repo in repos) {
-			printf("%s\n", [[NSString stringWithFormat:@"	%@", repo.name] UTF8String]);
-			
-			for(StashIssue *issue in repo.issues) {
-				printf("%s\n", [[NSString stringWithFormat:@"		#%@ %@", issue.number, issue.title] UTF8String]);
-			}
-		}
+//		NSArray *repos = [self.issuesManager fetchObjectsOfEntityName:[StashRepo entityName] matching:nil];
+//		qLog(@"repos: %d", repos.count);
+//		
+//		for(StashRepo *repo in repos) {
+//			printf("%s\n", [[NSString stringWithFormat:@"	%@", repo.name] UTF8String]);
+//			
+//			for(StashIssue *issue in repo.issues) {
+//				printf("%s\n", [[NSString stringWithFormat:@"		#%@ %@", issue.number, issue.title] UTF8String]);
+//			}
+//		}
 	}];
 
 	[self requestReposWithParameters:nil previousContent:nil group:group success:^(AFHTTPRequestOperation *operation, NSArray *combinedContent) {
@@ -639,7 +639,16 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 		(id)kSecAttrService : StashOAuthKeychainIdentifier
 	};
 	
-	OSStatus result = SecItemDelete((__bridge CFDictionaryRef)matchingAttributes);
+	OSStatus result = -1;
+	
+	@try {
+		result = SecItemDelete((__bridge CFDictionaryRef)matchingAttributes);
+	}
+	
+	@catch (NSException *exception) {
+		qLog(@"SecItemDelete crashed");
+	}
+	
 	BOOL success = result == errSecSuccess;
 	
 	if(success) {

@@ -1,5 +1,7 @@
 #import "XSViewController.h"
 
+@class StashPopoverWindowController;
+
 
 @interface StashViewController : XSViewController
 
@@ -7,5 +9,7 @@
 - (void)viewDidAppear:(BOOL)animated;
 - (void)viewWillDisappear:(BOOL)animated;
 - (void)viewDidDisappear:(BOOL)animated;
+
+- (StashPopoverWindowController *)popoverWindowController;
 
 @end

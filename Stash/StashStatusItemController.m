@@ -1,6 +1,6 @@
 #import "StashStatusItemController.h"
 
-#import "StashIssuesWindowController.h"
+#import "StashPopoverWindowController.h"
 #import "StashTexturedWindow.h"
 
 
@@ -28,7 +28,7 @@
 	
 	// Style the button
 	statusItemButton.bordered = FALSE;
-	statusItemButton.buttonType = NSMomentaryLightButton;
+	statusItemButton.buttonType = NSToggleButton;
 	statusItemButton.title = @"";
 	statusItemButton.image = [NSImage imageNamed:@"Status Item Icon"];
 	statusItemButton.alternateImage = [NSImage imageNamed:@"Status Item Icon - Highlighted"];

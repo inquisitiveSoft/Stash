@@ -6,6 +6,7 @@
 const struct StashAccountAttributes StashAccountAttributes = {
 	.accountURLString = @"accountURLString",
 	.avatarURLString = @"avatarURLString",
+	.currentRepoIdentifier = @"currentRepoIdentifier",
 	.dateStampOfLastSync = @"dateStampOfLastSync",
 	.identifier = @"identifier",
 	.name = @"name",
@@ -46,6 +47,11 @@ const struct StashAccountFetchedProperties StashAccountFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"currentRepoIdentifierValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"currentRepoIdentifier"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 	if ([key isEqualToString:@"identifierValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"identifier"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -72,6 +78,32 @@ const struct StashAccountFetchedProperties StashAccountFetchedProperties = {
 
 @dynamic avatarURLString;
 
+
+
+
+
+
+@dynamic currentRepoIdentifier;
+
+
+
+- (int64_t)currentRepoIdentifierValue {
+	NSNumber *result = [self currentRepoIdentifier];
+	return [result longLongValue];
+}
+
+- (void)setCurrentRepoIdentifierValue:(int64_t)value_ {
+	[self setCurrentRepoIdentifier:[NSNumber numberWithLongLong:value_]];
+}
+
+- (int64_t)primitiveCurrentRepoIdentifierValue {
+	NSNumber *result = [self primitiveCurrentRepoIdentifier];
+	return [result longLongValue];
+}
+
+- (void)setPrimitiveCurrentRepoIdentifierValue:(int64_t)value_ {
+	[self setPrimitiveCurrentRepoIdentifier:[NSNumber numberWithLongLong:value_]];
+}
 
 
 

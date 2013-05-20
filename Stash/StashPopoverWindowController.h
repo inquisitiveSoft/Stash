@@ -4,11 +4,12 @@
 typedef enum StashRootMode : NSUInteger {
 	StashRootModeUnknown,
 	StashRootModeLogin,
+	StashRootModeAccount,
 	StashRootModeIssues
 } StashRootMode;
 
 
-@interface StashIssuesWindowController : XSWindowController <NSWindowDelegate>
+@interface StashPopoverWindowController : XSWindowController <NSWindowDelegate>
 
 
 - (void)displayWindow:(BOOL)animated;

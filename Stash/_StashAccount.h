@@ -7,6 +7,7 @@
 extern const struct StashAccountAttributes {
 	__unsafe_unretained NSString *accountURLString;
 	__unsafe_unretained NSString *avatarURLString;
+	__unsafe_unretained NSString *currentRepoIdentifier;
 	__unsafe_unretained NSString *dateStampOfLastSync;
 	__unsafe_unretained NSString *identifier;
 	__unsafe_unretained NSString *name;
@@ -22,6 +23,7 @@ extern const struct StashAccountFetchedProperties {
 } StashAccountFetchedProperties;
 
 @class StashRepo;
+
 
 
 
@@ -59,6 +61,20 @@ extern const struct StashAccountFetchedProperties {
 
 
 //- (BOOL)validateAvatarURLString:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* currentRepoIdentifier;
+
+
+
+@property int64_t currentRepoIdentifierValue;
+- (int64_t)currentRepoIdentifierValue;
+- (void)setCurrentRepoIdentifierValue:(int64_t)value_;
+
+//- (BOOL)validateCurrentRepoIdentifier:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -152,6 +168,15 @@ extern const struct StashAccountFetchedProperties {
 
 - (NSString*)primitiveAvatarURLString;
 - (void)setPrimitiveAvatarURLString:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitiveCurrentRepoIdentifier;
+- (void)setPrimitiveCurrentRepoIdentifier:(NSNumber*)value;
+
+- (int64_t)primitiveCurrentRepoIdentifierValue;
+- (void)setPrimitiveCurrentRepoIdentifierValue:(int64_t)value_;
 
 
 

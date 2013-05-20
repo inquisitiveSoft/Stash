@@ -74,27 +74,35 @@
 
 - (BOOL)updateIssueWithProperties:(NSDictionary *)issueProperties
 {
-	if(!self.identifier) {
-		qLog(@"updateIssueWithProperties: called on a newly created local issue: %@", self);
-		return FALSE;
-	}
+	__block BOOL shouldUpdateValues = !self.identifier;
 	
-	NSDictionary *syncedStateDictionary = self.syncedStateDictionary;
-	if(!syncedStateDictionary) {
-		qLog(@"Couldn't find a syncedStateDictionary fot the issue: %@", self);
-		return FALSE;
-	}
-	
-	__block BOOL isFastForwardsMerge = [syncedStateDictionary count];
-	
-	if(isFastForwardsMerge) {
-		[syncedStateDictionary enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
-			if(![issueProperties[key] isEqual:value])
-				isFastForwardsMerge = FALSE;
-		}];
-	}
+	if(shouldUpdateValues) {
+		NSDictionary *syncedStateDictionary = self.syncedStateDictionary;
+		if(!syncedStateDictionary) {
+			qLog(@"Couldn't find a syncedStateDictionary fot the issue: %@", self);
+			return FALSE;
+		}
 		
-	return isFastForwardsMerge;
+		shouldUpdateValues = [syncedStateDictionary count];
+		
+		if(shouldUpdateValues) {
+			[syncedStateDictionary enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
+				if(![issueProperties[key] isEqual:value])
+					shouldUpdateValues = FALSE;
+			}];
+		}
+	}
+	
+	if(shouldUpdateValues) {
+		self.identifier = issueProperties[@"id"];
+		self.number = issueProperties[@"number"];
+		self.title = issueProperties[@"title"];
+		self.body = issueProperties[@"body"];
+		self.stateValue = [StashIssue stateFromString:issueProperties[@"state"]];
+		self.url = issueProperties[@"url"];
+	}
+	
+	return shouldUpdateValues;
 }
 
 

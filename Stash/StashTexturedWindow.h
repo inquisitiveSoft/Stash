@@ -9,6 +9,6 @@
 @property (readonly, retain, nonatomic) StashViewController *contentViewController;
 @property (assign, nonatomic) CGPoint attachmentPosition;
 
-- (void)setContentViewController:(StashViewController *)destinationView animated:(BOOL)animated animationDirecton:(NSString *)animationDirection;
+- (void)setContentViewController:(StashViewController *)destinationView animated:(BOOL)animated animationDirecton:(NSString *)animationDirection duration:(NSTimeInterval)duration;
 
 @end

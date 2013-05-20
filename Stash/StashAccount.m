@@ -22,4 +22,26 @@
 }
 
 
+- (void)setCurrentRepo:(StashRepo *)currentRepo
+{
+	self.currentRepoIdentifier = currentRepo.identifier;
+}
+
+
+- (StashRepo *)currentRepo
+{
+	StashRepo *currentRepo = nil;
+	NSNumber *currentRepoIdentifier = self.currentRepoIdentifier;
+	
+	for(StashRepo *repo in [self repos]) {
+		if(!currentRepoIdentifier || [repo.identifier isEqualToNumber:currentRepoIdentifier]) {
+			currentRepo = repo;
+			break;
+		}
+	}
+	
+	return currentRepo;
+}
+
+
 @end

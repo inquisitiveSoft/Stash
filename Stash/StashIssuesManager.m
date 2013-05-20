@@ -3,11 +3,13 @@
 
 #import "NSJSONSerialization+PrettyPrint.h"
 #import "NSDictionary+Verification.h"
+#import "NSObject+BlockObservation.h"
 #import "qLog.h"
 
 
 NSString * const StashIssuesStoreFileName = @"Stash.issuesStore";
 
+NSString * const StashCurrentAccountDidChange = @"StashCurrentAccountDidChange";
 NSString * const StashCurrentAccountIdentifierKey = @"StashCurrentAccountURIKey";
 
 
@@ -25,7 +27,7 @@ NSString * const StashCurrentAccountIdentifierKey = @"StashCurrentAccountURIKey"
 @synthesize currentAccount = _currentAccount;
 
 
-+ (id)sharedIssuesManager {
++ (StashIssuesManager *)sharedIssuesManager {
 	static StashIssuesManager *__sharedIssuesManager = nil;
 	static dispatch_once_t createSharedIssuesManager;
 	dispatch_once(&createSharedIssuesManager, ^{
@@ -87,8 +89,9 @@ NSString * const StashCurrentAccountIdentifierKey = @"StashCurrentAccountURIKey"
 	
 	NSManagedObjectContext *mainManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
 	[mainManagedObjectContext setParentContext:persistanceSavingManagedObjectContext];
-	
 	self.mainManagedObjectContext = mainManagedObjectContext;
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:StashCurrentAccountDidChange object:nil userInfo:nil];
 }
 
 
@@ -186,6 +189,7 @@ NSString * const StashCurrentAccountIdentifierKey = @"StashCurrentAccountURIKey"
 
 	// Store a URI to the current account in the user defaults
 	[[NSUserDefaults standardUserDefaults] setObject:currentAccount.identifier forKey:StashCurrentAccountIdentifierKey];
+	[[NSNotificationCenter defaultCenter] postNotificationName:StashCurrentAccountDidChange object:nil userInfo:nil];
 }
 
 
@@ -205,7 +209,14 @@ NSString * const StashCurrentAccountIdentifierKey = @"StashCurrentAccountURIKey"
 	if(!account)
 		account = [self objectOfEntityName:[StashAccount entityName] matching:nil];
 	
-	return account;
+	if(![account isDeleted]) {
+		if(_currentAccount != account)
+			self.currentAccount = account;
+		
+		return account;
+	}
+	
+	return nil;
 }
 
 
@@ -332,16 +343,15 @@ NSString * const StashCurrentAccountIdentifierKey = @"StashCurrentAccountURIKey"
 				BOOL existingIssue = FALSE;
 				StashIssue *issue = [self issueForIdentfier:issueProperties[@"id"] repo:repo create:TRUE existingIssue:&existingIssue];
 				
-				NSString *dateString = [issueProperties objectForKey:@"updated_at"];
-				NSDate *modificationDate = [[StashIssue dateFormatter] dateFromString:dateString];
-				
-				qLog(@"timeIntervalSinceDate: %d", [modificationDate timeIntervalSinceDate:dateStampOfLastSync]);
-//				if([modificationDate timeIntervalSinceDate:dateStampOfLastSync]) {
-//					qLog(@"<#%@#>", <#variable#>);
+//				NSString *dateString = [issueProperties objectForKey:@"updated_at"];
+//				NSDate *modificationDate = [[StashIssue dateFormatter] dateFromString:dateString];
+//				
+//				if([modificationDate timeIntervalSinceDate:dateStampOfLastSync] > 0) {
+//					// ModificationDate is more recent than dateStampOfLastSync
 //				}
 				
-//				if(![issue updateIssueWithProperties:issueProperties])
-//					[issuesNeedingManualMerge addObject:issue];
+				if(![issue updateIssueWithProperties:issueProperties])
+					[issuesNeedingManualMerge addObject:issue];
 				
 				[issues addObject:issue];
 			} else if(error)

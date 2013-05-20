@@ -27,7 +27,7 @@ NSString * const StashPreviousContentViewController = @"StashPreviousContentView
 	self = [super initWithContentRect:contentRect styleMask:NSBorderlessWindowMask backing:bufferingType defer:flag];
 	
 	if(self) {
-		[self setMovableByWindowBackground:YES];
+		[self setMovableByWindowBackground:FALSE];
 		[self setOpaque:FALSE];
 		[self setHasShadow:FALSE];	// The background view draws the
 		[self setBackgroundColor:[NSColor clearColor]];
@@ -75,7 +75,7 @@ NSString * const StashPreviousContentViewController = @"StashPreviousContentView
 }
 
 
-- (void)setContentViewController:(StashViewController *)destinationViewController animated:(BOOL)animated animationDirecton:(NSString *)animationDirection
+- (void)setContentViewController:(StashViewController *)destinationViewController animated:(BOOL)animated animationDirecton:(NSString *)animationDirection duration:(NSTimeInterval)duration
 {
 	StashViewController *currentViewController = _contentViewController;
 	
@@ -101,7 +101,7 @@ NSString * const StashPreviousContentViewController = @"StashPreviousContentView
 				transition.type = kCATransitionPush;
 				transition.subtype = animationDirection ?: kCATransitionFromBottom;
 				transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-				transition.duration = 1.2f;
+				transition.duration = duration;
 				transition.delegate = self;
 				objc_setAssociatedObject(self, (__bridge const void *)StashPreviousContentViewController, transition, OBJC_ASSOCIATION_ASSIGN);
 				

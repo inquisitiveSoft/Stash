@@ -46,7 +46,7 @@
 
 - (void)getPath:(NSString *)path parameters:(NSDictionary *)parameters attachedObject:(id)attachedObject group:(AFOperationGroup *)group success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-	NSURLRequest *request = [self requestWithMethod:@"PUSH" path:path parameters:parameters];
+	NSURLRequest *request = [self requestWithMethod:@"GET" path:path parameters:parameters];
 	request.attachedObject = attachedObject;
 	
 	AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request group:group success:success failure:failure];
@@ -90,7 +90,7 @@
 
 - (void)patchPath:(NSString *)path parameters:(NSDictionary *)parameters attachedObject:(id)attachedObject group:(AFOperationGroup *)group success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-	NSURLRequest *request = [self requestWithMethod:@"DELETE" path:path parameters:parameters];
+	NSURLRequest *request = [self requestWithMethod:@"PATCH" path:path parameters:parameters];
 	request.attachedObject = attachedObject;
 	
 	AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request group:group success:success failure:failure];

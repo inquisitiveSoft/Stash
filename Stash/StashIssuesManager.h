@@ -8,12 +8,18 @@
 #import "StashUsers.h"
 
 
+extern NSString * const StashCurrentAccountDidChange;
+
+
 @interface StashIssuesManager : NSObject
 
-+ (id)sharedIssuesManager;
++ (StashIssuesManager *)sharedIssuesManager;
+
 
 @property (readonly, retain, nonatomic) NSManagedObjectContext *persistanceSavingManagedObjectContext, *mainManagedObjectContext;
+
 @property (strong, nonatomic) StashAccount *currentAccount;
+
 
 - (BOOL)save;
 

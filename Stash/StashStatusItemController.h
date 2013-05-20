@@ -1,11 +1,11 @@
 #import <Foundation/Foundation.h>
 
-@class StashIssuesWindowController;
+@class StashPopoverWindowController;
 
 
 @interface StashStatusItemController : NSObject
 
-@property (weak, nonatomic) StashIssuesWindowController *popoverWindowController;
+@property (weak, nonatomic) StashPopoverWindowController *popoverWindowController;
 
 - (void)presentStatusBar;
 
