@@ -39,7 +39,7 @@
 	
 	StashTextView *filterTextView = self.filterTextView;
 	filterTextView.delegate = self;
-	filterTextView.font = [NSFont fontWithName:@"Lucida Grande" size:14.0];
+	filterTextView.font = [NSFont fontWithName:@"Lucida Grande" size:13.0];
 	
 	NSScrollView *issuesCollectionScrollView = self.issuesCollectionScrollView;
 	[issuesCollectionScrollView setBackgroundColor:[NSColor clearColor]];
@@ -53,7 +53,7 @@
 	[issuesCollectionView setMaxNumberOfColumns:1];
 	[issuesCollectionView setSelectable:TRUE];
 	[issuesCollectionView setMaxItemSize:NSMakeSize(1024.0, 28.0)];
-	
+	[issuesCollectionView setValue:@(FALSE) forKey:@"_animationDuration"];
 	[self setIssuesViewMode:StashIssuesViewModeFiltering];
 }
 

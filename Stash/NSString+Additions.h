@@ -1,12 +1,8 @@
 #import <Foundation/Foundation.h>
 
 
-@interface NSString (SYMLAdditions)
+@interface NSString (StashAdditions)
 
-- (NSRange)range;
-- (SYMLTextRange *)textRange;
-
-- (NSString *)substringWithUntestedRange:(NSRange)substringRange;
 - (NSString *)normalizedString;
 
 @end

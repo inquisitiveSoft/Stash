@@ -160,7 +160,10 @@ NSString * const StashCurrentAccountIdentifierKey = @"StashCurrentAccountURIKey"
 	}
 		
 	NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
-	fetchRequest.predicate = [NSPredicate predicateWithFormat:predicateString argumentArray:predicateArguments];
+	
+	if([predicateString length])
+		fetchRequest.predicate = [NSPredicate predicateWithFormat:predicateString argumentArray:predicateArguments];
+	
 	fetchRequest.sortDescriptors = sortDescriptors;
 	
 	NSError *error = nil;

@@ -39,15 +39,12 @@ NSString * const StashPreviousContentViewController = @"StashPreviousContentView
 		[self setContentView:windowBackgroundView];
 		self.windowBackgroundView = windowBackgroundView;
 		
-		CGFloat innerCornerRadius = windowBackgroundView.innerCornerRadius;
-		
 		StashView *clipView = [[StashView alloc] initWithFrame:[self contentRectForFrameRect:[windowBackgroundView bounds]]];
 		clipView.wantsLayer = TRUE;
 		clipView.layer.masksToBounds = TRUE;
-		clipView.layer.cornerRadius = innerCornerRadius;
+		clipView.layer.cornerRadius = windowBackgroundView.innerCornerRadius;
 		[clipView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
 		[windowBackgroundView addSubview:clipView];
-
 		
 		StashView *containerView = [[StashView alloc] initWithFrame:clipView.bounds];
 		containerView.wantsLayer = TRUE;
