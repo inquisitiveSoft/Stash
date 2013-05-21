@@ -2,8 +2,14 @@
 #import "StashNetworkManager.h"
 
 
+typedef enum StashIssuesViewMode : NSUInteger {
+	StashIssuesViewModeUnknown,
+	StashIssuesViewModeFiltering,
+	StashIssuesViewModeCreation
+} StashIssuesViewMode;
 
-@interface StashIssuesViewController : StashViewController <NSCollectionViewDelegate>
+
+@interface StashIssuesViewController : StashViewController <NSTextViewDelegate, NSCollectionViewDelegate>
 
 
 

@@ -91,7 +91,7 @@ NSString * const StashCurrentAccountIdentifierKey = @"StashCurrentAccountURIKey"
 	[mainManagedObjectContext setParentContext:persistanceSavingManagedObjectContext];
 	self.mainManagedObjectContext = mainManagedObjectContext;
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:StashCurrentAccountDidChange object:nil userInfo:nil];
+	[self restoreCurrentAccount];
 }
 
 
@@ -114,6 +114,19 @@ NSString * const StashCurrentAccountIdentifierKey = @"StashCurrentAccountURIKey"
 
 - (NSArray *)fetchObjectsOfEntityName:(NSString *)entityName matching:(id)predicate, ...
 {
+	va_list predicateArguments;
+	va_start(predicateArguments, predicate);
+		
+	NSArray *result = [self fetchObjectsOfEntityName:entityName matching:predicate arguments:predicateArguments sortDescriptors:nil];
+	
+	va_end(predicateArguments);
+	
+	return result;
+}
+
+
+- (NSArray *)fetchObjectsOfEntityName:(NSString *)entityName matching:(id)predicate arguments:(va_list)predicateArguments sortDescriptors:(NSArray *)sortDescriptors
+{
 	if(![entityName length]) {
 		qLog(@"Requires an entity name: %@", entityName);
 		return nil;
@@ -122,12 +135,7 @@ NSString * const StashCurrentAccountIdentifierKey = @"StashCurrentAccountURIKey"
 	NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
 	
 	if([predicate isKindOfClass:[NSString class]]) {
-		va_list trailingArguments;
-		va_start(trailingArguments, predicate);
-		
-		fetchRequest.predicate = [NSPredicate predicateWithFormat:predicate arguments:trailingArguments];
-		
-		va_end(trailingArguments);
+		fetchRequest.predicate = [NSPredicate predicateWithFormat:predicate arguments:predicateArguments];
 	} else if([predicate isKindOfClass:[NSPredicate class]]) {
 		fetchRequest.predicate = predicate;
 	} else if(predicate) {
@@ -144,7 +152,7 @@ NSString * const StashCurrentAccountIdentifierKey = @"StashCurrentAccountURIKey"
 }
 
 
-- (id)objectOfEntityName:(NSString *)entityName matching:(id)predicate, ...
+- (NSArray *)fetchObjectsOfEntityName:(NSString *)entityName matching:(NSString *)predicateString argumentArray:(NSArray *)predicateArguments sortDescriptors:(NSArray *)sortDescriptors
 {
 	if(![entityName length]) {
 		qLog(@"Requires an entity name: %@", entityName);
@@ -152,26 +160,47 @@ NSString * const StashCurrentAccountIdentifierKey = @"StashCurrentAccountURIKey"
 	}
 		
 	NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
-	
-	if([predicate isKindOfClass:[NSString class]]) {
-		va_list trailingArguments;
-		va_start(trailingArguments, predicate);
-		
-		fetchRequest.predicate = [NSPredicate predicateWithFormat:predicate arguments:trailingArguments];
-		
-		va_end(trailingArguments);
-	} else if([predicate isKindOfClass:[NSPredicate class]]) {
-		fetchRequest.predicate = predicate;
-	} else if(predicate) {
-		qLog(@"Unexpected predicate. Expects a format string or a predicate. %@", predicate);
-	}	
+	fetchRequest.predicate = [NSPredicate predicateWithFormat:predicateString argumentArray:predicateArguments];
+	fetchRequest.sortDescriptors = sortDescriptors;
 	
 	NSError *error = nil;
 	NSArray *result = [self.mainManagedObjectContext executeFetchRequest:fetchRequest error:&error];
 	if(!result && error) {
 		qLog(@"%@", error);
 	}
+	
+	return result;
+}
+
+- (NSArray *)fetchObjectsOfEntityName:(NSString *)entityName sortDescriptors:(NSArray *)sortDescriptors
+{
+	if(![entityName length]) {
+		qLog(@"Requires an entity name: %@", entityName);
+		return nil;
+	}
 		
+	NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
+	fetchRequest.sortDescriptors = sortDescriptors;
+	
+	NSError *error = nil;
+	NSArray *result = [self.mainManagedObjectContext executeFetchRequest:fetchRequest error:&error];
+	if(!result && error) {
+		qLog(@"%@", error);
+	}
+	
+	return result;
+}
+
+
+- (id)objectOfEntityName:(NSString *)entityName matching:(id)predicate, ...
+{
+	va_list trailingArguments;
+	va_start(trailingArguments, predicate);
+	
+	NSArray *result = [self fetchObjectsOfEntityName:entityName matching:predicate arguments:trailingArguments sortDescriptors:nil];
+	
+	va_end(trailingArguments);
+	
 	if([result count] > 0)
 		return [result objectAtIndex:0];
 	
@@ -182,43 +211,31 @@ NSString * const StashCurrentAccountIdentifierKey = @"StashCurrentAccountURIKey"
 
 #pragma mark - Account management
 
+- (void)restoreCurrentAccount
+{
+	NSNumber *currentAccountIdentifier = [[NSUserDefaults standardUserDefaults] objectForKey:StashCurrentAccountIdentifierKey];
+	StashAccount *currentAccount = nil;
+	
+	// Look for an account with a matching identifier
+	if(currentAccountIdentifier)
+		currentAccount = [self objectOfEntityName:[StashAccount entityName] matching:@"identifier == %@", currentAccountIdentifier];
+	
+	// Otherwise look for any account
+	if(!currentAccount)
+		currentAccount = [self objectOfEntityName:[StashAccount entityName] matching:nil];
+	
+	self.currentAccount = currentAccount;
+}
+
 
 - (void)setCurrentAccount:(StashAccount *)currentAccount
 {
 	_currentAccount = currentAccount;
-
+	
 	// Store a URI to the current account in the user defaults
 	[[NSUserDefaults standardUserDefaults] setObject:currentAccount.identifier forKey:StashCurrentAccountIdentifierKey];
 	[[NSNotificationCenter defaultCenter] postNotificationName:StashCurrentAccountDidChange object:nil userInfo:nil];
 }
-
-
-- (StashAccount *)currentAccount
-{
-	if(_currentAccount)
-		return _currentAccount;
-	
-	NSNumber *currentAccountIdentifier = [[NSUserDefaults standardUserDefaults] objectForKey:StashCurrentAccountIdentifierKey];
-	StashAccount *account = nil;
-	
-	// Look for an account with a matching identifier
-	if(currentAccountIdentifier)
-		account = [self objectOfEntityName:[StashAccount entityName] matching:@"identifier == %@", currentAccountIdentifier];
-	
-	// Otherwise look for any account
-	if(!account)
-		account = [self objectOfEntityName:[StashAccount entityName] matching:nil];
-	
-	if(![account isDeleted]) {
-		if(_currentAccount != account)
-			self.currentAccount = account;
-		
-		return account;
-	}
-	
-	return nil;
-}
-
 
 
 - (StashAccount *)accountForTokenIdentifier:(NSNumber *)tokenIdentifier create:(BOOL)create
@@ -229,6 +246,7 @@ NSString * const StashCurrentAccountIdentifierKey = @"StashCurrentAccountURIKey"
 		// Create a new account
 		account = [StashAccount insertInManagedObjectContext:self.mainManagedObjectContext];
 		account.tokenIdentifier = tokenIdentifier;
+		
 		[self.mainManagedObjectContext save:nil];
 	}
 	

@@ -13,4 +13,13 @@
 }
 
 
+- (NSRect)adjustScroll:(NSRect)proposedRect
+{
+	if(!self.scrollEnabled)
+		proposedRect.origin = NSZeroPoint;
+	
+	return proposedRect;
+}
+
+
 @end

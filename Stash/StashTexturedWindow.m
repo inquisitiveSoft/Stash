@@ -37,6 +37,7 @@ NSString * const StashPreviousContentViewController = @"StashPreviousContentView
 		self.windowBackgroundView = windowBackgroundView;
 		
 		NSView *containerView = [[NSView alloc] initWithFrame:[self contentRectForFrameRect:[windowBackgroundView bounds]]];
+		containerView.layer = [CALayer layer];
 		containerView.wantsLayer = TRUE;
 		containerView.layer.masksToBounds = TRUE;
 		containerView.layer.cornerRadius = windowBackgroundView.innerCornerRadius;
@@ -95,7 +96,6 @@ NSString * const StashPreviousContentViewController = @"StashPreviousContentView
 		[currentViewController viewWillDisappear:animated];
 		
 		if(currentView) {
-
 			if(animated) {
 				CATransition *transition = [CATransition animation];
 				transition.type = kCATransitionPush;
@@ -105,8 +105,10 @@ NSString * const StashPreviousContentViewController = @"StashPreviousContentView
 				transition.delegate = self;
 				objc_setAssociatedObject(self, (__bridge const void *)StashPreviousContentViewController, transition, OBJC_ASSOCIATION_ASSIGN);
 				
-				self.containerView.animations = @{ @"subviews" : transition };
-				[self.containerView.animator replaceSubview:currentView with:destinationView];
+				[self.containerView.layer addAnimation:transition forKey:nil];
+				
+				[self.containerView replaceSubview:currentView with:destinationView];
+				
 			} else {
 				[self.containerView replaceSubview:currentView with:destinationView];
 			}

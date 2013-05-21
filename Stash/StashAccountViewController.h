@@ -1,6 +1,10 @@
 #import "StashViewController.h"
+#import "StashCollectionViewDelegate.h"
 
 
-@interface StashAccountViewController : StashViewController
+
+@interface StashAccountViewController : StashViewController <StashCollectionViewDelegate>
+
+
 
 @end

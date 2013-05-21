@@ -21,10 +21,13 @@
 	self = [super initWithFrame:frame];
 	
 	if(self) {
+		self.layer = [CALayer layer];
+		self.wantsLayer = TRUE;
+		
 		arrowSize = CGSizeMake(22.0f, 11.0f);
 		
 		cornerRadius = 6.0f;
-		contentPadding = 2.0f;
+		contentPadding = 1.0f;
 		innerCornerRadius = roundf(cornerRadius - ceilf(contentPadding / 2));
 		
 		shadowRadius = 8.0;

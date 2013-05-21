@@ -14,11 +14,12 @@
 
 @interface StashAccountViewController ()
 
-@property (strong) NSArrayController *reposArrayController;
-
 @property (strong) IBOutlet NSScrollView *reposCollectionScrollView;
 @property (strong) IBOutlet NSCollectionView *reposCollectionView;
-@property (strong) IBOutlet StashView *sideBarView;
+@property (strong) IBOutlet NSSearchField *filterField;
+
+@property (strong) IBOutlet NSTextField *usernameField;
+@property (strong) IBOutlet NSTextField *fullNameField;
 
 @property (strong) NSMutableArray *observationTokens;
 
@@ -30,7 +31,7 @@
 
 - (void)awakeFromNib
 {
-	self.sideBarView.backgroundColor = [NSColor colorWithDeviceHue:0.595 saturation:0.059 brightness:0.937 alpha:1.0];
+	self.filterField.alphaValue = 0.5;
 	
 	NSColor *backgroundColor = [NSColor whiteColor];
 	NSScrollView *reposCollectionScrollView = self.reposCollectionScrollView;
@@ -40,27 +41,13 @@
 	NSCollectionView *reposCollectionView = self.reposCollectionView;
 	
 	StashRepoCollectionViewItem *repoCollectionItemView = [[StashRepoCollectionViewItem alloc] initWithNibName:@"Repo Collection View Item" bundle:nil];
-	[reposCollectionView setItemPrototype:repoCollectionItemView];
-	[reposCollectionView setMaxNumberOfColumns:1];
-	[reposCollectionView setSelectable:TRUE];
-	[reposCollectionView setAllowsMultipleSelection:FALSE];
+	reposCollectionView.delegate = self;
+	reposCollectionView.itemPrototype = repoCollectionItemView;
+	reposCollectionView.maxNumberOfColumns = 1;
+	reposCollectionView.maxItemSize = NSMakeSize(1024.0, 36.0);
 	
-	[reposCollectionView setBackgroundColors:@[backgroundColor]];
-	[reposCollectionView setMaxItemSize:NSMakeSize(1024.0, 36.0)];
-	
-	NSArrayController *reposArrayController = [[NSArrayController alloc] init];
-	[reposArrayController setManagedObjectContext:[[StashIssuesManager sharedIssuesManager] mainManagedObjectContext]];
-	[reposArrayController setEntityName:[StashRepo entityName]];	
-	[reposArrayController setAutomaticallyPreparesContent:TRUE];
-	[reposArrayController setAutomaticallyRearrangesObjects:TRUE];
-	[reposArrayController setFetchPredicate:nil];
-	[reposArrayController setSortDescriptors:@[
-		[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:TRUE]
-	]];
-	
-	self.reposArrayController = reposArrayController;
-	
-	[reposCollectionView bind:NSContentBinding toObject:reposArrayController withKeyPath:@"arrangedObjects" options:nil];
+	[self.usernameField bind:@"stringValue" toObject:[StashIssuesManager sharedIssuesManager] withKeyPath:@"currentAccount.username" options:nil];
+	[self.fullNameField	bind:@"stringValue" toObject:[StashIssuesManager sharedIssuesManager] withKeyPath:@"currentAccount.name" options:nil];
 }
 
 
@@ -71,7 +58,7 @@
 	NSMutableArray *observationTokens = [self observationTokens] ? : [[NSMutableArray alloc] init];
 	__weak StashAccountViewController *accountViewController = self;
 	
-	id token = [[StashIssuesManager sharedIssuesManager] sk_observeKeyPath:@"currentAccount.currentRepo" change:^(id observedObject, NSString *keyPath, id oldValue, id newValue) {
+	id token = [[StashIssuesManager sharedIssuesManager] sk_observeKeyPath:@"currentAccount.repos" change:^(id observedObject, NSString *keyPath, id oldValue, id newValue) {
 		[accountViewController updateContent];
 	}];
 	
@@ -80,16 +67,36 @@
 }
 
 
-- (void)updateContent
-{
-//	self.view
-}
-
-
 - (void)viewWillDisappear:(BOOL)animated
 {
 	for(id observationToken in self.observationTokens)
 		[NSObject sk_removeObservationForToken:observationToken];
+}
+
+
+- (void)updateContent
+{
+	NSArray *allRepos = [[StashIssuesManager sharedIssuesManager] fetchObjectsOfEntityName:[StashRepo entityName] sortDescriptors:nil];
+	
+	allRepos = [allRepos sortedArrayUsingComparator:^NSComparisonResult(id firstObject, id secondObject) {
+		StashRepo *firstRepo = firstObject;
+		StashRepo *secondRepo = secondObject;
+		
+		return [firstRepo.name compare:secondRepo.name options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch | NSWidthInsensitiveSearch];
+	}];
+	
+	self.reposCollectionView.content = allRepos;
+}
+
+
+- (void)collectionView:(id)collectionView didTapItem:(NSCollectionViewItem *)item
+{
+	StashRepo *repo = item.representedObject;
+	
+	if([repo isKindOfClass:[StashRepo class]]) {
+		repo.account.currentRepo = repo;
+		[self.popoverWindowController setRootMode:StashRootModeIssues animated:TRUE];
+	}
 }
 
 

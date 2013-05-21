@@ -3,4 +3,6 @@
 
 @interface StashTextView : NSTextView
 
+@property (assign) BOOL scrollEnabled;
+
 @end

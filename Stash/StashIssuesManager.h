@@ -29,6 +29,10 @@ extern NSString * const StashCurrentAccountDidChange;
 - (StashRepo *)repoForIdentfier:(NSNumber *)identifier account:(StashAccount *)account create:(BOOL)create;
 
 - (NSArray *)fetchObjectsOfEntityName:(NSString *)entityName matching:(id)predicate, ...;
+- (NSArray *)fetchObjectsOfEntityName:(NSString *)entityName matching:(id)predicate arguments:(va_list)predicateArguments sortDescriptors:(NSArray *)sortDescriptors;
+- (NSArray *)fetchObjectsOfEntityName:(NSString *)entityName matching:(NSString *)predicateString argumentArray:(NSArray *)predicateArguments sortDescriptors:(NSArray *)sortDescriptors;
+- (NSArray *)fetchObjectsOfEntityName:(NSString *)entityName sortDescriptors:(NSArray *)sortDescriptors;
+
 - (id)objectOfEntityName:(NSString *)entityName matching:(id)predicate, ...;
 
 - (NSArray *)updateReposforAccount:(StashAccount *)account withArray:(NSArray *)reposArray;

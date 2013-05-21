@@ -114,6 +114,7 @@
 		4A7EB141173FB19E00AF5916 /* NSView+ConstraintAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+ConstraintAdditions.m"; sourceTree = "<group>"; };
 		4A7EB145173FD9E800AF5916 /* StashDrawingFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashDrawingFunctions.h; sourceTree = "<group>"; };
 		4A7EB146173FD9E800AF5916 /* StashDrawingFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashDrawingFunctions.m; sourceTree = "<group>"; };
+		4A9BCEA4174A322E00A65D08 /* StashCollectionViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StashCollectionViewDelegate.h; sourceTree = "<group>"; };
 		4AB106BF1749423C004DBFB9 /* StashRepoCollectionViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashRepoCollectionViewItem.h; sourceTree = "<group>"; };
 		4AB106C01749423D004DBFB9 /* StashRepoCollectionViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashRepoCollectionViewItem.m; sourceTree = "<group>"; };
 		4AB106C11749423D004DBFB9 /* Repo Collection View Item.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Repo Collection View Item.xib"; sourceTree = "<group>"; };
@@ -482,6 +483,7 @@
 				4AF3E469174819B50060AA3F /* StashAccountViewController.h */,
 				4AF3E46A174819B50060AA3F /* StashAccountViewController.m */,
 				4AF3E46B174819B50060AA3F /* Account View.xib */,
+				4A9BCEA4174A322E00A65D08 /* StashCollectionViewDelegate.h */,
 				4AB106BF1749423C004DBFB9 /* StashRepoCollectionViewItem.h */,
 				4AB106C01749423D004DBFB9 /* StashRepoCollectionViewItem.m */,
 				4AB106C11749423D004DBFB9 /* Repo Collection View Item.xib */,
