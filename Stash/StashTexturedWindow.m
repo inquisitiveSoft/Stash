@@ -1,6 +1,8 @@
 #import "StashTexturedWindow.h"
 #import "StashTexturedWindowView.h"
 #import "StashViewController.h"
+#import "StashView.h"
+
 #import "StashDrawingFunctions.h"
 
 #import <QuartzCore/QuartzCore.h>
@@ -37,13 +39,21 @@ NSString * const StashPreviousContentViewController = @"StashPreviousContentView
 		[self setContentView:windowBackgroundView];
 		self.windowBackgroundView = windowBackgroundView;
 		
-		NSView *containerView = [[NSView alloc] initWithFrame:[self contentRectForFrameRect:[windowBackgroundView bounds]]];
-		containerView.layer = [CALayer layer];
+		CGFloat innerCornerRadius = windowBackgroundView.innerCornerRadius;
+		
+		StashView *clipView = [[StashView alloc] initWithFrame:[self contentRectForFrameRect:[windowBackgroundView bounds]]];
+		clipView.wantsLayer = TRUE;
+		clipView.layer.masksToBounds = TRUE;
+		clipView.layer.cornerRadius = innerCornerRadius;
+		[clipView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+		[windowBackgroundView addSubview:clipView];
+
+		
+		StashView *containerView = [[StashView alloc] initWithFrame:clipView.bounds];
 		containerView.wantsLayer = TRUE;
-		containerView.layer.masksToBounds = TRUE;
-		containerView.layer.cornerRadius = windowBackgroundView.innerCornerRadius;
 		[containerView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
-		[windowBackgroundView addSubview:containerView];
+		[clipView addSubview:containerView];
+		
 		self.containerView = containerView;
 	}
 	
@@ -103,7 +113,7 @@ NSString * const StashPreviousContentViewController = @"StashPreviousContentView
 				transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
 				transition.duration = duration;
 				transition.delegate = self;
-				objc_setAssociatedObject(self, (__bridge const void *)StashPreviousContentViewController, transition, OBJC_ASSOCIATION_ASSIGN);
+				objc_setAssociatedObject(self, (__bridge const void *)StashPreviousContentViewController, currentViewController, OBJC_ASSOCIATION_ASSIGN);
 				
 				self.containerView.animations = @{ @"subviews" : transition };
 				[self.containerView.animator replaceSubview:currentView with:destinationView];
