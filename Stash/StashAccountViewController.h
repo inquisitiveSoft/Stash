@@ -3,7 +3,7 @@
 
 
 
-@interface StashAccountViewController : StashViewController <StashCollectionViewDelegate, NSTextFieldDelegate>
+@interface StashAccountViewController : StashViewController <NSTableViewDataSource, NSTableViewDelegate, NSTextFieldDelegate>
 
 
 

@@ -25,12 +25,13 @@
 		4A7EB13F173FACEB00AF5916 /* StashView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EB13E173FACEB00AF5916 /* StashView.m */; };
 		4A7EB142173FB19E00AF5916 /* NSView+ConstraintAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EB141173FB19E00AF5916 /* NSView+ConstraintAdditions.m */; };
 		4A7EB147173FD9E800AF5916 /* StashDrawingFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EB146173FD9E800AF5916 /* StashDrawingFunctions.m */; };
-		4AB106C21749423D004DBFB9 /* StashRepoCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB106C01749423D004DBFB9 /* StashRepoCollectionViewItem.m */; };
-		4AB106C31749423D004DBFB9 /* Repo Collection View Item.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AB106C11749423D004DBFB9 /* Repo Collection View Item.xib */; };
+		4AB106C21749423D004DBFB9 /* StashRepoTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB106C01749423D004DBFB9 /* StashRepoTableCellView.m */; };
 		4AB61EDA174B853600B46EF2 /* StashTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB61ED9174B853600B46EF2 /* StashTextField.m */; };
 		4AB61EDD174BA86F00B46EF2 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB61EDC174BA86F00B46EF2 /* NSString+Additions.m */; };
 		4AB61EE0174BB27F00B46EF2 /* StashCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB61EDF174BB27F00B46EF2 /* StashCollectionView.m */; };
 		4AB61EE3174BB70D00B46EF2 /* NSString+ScoreForAbbreviation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB61EE2174BB70D00B46EF2 /* NSString+ScoreForAbbreviation.m */; };
+		4AB61EEB174BD65500B46EF2 /* JUCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB61EE5174BD65400B46EF2 /* JUCollectionView.m */; };
+		4AB61EED174BD65500B46EF2 /* JUCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB61EE9174BD65500B46EF2 /* JUCollectionViewCell.m */; };
 		4AB88B3C1741D9D50085D8A7 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AD190BC173DE4B100D3F24E /* CoreData.framework */; };
 		4AB88B411741DA2F0085D8A7 /* _StashItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB88B3E1741DA2F0085D8A7 /* _StashItem.m */; };
 		4AB88B421741DA2F0085D8A7 /* StashItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB88B401741DA2F0085D8A7 /* StashItem.m */; };
@@ -118,9 +119,8 @@
 		4A7EB145173FD9E800AF5916 /* StashDrawingFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashDrawingFunctions.h; sourceTree = "<group>"; };
 		4A7EB146173FD9E800AF5916 /* StashDrawingFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashDrawingFunctions.m; sourceTree = "<group>"; };
 		4A9BCEA4174A322E00A65D08 /* StashCollectionViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StashCollectionViewDelegate.h; sourceTree = "<group>"; };
-		4AB106BF1749423C004DBFB9 /* StashRepoCollectionViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashRepoCollectionViewItem.h; sourceTree = "<group>"; };
-		4AB106C01749423D004DBFB9 /* StashRepoCollectionViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashRepoCollectionViewItem.m; sourceTree = "<group>"; };
-		4AB106C11749423D004DBFB9 /* Repo Collection View Item.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Repo Collection View Item.xib"; sourceTree = "<group>"; };
+		4AB106BF1749423C004DBFB9 /* StashRepoTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashRepoTableCellView.h; sourceTree = "<group>"; };
+		4AB106C01749423D004DBFB9 /* StashRepoTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashRepoTableCellView.m; sourceTree = "<group>"; };
 		4AB61ED8174B853600B46EF2 /* StashTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashTextField.h; sourceTree = "<group>"; };
 		4AB61ED9174B853600B46EF2 /* StashTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashTextField.m; sourceTree = "<group>"; };
 		4AB61EDB174BA86F00B46EF2 /* NSString+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Additions.h"; sourceTree = "<group>"; };
@@ -129,6 +129,11 @@
 		4AB61EDF174BB27F00B46EF2 /* StashCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashCollectionView.m; sourceTree = "<group>"; };
 		4AB61EE1174BB70D00B46EF2 /* NSString+ScoreForAbbreviation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+ScoreForAbbreviation.h"; path = "Submodules/SYMLFoundation/Combined/Categories/NSString+ScoreForAbbreviation.h"; sourceTree = SOURCE_ROOT; };
 		4AB61EE2174BB70D00B46EF2 /* NSString+ScoreForAbbreviation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+ScoreForAbbreviation.m"; path = "Submodules/SYMLFoundation/Combined/Categories/NSString+ScoreForAbbreviation.m"; sourceTree = SOURCE_ROOT; };
+		4AB61EE4174BD65400B46EF2 /* JUCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JUCollectionView.h; path = Submodules/JUCollectionView/Source/JUCollectionView.h; sourceTree = "<group>"; };
+		4AB61EE5174BD65400B46EF2 /* JUCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JUCollectionView.m; path = Submodules/JUCollectionView/Source/JUCollectionView.m; sourceTree = "<group>"; };
+		4AB61EE8174BD65500B46EF2 /* JUCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JUCollectionViewCell.h; path = Submodules/JUCollectionView/Source/JUCollectionViewCell.h; sourceTree = "<group>"; };
+		4AB61EE9174BD65500B46EF2 /* JUCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JUCollectionViewCell.m; path = Submodules/JUCollectionView/Source/JUCollectionViewCell.m; sourceTree = "<group>"; };
+		4AB61EEA174BD65500B46EF2 /* JUCollectionViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JUCollectionViewDelegate.h; path = Submodules/JUCollectionView/Source/JUCollectionViewDelegate.h; sourceTree = "<group>"; };
 		4AB88B3D1741DA2F0085D8A7 /* _StashItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _StashItem.h; sourceTree = "<group>"; };
 		4AB88B3E1741DA2F0085D8A7 /* _StashItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _StashItem.m; sourceTree = "<group>"; };
 		4AB88B3F1741DA2F0085D8A7 /* StashItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashItem.h; sourceTree = "<group>"; };
@@ -273,6 +278,19 @@
 			name = "Issues View";
 			sourceTree = "<group>";
 		};
+		4AB61EEE174BD65A00B46EF2 /* JUCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				4AB61EE4174BD65400B46EF2 /* JUCollectionView.h */,
+				4AB61EE5174BD65400B46EF2 /* JUCollectionView.m */,
+				4AB61EE8174BD65500B46EF2 /* JUCollectionViewCell.h */,
+				4AB61EE9174BD65500B46EF2 /* JUCollectionViewCell.m */,
+				4AB61EEA174BD65500B46EF2 /* JUCollectionViewDelegate.h */,
+			);
+			name = JUCollectionView;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		4AB88B4917425E170085D8A7 /* RegexKitLite */ = {
 			isa = PBXGroup;
 			children = (
@@ -359,6 +377,7 @@
 				4AD1910C173DE75F00D3F24E /* XSControllers */,
 				4AD19108173DE73600D3F24E /* SYMLFoundation */,
 				4AD19107173DE72100D3F24E /* AFNetworking */,
+				4AB61EEE174BD65A00B46EF2 /* JUCollectionView */,
 			);
 			name = "Other Sources";
 			path = Stash;
@@ -499,9 +518,8 @@
 				4AF3E46A174819B50060AA3F /* StashAccountViewController.m */,
 				4AF3E46B174819B50060AA3F /* Account View.xib */,
 				4A9BCEA4174A322E00A65D08 /* StashCollectionViewDelegate.h */,
-				4AB106BF1749423C004DBFB9 /* StashRepoCollectionViewItem.h */,
-				4AB106C01749423D004DBFB9 /* StashRepoCollectionViewItem.m */,
-				4AB106C11749423D004DBFB9 /* Repo Collection View Item.xib */,
+				4AB106BF1749423C004DBFB9 /* StashRepoTableCellView.h */,
+				4AB106C01749423D004DBFB9 /* StashRepoTableCellView.m */,
 			);
 			name = "Account View";
 			sourceTree = "<group>";
@@ -622,7 +640,6 @@
 				4AB88B4317423C4F0085D8A7 /* Issues Model.xcdatamodeld in Resources */,
 				4ABDA28417451D36002EADB7 /* Issue Collection View Item.xib in Resources */,
 				4AF3E46D174819B50060AA3F /* Account View.xib in Resources */,
-				4AB106C31749423D004DBFB9 /* Repo Collection View Item.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -685,13 +702,15 @@
 				4AFDC5AC1744AA4B0038F953 /* NSObject+BlockObservation.m in Sources */,
 				4ABDA28A17475CA7002EADB7 /* StashTextView.m in Sources */,
 				4AF3E46C174819B50060AA3F /* StashAccountViewController.m in Sources */,
-				4AB106C21749423D004DBFB9 /* StashRepoCollectionViewItem.m in Sources */,
+				4AB106C21749423D004DBFB9 /* StashRepoTableCellView.m in Sources */,
 				4A147F7B174963A400C0AC82 /* NSArray+UntestedIndex.m in Sources */,
 				4A147F7C174963A400C0AC82 /* NSMutableArray+UntestedIndex.m in Sources */,
 				4AB61EDA174B853600B46EF2 /* StashTextField.m in Sources */,
 				4AB61EDD174BA86F00B46EF2 /* NSString+Additions.m in Sources */,
 				4AB61EE0174BB27F00B46EF2 /* StashCollectionView.m in Sources */,
 				4AB61EE3174BB70D00B46EF2 /* NSString+ScoreForAbbreviation.m in Sources */,
+				4AB61EEB174BD65500B46EF2 /* JUCollectionView.m in Sources */,
+				4AB61EED174BD65500B46EF2 /* JUCollectionViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

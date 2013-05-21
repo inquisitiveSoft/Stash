@@ -319,6 +319,7 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 		NSDate *dateOfLastModification = [operation dateOfLastModification];
 		
 		BOOL hasChangesToPull = !(dateStampOfLastSync && dateOfLastModification && [dateOfLastModification timeIntervalSinceDate:dateStampOfLastSync] < 0);
+		#warning hasChangesToPull isn't read
 		hasChangesToPull = TRUE;
 		
 		if(hasChangesToPull) {

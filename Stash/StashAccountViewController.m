@@ -4,7 +4,7 @@
 #import "StashNetworkManager.h"
 
 #import "StashPopoverWindowController.h"
-#import "StashRepoCollectionViewItem.h"
+#import "StashRepoTableCellView.h"
 #import "StashView.h"
 
 #import <QuartzCore/QuartzCore.h>
@@ -16,10 +16,14 @@
 #import "qLog.h"
 
 
+NSString * const StashRepoTableCellViewIdentifier = @"StashRepoTableCellViewIdentifier";
+
+
 @interface StashAccountViewController ()
 
 @property (strong) IBOutlet NSScrollView *reposCollectionScrollView;
 @property (strong) IBOutlet NSCollectionView *reposCollectionView;
+@property (strong) IBOutlet NSTableView *reposTableView;
 @property (strong) IBOutlet NSSearchField *filterField;
 @property (strong) IBOutlet StashView *filterBackgroundView;
 
@@ -45,13 +49,11 @@
 	[reposCollectionScrollView setBackgroundColor:backgroundColor];
 	[reposCollectionScrollView setScrollerStyle:NSScrollerStyleOverlay];
 	
-	NSCollectionView *reposCollectionView = self.reposCollectionView;
-	
-	StashRepoCollectionViewItem *repoCollectionItemView = [[StashRepoCollectionViewItem alloc] initWithNibName:@"Repo Collection View Item" bundle:nil];
-	reposCollectionView.delegate = self;
-	reposCollectionView.itemPrototype = repoCollectionItemView;
-	reposCollectionView.maxNumberOfColumns = 1;
-	reposCollectionView.maxItemSize = NSMakeSize(1024.0, 36.0);
+	NSTableView *reposTableView = self.reposTableView;
+	reposTableView.rowHeight = 32.0;
+	reposTableView.delegate = self;
+	reposTableView.dataSource = self;
+	[reposTableView setNeedsDisplay];
 	
 	[self.usernameField bind:@"stringValue" toObject:[StashIssuesManager sharedIssuesManager] withKeyPath:@"currentAccount.username" options:nil];
 	[self.fullNameField	bind:@"stringValue" toObject:[StashIssuesManager sharedIssuesManager] withKeyPath:@"currentAccount.name" options:nil];
@@ -112,7 +114,13 @@
 	allRepos = [self sortedArrayOfRepos:allRepos usingAbbreviation:filterString];
 	
 	self.currentRepos = allRepos;
-	self.reposCollectionView.content = allRepos;
+	
+	NSTableView *reposTableView = self.reposTableView;
+	[reposTableView reloadData];
+	
+	if([allRepos count]) {
+		[reposTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:FALSE];
+	}
 }
 
 
@@ -179,13 +187,48 @@
 
 #pragma mark -
 
-- (void)collectionView:(id)collectionView didTapItem:(NSCollectionViewItem *)item
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-	StashRepo *repo = item.representedObject;
+	return self.currentRepos.count;
+}
+
+
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+	StashRepoTableCellView *view = [tableView makeViewWithIdentifier:StashRepoTableCellViewIdentifier owner:self];
 	
-	if([repo isKindOfClass:[StashRepo class]]) {
-		repo.account.currentRepo = repo;
-		[self.popoverWindowController setRootMode:StashRootModeIssues animated:TRUE];
+	if(!view) {
+		view = [[StashRepoTableCellView alloc] initWithFrame:NSMakeRect(0.0, 0.0, 120.0, tableView.rowHeight)];
+		view.identifier = StashRepoTableCellViewIdentifier;
+	}
+	
+	
+ 	StashRepo *repo = [self.currentRepos objectAtUntestedIndex:row];
+	view.label.stringValue = repo.name;
+	
+	return view;
+}
+
+
+
+- (void)tableViewSelectionDidChange:(NSNotification *)notification
+{
+	NSIndexSet *selectedRowIndexes = self.reposTableView.selectedRowIndexes;
+	
+	if([selectedRowIndexes count]) {
+		NSInteger selectedIndex = [selectedRowIndexes firstIndex];
+		StashRepo *selectedRepo = [self.currentRepos objectAtUntestedIndex:selectedIndex];
+		
+		if(selectedRepo) {
+			[StashIssuesManager sharedIssuesManager].currentAccount.currentRepo = selectedRepo;
+			
+			NSEvent *currentEvent = [[NSApplication sharedApplication] currentEvent];
+			
+			if(currentEvent.type == NSLeftMouseUp) {
+				[self.popoverWindowController setRootMode:StashRootModeIssues animated:TRUE];
+			}
+		}
 	}
 }
 
