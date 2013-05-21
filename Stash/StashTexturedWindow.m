@@ -28,8 +28,9 @@ NSString * const StashPreviousContentViewController = @"StashPreviousContentView
 	
 	if(self) {
 		[self setMovableByWindowBackground:FALSE];
+		[self setRestorable:FALSE];
 		[self setOpaque:FALSE];
-		[self setHasShadow:FALSE];	// The background view draws the
+		[self setHasShadow:FALSE];	// The background view draws the shadow
 		[self setBackgroundColor:[NSColor clearColor]];
 		
 		StashTexturedWindowView *windowBackgroundView = [[StashTexturedWindowView alloc] initWithFrame:[self frameRectForContentRect:contentRect]];
@@ -44,7 +45,6 @@ NSString * const StashPreviousContentViewController = @"StashPreviousContentView
 		[containerView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
 		[windowBackgroundView addSubview:containerView];
 		self.containerView = containerView;
-
 	}
 	
 	return self;
@@ -99,16 +99,14 @@ NSString * const StashPreviousContentViewController = @"StashPreviousContentView
 			if(animated) {
 				CATransition *transition = [CATransition animation];
 				transition.type = kCATransitionPush;
-				transition.subtype = animationDirection ?: kCATransitionFromBottom;
+				transition.subtype = animationDirection ? : kCATransitionFromBottom;
 				transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
 				transition.duration = duration;
 				transition.delegate = self;
 				objc_setAssociatedObject(self, (__bridge const void *)StashPreviousContentViewController, transition, OBJC_ASSOCIATION_ASSIGN);
 				
-				[self.containerView.layer addAnimation:transition forKey:nil];
-				
-				[self.containerView replaceSubview:currentView with:destinationView];
-				
+				self.containerView.animations = @{ @"subviews" : transition };
+				[self.containerView.animator replaceSubview:currentView with:destinationView];
 			} else {
 				[self.containerView replaceSubview:currentView with:destinationView];
 			}

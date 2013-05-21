@@ -4,7 +4,6 @@
 #import "StashNetworkManager.h"
 
 #import "StashPopoverWindowController.h"
-#import "StashTopButton.h"
 
 #import "StashTextView.h"
 #import "StashIssueCollectionViewItem.h"
@@ -18,8 +17,7 @@
 
 @interface StashIssuesViewController ()
 
-@property (strong) IBOutlet StashIssueCollectionViewItem *collectionViewItem;
-@property (strong) IBOutlet StashTopButton *topButton;
+@property (strong) IBOutlet NSButton *topButton;
 @property (strong) IBOutlet StashTextView *filterTextView;
 @property (strong) IBOutlet NSLayoutConstraint *filterTextViewHeightConstraint;
 
@@ -41,7 +39,7 @@
 	
 	StashTextView *filterTextView = self.filterTextView;
 	filterTextView.delegate = self;
-	filterTextView.font = [NSFont fontWithName:@"Avenir Medium" size:15.0];
+	filterTextView.font = [NSFont fontWithName:@"Lucida Grande" size:14.0];
 	
 	NSScrollView *issuesCollectionScrollView = self.issuesCollectionScrollView;
 	[issuesCollectionScrollView setBackgroundColor:[NSColor clearColor]];

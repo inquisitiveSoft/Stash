@@ -21,13 +21,18 @@
 	self = [super initWithFrame:frame];
 	
 	if(self) {
-		self.layer = [CALayer layer];
+		CALayer *layer = [CALayer layer];
+		layer.needsDisplayOnBoundsChange = TRUE;
+		layer.delegate = self;
+		self.layer = layer;
+		[layer setNeedsDisplay];
+		
 		self.wantsLayer = TRUE;
 		
 		arrowSize = CGSizeMake(22.0f, 11.0f);
 		
 		cornerRadius = 6.0f;
-		contentPadding = 1.0f;
+		contentPadding = 2.0f;
 		innerCornerRadius = roundf(cornerRadius - ceilf(contentPadding / 2));
 		
 		shadowRadius = 8.0;
@@ -56,17 +61,14 @@
 }
 
 
-- (void)drawRect:(NSRect)dirtyRect
+- (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)context
 {
-
 	// Gather variables so as to be nicely copy and pastable into a custom view
 	CGRect bounds = self.bounds;
 	CGRect arrowRect = [self arrowRect];
 	
 	NSEdgeInsets arrowInsets = NSEdgeInsetsMake(arrowSize.height, 0.0, 0.0, 0.0);
 	CGRect outlineRect = StashNSEdgeInsetsInsetRect(StashNSEdgeInsetsInsetRect(bounds, arrowInsets), shadowInsets);
-	
-	CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
 	
 	CGContextSaveGState(context);
 	CGSize flippedShadowOffset = shadowOffset;
