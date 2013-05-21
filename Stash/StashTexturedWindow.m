@@ -113,6 +113,7 @@ NSString * const StashPreviousContentViewController = @"StashPreviousContentView
 				objc_setAssociatedObject(self, (__bridge const void *)StashPreviousContentViewController, currentViewController, OBJC_ASSOCIATION_ASSIGN);
 				
 				self.containerView.animations = @{ @"subviews" : transition };
+				
 				[self.containerView.animator replaceSubview:currentView with:destinationView];
 			} else {
 				[self.containerView replaceSubview:currentView with:destinationView];

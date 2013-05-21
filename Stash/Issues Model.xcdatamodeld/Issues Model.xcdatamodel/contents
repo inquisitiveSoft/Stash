@@ -60,7 +60,7 @@
         <element name="StashIssue" positionX="-45" positionY="-291" width="128" height="238"/>
         <element name="StashLabel" positionX="198" positionY="-13" width="128" height="103"/>
         <element name="StashMilestone" positionX="216" positionY="-184" width="128" height="148"/>
-        <element name="StashRepo" positionX="-234" positionY="-123" width="128" height="150"/>
+        <element name="StashRepo" positionX="-234" positionY="-123" width="128" height="148"/>
         <element name="StashUsers" positionX="178" positionY="117" width="128" height="88"/>
     </elements>
 </model>

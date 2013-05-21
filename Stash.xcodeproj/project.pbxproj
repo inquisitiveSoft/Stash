@@ -30,6 +30,7 @@
 		4AB61EDA174B853600B46EF2 /* StashTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB61ED9174B853600B46EF2 /* StashTextField.m */; };
 		4AB61EDD174BA86F00B46EF2 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB61EDC174BA86F00B46EF2 /* NSString+Additions.m */; };
 		4AB61EE0174BB27F00B46EF2 /* StashCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB61EDF174BB27F00B46EF2 /* StashCollectionView.m */; };
+		4AB61EE3174BB70D00B46EF2 /* NSString+ScoreForAbbreviation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB61EE2174BB70D00B46EF2 /* NSString+ScoreForAbbreviation.m */; };
 		4AB88B3C1741D9D50085D8A7 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AD190BC173DE4B100D3F24E /* CoreData.framework */; };
 		4AB88B411741DA2F0085D8A7 /* _StashItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB88B3E1741DA2F0085D8A7 /* _StashItem.m */; };
 		4AB88B421741DA2F0085D8A7 /* StashItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB88B401741DA2F0085D8A7 /* StashItem.m */; };
@@ -126,6 +127,8 @@
 		4AB61EDC174BA86F00B46EF2 /* NSString+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additions.m"; sourceTree = "<group>"; };
 		4AB61EDE174BB27F00B46EF2 /* StashCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashCollectionView.h; sourceTree = "<group>"; };
 		4AB61EDF174BB27F00B46EF2 /* StashCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashCollectionView.m; sourceTree = "<group>"; };
+		4AB61EE1174BB70D00B46EF2 /* NSString+ScoreForAbbreviation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+ScoreForAbbreviation.h"; path = "Submodules/SYMLFoundation/Combined/Categories/NSString+ScoreForAbbreviation.h"; sourceTree = SOURCE_ROOT; };
+		4AB61EE2174BB70D00B46EF2 /* NSString+ScoreForAbbreviation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+ScoreForAbbreviation.m"; path = "Submodules/SYMLFoundation/Combined/Categories/NSString+ScoreForAbbreviation.m"; sourceTree = SOURCE_ROOT; };
 		4AB88B3D1741DA2F0085D8A7 /* _StashItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _StashItem.h; sourceTree = "<group>"; };
 		4AB88B3E1741DA2F0085D8A7 /* _StashItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _StashItem.m; sourceTree = "<group>"; };
 		4AB88B3F1741DA2F0085D8A7 /* StashItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashItem.h; sourceTree = "<group>"; };
@@ -249,6 +252,8 @@
 				4A7EB141173FB19E00AF5916 /* NSView+ConstraintAdditions.m */,
 				4AB61EDB174BA86F00B46EF2 /* NSString+Additions.h */,
 				4AB61EDC174BA86F00B46EF2 /* NSString+Additions.m */,
+				4AB61EE1174BB70D00B46EF2 /* NSString+ScoreForAbbreviation.h */,
+				4AB61EE2174BB70D00B46EF2 /* NSString+ScoreForAbbreviation.m */,
 				4A7EB145173FD9E800AF5916 /* StashDrawingFunctions.h */,
 				4A7EB146173FD9E800AF5916 /* StashDrawingFunctions.m */,
 			);
@@ -686,6 +691,7 @@
 				4AB61EDA174B853600B46EF2 /* StashTextField.m in Sources */,
 				4AB61EDD174BA86F00B46EF2 /* NSString+Additions.m in Sources */,
 				4AB61EE0174BB27F00B46EF2 /* StashCollectionView.m in Sources */,
+				4AB61EE3174BB70D00B46EF2 /* NSString+ScoreForAbbreviation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

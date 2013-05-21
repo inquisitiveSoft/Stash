@@ -9,6 +9,7 @@
 
 
 @implementation StashRepo
+@synthesize scoreForAbbreviation, maskForAbbreviation;
 
 
 

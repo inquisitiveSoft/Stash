@@ -12,6 +12,7 @@
 #import "NSObject+BlockObservation.h"
 #import "NSArray+UntestedIndex.h"
 #import "NSString+Additions.h"
+#import "NSString+ScoreForAbbreviation.h"
 #import "qLog.h"
 
 
@@ -37,7 +38,6 @@
 - (void)awakeFromNib
 {
 	self.filterField.delegate = self;
-	
 	self.filterBackgroundView.backgroundColor = [NSColor colorWithDeviceHue:0.639 saturation:0.011 brightness:0.963 alpha:1.000];
 	
 	NSColor *backgroundColor = [NSColor whiteColor];
@@ -109,20 +109,54 @@
 	
 	
 	NSArray *allRepos = [[StashIssuesManager sharedIssuesManager] fetchObjectsOfEntityName:[StashRepo entityName] matching:predicateFormat argumentArray:arguments sortDescriptors:nil];
-	
-	
-	// Entering the sort descriptor above wasn't working
-	allRepos = [allRepos sortedArrayUsingComparator:^NSComparisonResult(id firstObject, id secondObject) {
-		StashRepo *firstRepo = firstObject;
-		StashRepo *secondRepo = secondObject;
-		
-		return [firstRepo.name compare:secondRepo.name options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch | NSWidthInsensitiveSearch];
-	}];
-	
+	allRepos = [self sortedArrayOfRepos:allRepos usingAbbreviation:filterString];
 	
 	self.currentRepos = allRepos;
-	
 	self.reposCollectionView.content = allRepos;
+}
+
+
+- (NSArray *)sortedArrayOfRepos:(NSArray *)repos usingAbbreviation:(NSString *)abbreviation
+{
+	if([abbreviation length]) {
+		// Sort by the abbreviation score
+		for(StashRepo *repo in repos) {
+			// Happily clobber any existing scoreForAbbreviation or maskForAbbreviation
+			NSMutableIndexSet *mask = [[NSMutableIndexSet alloc] init];
+			repo.scoreForAbbreviation = [[repo.name normalizedString] scoreForAbbreviation:abbreviation hitMask:&mask];
+			repo.maskForAbbreviation = [mask copy];
+		}
+		
+		repos = [repos sortedArrayUsingComparator:^NSComparisonResult(StashRepo *firstRepo, StashRepo *secondRepo) {
+			//
+			if(![firstRepo isKindOfClass:[StashRepo class]] || ![secondRepo isKindOfClass:[StashRepo class]]) {
+				qLog(@"Unexpected object types in comparison: %@ - %@. Expecting StashRepo's", firstRepo, secondRepo);
+				return NSOrderedSame;
+			}
+			
+			CGFloat firstElementRating = firstRepo.scoreForAbbreviation;
+			CGFloat secondElementRating = secondRepo.scoreForAbbreviation;
+			
+			if(firstElementRating < secondElementRating)
+				return NSOrderedDescending;
+			else if(firstElementRating > secondElementRating)
+				return NSOrderedAscending;
+			
+			return [firstRepo.name localizedStandardCompare:secondRepo.name];
+		}];
+	} else {
+		// Otherwise simply sort by name
+		repos =  [repos sortedArrayUsingComparator:^NSComparisonResult(StashRepo *firstRepo, StashRepo *secondRepo) {
+			if(![firstRepo isKindOfClass:[StashRepo class]] || ![secondRepo isKindOfClass:[StashRepo class]]) {
+				qLog(@"Unexpected object types in comparison: %@ - %@. Expecting StashRepo's", firstRepo, secondRepo);
+				return NSOrderedSame;
+			}
+			
+			return [firstRepo.name localizedStandardCompare:secondRepo.name];
+		}];
+	}
+	
+	return repos;
 }
 
 
