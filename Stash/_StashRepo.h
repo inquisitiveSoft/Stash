@@ -7,6 +7,7 @@
 extern const struct StashRepoAttributes {
 	__unsafe_unretained NSString *identifier;
 	__unsafe_unretained NSString *name;
+	__unsafe_unretained NSString *public;
 } StashRepoAttributes;
 
 extern const struct StashRepoRelationships {
@@ -25,6 +26,7 @@ extern const struct StashRepoFetchedProperties {
 @class StashLabel;
 @class StashMilestone;
 @class StashUsers;
+
 
 
 
@@ -61,6 +63,20 @@ extern const struct StashRepoFetchedProperties {
 
 
 //- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* public;
+
+
+
+@property BOOL publicValue;
+- (BOOL)publicValue;
+- (void)setPublicValue:(BOOL)value_;
+
+//- (BOOL)validatePublic:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -142,6 +158,15 @@ extern const struct StashRepoFetchedProperties {
 
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitivePublic;
+- (void)setPrimitivePublic:(NSNumber*)value;
+
+- (BOOL)primitivePublicValue;
+- (void)setPrimitivePublicValue:(BOOL)value_;
 
 
 

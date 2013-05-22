@@ -13,24 +13,25 @@
 #import "NSArray+UntestedIndex.h"
 #import "NSString+Additions.h"
 #import "NSString+ScoreForAbbreviation.h"
+#import "NSString+KeyCodeTranslator.h"
+
 #import "qLog.h"
 
 
 NSString * const StashRepoTableCellViewIdentifier = @"StashRepoTableCellViewIdentifier";
+NSString * const StashRepoListSelectionIdentifier = @"StashRepoListSelectionIdentifier";
 
 
 @interface StashAccountViewController ()
 
 @property (strong) IBOutlet NSScrollView *reposCollectionScrollView;
-@property (strong) IBOutlet NSCollectionView *reposCollectionView;
 @property (strong) IBOutlet NSTableView *reposTableView;
 @property (strong) IBOutlet NSSearchField *filterField;
 @property (strong) IBOutlet StashView *filterBackgroundView;
 
-@property (strong) IBOutlet NSTextField *usernameField;
-@property (strong) IBOutlet NSTextField *fullNameField;
+@property (copy, nonatomic) NSString *filterString;
 
-@property (strong) NSArray *currentRepos;
+@property (strong) NSArray *repos;
 @property (strong) NSMutableArray *observationTokens;
 
 @end
@@ -40,7 +41,7 @@ NSString * const StashRepoTableCellViewIdentifier = @"StashRepoTableCellViewIden
 
 
 - (void)awakeFromNib
-{
+{	
 	self.filterField.delegate = self;
 	self.filterBackgroundView.backgroundColor = [NSColor colorWithDeviceHue:0.639 saturation:0.011 brightness:0.963 alpha:1.000];
 	
@@ -54,25 +55,61 @@ NSString * const StashRepoTableCellViewIdentifier = @"StashRepoTableCellViewIden
 	reposTableView.delegate = self;
 	reposTableView.dataSource = self;
 	[reposTableView setNeedsDisplay];
+		
+	__weak StashAccountViewController *accountViewController = self;
+	[(StashView *)self.view setKeyEventHandlingBlock:^(NSEvent *keyEvent, BOOL *shouldCallSuper) {
+		*shouldCallSuper = [accountViewController handleKeyEvent:keyEvent];
+	}];
+}
+
+
+- (void)setFilterString:(NSString *)filterString
+{
+	_filterString = filterString;
 	
-	[self.usernameField bind:@"stringValue" toObject:[StashIssuesManager sharedIssuesManager] withKeyPath:@"currentAccount.username" options:nil];
-	[self.fullNameField	bind:@"stringValue" toObject:[StashIssuesManager sharedIssuesManager] withKeyPath:@"currentAccount.name" options:nil];
+	[self updateContent:TRUE];
+	
+	if(filterString.length == 0) {
+		[self.reposTableView deselectAll:nil];
+	}
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	NSMutableArray *observationTokens = [self observationTokens] ? : [[NSMutableArray alloc] init];
+	__weak StashAccountViewController *accountViewController = self;
+	
+	id token = [[StashIssuesManager sharedIssuesManager] sk_observeKeyPath:@"currentAccount.repos" change:^(id observedObject, NSString *keyPath, id oldValue, id newValue) {
+		[accountViewController updateContent:FALSE];
+	}];
+	
+	if(token)
+		[observationTokens addObject:token];
+	
+	[self updateContent:FALSE];
+	
+	// Restore the previous selection
+//	NSUInteger repoInteger = [[NSUserDefaults standardUserDefaults] integerForKey:StashRepoListSelectionIdentifier];
+//	
+//	if(repoInteger > 0) { 
+//		NSUInteger selectionIndex = 0;
+//		
+//		for(StashRepo *repo in self.repos) {
+//			if(repo.identifier.integerValue == repoInteger) {
+//				[self.reposTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:selectionIndex] byExtendingSelection:FALSE];
+//				break;
+//			}
+//			
+//			selectionIndex++;
+//		}
+//	}
 }
 
 
 - (void)viewDidAppear:(BOOL)animated
 {
-	[self updateContent];
-	
-	NSMutableArray *observationTokens = [self observationTokens] ? : [[NSMutableArray alloc] init];
-	__weak StashAccountViewController *accountViewController = self;
-	
-	id token = [[StashIssuesManager sharedIssuesManager] sk_observeKeyPath:@"currentAccount.repos" change:^(id observedObject, NSString *keyPath, id oldValue, id newValue) {
-		[accountViewController updateContent];
-	}];
-	
-	if(token)
-		[observationTokens addObject:token];
+	[self.view.window makeFirstResponder:self.view];
 }
 
 
@@ -80,13 +117,17 @@ NSString * const StashRepoTableCellViewIdentifier = @"StashRepoTableCellViewIden
 {
 	for(id observationToken in self.observationTokens)
 		[NSObject sk_removeObservationForToken:observationToken];
+	
+	// Save the current selection
+	StashRepo *repo = [self.repos objectAtUntestedIndex:self.reposTableView.selectedRow];
+	NSUInteger repoInteger = [repo.identifier integerValue];
+	[[NSUserDefaults standardUserDefaults] setInteger:repoInteger forKey:StashRepoListSelectionIdentifier];
 }
 
 
-- (void)updateContent
+- (void)updateContent:(BOOL)selectFirstItem
 {
-	NSString *filterString = self.filterField.stringValue;
-	
+	NSString *filterString = self.filterString;
 	NSString *predicateFormat = nil;
 	NSArray *arguments = nil;
 	
@@ -110,15 +151,14 @@ NSString * const StashRepoTableCellViewIdentifier = @"StashRepoTableCellViewIden
 	}
 	
 	
-	NSArray *allRepos = [[StashIssuesManager sharedIssuesManager] fetchObjectsOfEntityName:[StashRepo entityName] matching:predicateFormat argumentArray:arguments sortDescriptors:nil];
-	allRepos = [self sortedArrayOfRepos:allRepos usingAbbreviation:filterString];
-	
-	self.currentRepos = allRepos;
+	NSArray *repos = [[StashIssuesManager sharedIssuesManager] fetchObjectsOfEntityName:[StashRepo entityName] matching:predicateFormat argumentArray:arguments sortDescriptors:nil];
+	repos = [self sortedArrayOfRepos:repos usingAbbreviation:filterString];
+	self.repos = repos;
 	
 	NSTableView *reposTableView = self.reposTableView;
 	[reposTableView reloadData];
 	
-	if([allRepos count]) {
+	if(selectFirstItem && [repos count]) {
 		[reposTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:FALSE];
 	}
 }
@@ -170,18 +210,60 @@ NSString * const StashRepoTableCellViewIdentifier = @"StashRepoTableCellViewIden
 
 #pragma mark - 
 
-- (void)controlTextDidChange:(NSNotification *)notification
+
+- (BOOL)handleKeyEvent:(NSEvent *)keyEvent
 {
-	[self updateContent];
+	NSString *key = [NSString stringForKeyCode:keyEvent.keyCode withModifierFlags:keyEvent.modifierFlags];
+	
+	if(!key)
+		return FALSE;
+	
+	
+	BOOL hasFilterString = self.filterString.length > 0;
+	BOOL foundMatch = hasFilterString;
+	
+	if([key isEqualToString:@"Enter"]) {
+		// Switch to the issues screen
+		if(hasFilterString && self.reposTableView.selectedRow >= 0) {
+			[self switchToIssuesView:TRUE];
+		}
+	} else if([key isEqualToString:@"Escape"]) {
+		// Clear the filter string
+		if(hasFilterString) {
+			self.filterString = nil;
+		}
+	} else if([key isEqualToString:@"Backspace"]) {
+		// Remove the last filter string
+		if(hasFilterString) {
+			NSString *filterString = self.filterString;
+			filterString = [filterString substringWithRange:NSMakeRange(0, filterString.length - 1)];
+			self.filterString = filterString;
+		}
+	} else if([key isEqualToString:@"Up"] || [key isEqualToString:@"Down"]) {
+		NSInteger currentSelectedRow = [self.reposTableView.selectedRowIndexes firstIndex];
+		
+		if(currentSelectedRow != NSNotFound) {
+			if([key isEqualToString:@"Down"])
+				currentSelectedRow++;
+			
+			if([key isEqualToString:@"Up"])
+				currentSelectedRow--;
+			
+			NSInteger rowToSelect = MIN(MAX(0, currentSelectedRow), self.repos.count - 1);
+			NSTableView *reposTableView = self.reposTableView;
+			[reposTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:rowToSelect] byExtendingSelection:FALSE];
+			[reposTableView scrollRowToVisible:rowToSelect];
+		}
+	} else if([key length] == 1) {
+		self.filterString = [self.filterString ? : @"" stringByAppendingString:key];
+	} else {
+		qLog(@"Unmatched key press: %@", key);
+		foundMatch = FALSE;
+	}
+	
+	return foundMatch;
 }
 
-
-- (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
-{
-	StashRepo *repo = (StashRepo *)[self.currentRepos objectAtUntestedIndex:0];
-	[StashIssuesManager sharedIssuesManager].currentAccount.currentRepo = repo;
-	return TRUE;
-}
 
 
 
@@ -190,7 +272,7 @@ NSString * const StashRepoTableCellViewIdentifier = @"StashRepoTableCellViewIden
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-	return self.currentRepos.count;
+	return self.repos.count;
 }
 
 
@@ -204,8 +286,14 @@ NSString * const StashRepoTableCellViewIdentifier = @"StashRepoTableCellViewIden
 	}
 	
 	
- 	StashRepo *repo = [self.currentRepos objectAtUntestedIndex:row];
-	view.label.stringValue = repo.name;
+ 	StashRepo *repo = [self.repos objectAtUntestedIndex:row];
+	view.textField.stringValue = repo.name;
+	
+	NSInteger numberOfIssues = repo.issues.count;
+	view.numberLabel.stringValue = numberOfIssues > 0 ? [NSString stringWithFormat:@"%ld", numberOfIssues] : @"";
+	
+	NSString *iconName = repo.publicValue ? @"Public Repo" : @"Private Repo";
+	view.imageView.image = [NSImage imageNamed:iconName];
 	
 	return view;
 }
@@ -218,7 +306,7 @@ NSString * const StashRepoTableCellViewIdentifier = @"StashRepoTableCellViewIden
 	
 	if([selectedRowIndexes count]) {
 		NSInteger selectedIndex = [selectedRowIndexes firstIndex];
-		StashRepo *selectedRepo = [self.currentRepos objectAtUntestedIndex:selectedIndex];
+		StashRepo *selectedRepo = [self.repos objectAtUntestedIndex:selectedIndex];
 		
 		if(selectedRepo) {
 			[StashIssuesManager sharedIssuesManager].currentAccount.currentRepo = selectedRepo;
@@ -226,11 +314,18 @@ NSString * const StashRepoTableCellViewIdentifier = @"StashRepoTableCellViewIden
 			NSEvent *currentEvent = [[NSApplication sharedApplication] currentEvent];
 			
 			if(currentEvent.type == NSLeftMouseUp) {
-				[self.popoverWindowController setRootMode:StashRootModeIssues animated:TRUE];
+				[self switchToIssuesView:TRUE];
 			}
 		}
 	}
 }
+
+
+- (void)switchToIssuesView:(BOOL)animated
+{
+	[self.popoverWindowController setRootMode:StashRootModeIssues animated:TRUE];
+}
+
 
 
 - (IBAction)logout:(id)sender

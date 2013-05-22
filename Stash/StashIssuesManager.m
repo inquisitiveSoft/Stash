@@ -322,12 +322,14 @@ NSString * const StashCurrentAccountIdentifierKey = @"StashCurrentAccountURIKey"
 		if([repoDictionary validatesAgainstExpectations:@{
 			@"id"		: [NSNumber class],
 			@"name"	: [NSString class],
+			@"private"	: [NSNumber class],
 		} error:&error]) {
 			StashRepo *repo = [self repoForIdentfier:repoDictionary[@"id"] account:account create:TRUE];
 			repo.name = repoDictionary[@"name"];
+			repo.publicValue = ![repoDictionary[@"private"] boolValue];
 			[repos addObject:repo];
 		} else if(error)
-			qLog(@"repoDictionary failed validation: %@", error);
+			qLog(@"Couldn't validate the dictionary defining a repo: %@, %@", error, repoDictionary);
 	}
 	
 	

@@ -3,6 +3,6 @@
 
 @interface StashRepoTableCellView : NSTableCellView
 
-@property (readonly, nonatomic) NSTextField *label;
+@property (readonly, nonatomic) NSTextField *numberLabel;
 
 @end

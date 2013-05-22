@@ -6,6 +6,7 @@
 const struct StashRepoAttributes StashRepoAttributes = {
 	.identifier = @"identifier",
 	.name = @"name",
+	.public = @"public",
 };
 
 const struct StashRepoRelationships StashRepoRelationships = {
@@ -50,6 +51,11 @@ const struct StashRepoFetchedProperties StashRepoFetchedProperties = {
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
+	if ([key isEqualToString:@"publicValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"public"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 
 	return keyPaths;
 }
@@ -85,6 +91,32 @@ const struct StashRepoFetchedProperties StashRepoFetchedProperties = {
 
 @dynamic name;
 
+
+
+
+
+
+@dynamic public;
+
+
+
+- (BOOL)publicValue {
+	NSNumber *result = [self public];
+	return [result boolValue];
+}
+
+- (void)setPublicValue:(BOOL)value_ {
+	[self setPublic:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitivePublicValue {
+	NSNumber *result = [self primitivePublic];
+	return [result boolValue];
+}
+
+- (void)setPrimitivePublicValue:(BOOL)value_ {
+	[self setPrimitivePublic:[NSNumber numberWithBool:value_]];
+}
 
 
 

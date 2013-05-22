@@ -34,4 +34,28 @@
 }
 
 
+- (BOOL)acceptsFirstResponder
+{
+	if(self.keyEventHandlingBlock)
+		return TRUE;
+	
+	return [super acceptsFirstResponder];
+}
+
+
+- (void)keyDown:(NSEvent *)theEvent {
+	StashKeyEventHandlingBlock keyEventHandlingBlock = self.keyEventHandlingBlock;
+	BOOL shouldCallSuper = TRUE;
+	
+	if(keyEventHandlingBlock) {
+		shouldCallSuper = FALSE;
+		keyEventHandlingBlock(theEvent, &shouldCallSuper);
+	}
+	
+	if(shouldCallSuper)
+		[super keyDown:theEvent];
+}
+
+
+
 @end
