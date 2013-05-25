@@ -74,8 +74,6 @@
 	CGContextAddPath(context, outlinePath);
 	CGContextSetFillColorWithColor(context, [[NSColor blackColor] CGColor]);
 	CGContextSetStrokeColorWithColor(context, [[NSColor whiteColor] CGColor]);
-//	CGContextSetLineWidth(context, 1.0);
-//	CGContextDrawPath(context, kCGPathEOFill);
 	CGContextFillPath(context);
 	CGPathRelease(outlinePath);
 	
@@ -94,10 +92,6 @@
 	CGContextSetFillColorWithColor(context, [[NSColor whiteColor] CGColor]);
 	CGContextFillPath(context);
 	CGPathRelease(innerPath);
-	
-//	[[NSColor blueColor] setFill];
-//	NSFrameRect(arrowRect);
-//	NSFrameRect(bounds);
 }
 
 

@@ -3,6 +3,6 @@
 @interface StashRepo : _StashRepo {}
 
 @property (assign) CGFloat scoreForAbbreviation;
-@property (strong) NSSet *maskForAbbreviation;
+@property (strong) NSIndexSet *maskForAbbreviation;
 
 @end

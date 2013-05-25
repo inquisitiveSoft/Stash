@@ -8,6 +8,7 @@
 #import "StashView.h"
 
 #import <QuartzCore/QuartzCore.h>
+#import <WebKit/WebKit.h>
 
 #import "NSObject+BlockObservation.h"
 #import "NSArray+UntestedIndex.h"
@@ -28,6 +29,7 @@ NSString * const StashRepoListSelectionIdentifier = @"StashRepoListSelectionIden
 @property (strong) IBOutlet NSTableView *reposTableView;
 @property (strong) IBOutlet NSSearchField *filterField;
 @property (strong) IBOutlet StashView *filterBackgroundView;
+@property (strong) IBOutlet WebView *messageWebView;
 
 @property (copy, nonatomic) NSString *filterString;
 
@@ -90,25 +92,28 @@ NSString * const StashRepoListSelectionIdentifier = @"StashRepoListSelectionIden
 	[self updateContent:FALSE];
 	
 	// Restore the previous selection
-//	NSUInteger repoInteger = [[NSUserDefaults standardUserDefaults] integerForKey:StashRepoListSelectionIdentifier];
-//	
-//	if(repoInteger > 0) { 
-//		NSUInteger selectionIndex = 0;
-//		
-//		for(StashRepo *repo in self.repos) {
-//			if(repo.identifier.integerValue == repoInteger) {
-//				[self.reposTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:selectionIndex] byExtendingSelection:FALSE];
-//				break;
-//			}
-//			
-//			selectionIndex++;
-//		}
-//	}
+	if([self.reposTableView.selectedRowIndexes count] == 0) {
+		NSUInteger repoInteger = [[NSUserDefaults standardUserDefaults] integerForKey:StashRepoListSelectionIdentifier];
+		
+		if(repoInteger > 0) { 
+			NSUInteger selectionIndex = 0;
+			
+			for(StashRepo *repo in self.repos) {
+				if(repo.identifier.integerValue == repoInteger) {
+					[self.reposTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:selectionIndex] byExtendingSelection:FALSE];
+					break;
+				}
+				
+				selectionIndex++;
+			}
+		}
+	}
 }
 
 
 - (void)viewDidAppear:(BOOL)animated
 {
+	[StashIssuesManager sharedIssuesManager].currentAccount.currentRepo = nil;
 	[self.view.window makeFirstResponder:self.view];
 }
 
@@ -158,8 +163,15 @@ NSString * const StashRepoListSelectionIdentifier = @"StashRepoListSelectionIden
 	NSTableView *reposTableView = self.reposTableView;
 	[reposTableView reloadData];
 	
-	if(selectFirstItem && [repos count]) {
-		[reposTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:FALSE];
+	if([repos count]) {
+		if(selectFirstItem) {
+			[reposTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:FALSE];
+			[reposTableView scrollRowToVisible:0];
+		}
+	} else {
+		if(self.filterString.length) {
+			
+		}
 	}
 }
 
@@ -241,19 +253,26 @@ NSString * const StashRepoListSelectionIdentifier = @"StashRepoListSelectionIden
 		}
 	} else if([key isEqualToString:@"Up"] || [key isEqualToString:@"Down"]) {
 		NSInteger currentSelectedRow = [self.reposTableView.selectedRowIndexes firstIndex];
-		
-		if(currentSelectedRow != NSNotFound) {
-			if([key isEqualToString:@"Down"])
+
+		if([key isEqualToString:@"Down"]) {
+			//
+			if(currentSelectedRow == NSNotFound)
+				currentSelectedRow = 0;
+			else
 				currentSelectedRow++;
 			
-			if([key isEqualToString:@"Up"])
+		} else if([key isEqualToString:@"Up"]) {
+			//
+			if(currentSelectedRow == NSNotFound)
+				currentSelectedRow = NSIntegerMax;
+			else
 				currentSelectedRow--;
-			
-			NSInteger rowToSelect = MIN(MAX(0, currentSelectedRow), self.repos.count - 1);
-			NSTableView *reposTableView = self.reposTableView;
-			[reposTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:rowToSelect] byExtendingSelection:FALSE];
-			[reposTableView scrollRowToVisible:rowToSelect];
 		}
+		
+		NSInteger rowToSelect = MIN(MAX(0, currentSelectedRow), self.repos.count - 1);
+		NSTableView *reposTableView = self.reposTableView;
+		[reposTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:rowToSelect] byExtendingSelection:FALSE];
+		[reposTableView scrollRowToVisible:rowToSelect];
 	} else if([key length] == 1) {
 		self.filterString = [self.filterString ? : @"" stringByAppendingString:key];
 	} else {
@@ -278,7 +297,7 @@ NSString * const StashRepoListSelectionIdentifier = @"StashRepoListSelectionIden
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-	StashRepoTableCellView *view = [tableView makeViewWithIdentifier:StashRepoTableCellViewIdentifier owner:self];
+	__block StashRepoTableCellView *view = [tableView makeViewWithIdentifier:StashRepoTableCellViewIdentifier owner:self];
 	
 	if(!view) {
 		view = [[StashRepoTableCellView alloc] initWithFrame:NSMakeRect(0.0, 0.0, 120.0, tableView.rowHeight)];
@@ -287,13 +306,33 @@ NSString * const StashRepoListSelectionIdentifier = @"StashRepoListSelectionIden
 	
 	
  	StashRepo *repo = [self.repos objectAtUntestedIndex:row];
-	view.textField.stringValue = repo.name;
-	
+		
 	NSInteger numberOfIssues = repo.issues.count;
 	view.numberLabel.stringValue = numberOfIssues > 0 ? [NSString stringWithFormat:@"%ld", numberOfIssues] : @"";
 	
 	NSString *iconName = repo.publicValue ? @"Public Repo" : @"Private Repo";
 	view.imageView.image = [NSImage imageNamed:iconName];
+	
+	// Underline the matching letters
+	if(self.filterString.length) {
+		__block NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:repo.name attributes:@{
+			NSFontAttributeName : [view labelFont]
+		}];
+		
+		NSIndexSet *maskForAbbreviation = repo.maskForAbbreviation;
+		[maskForAbbreviation enumerateRangesUsingBlock:^(NSRange range, BOOL *stop) {
+			[attributedString addAttributes:@{
+				NSUnderlineStyleAttributeName : @(NSUnderlineStyleThick)
+			} range:range];
+		}];
+		
+		view.textField.attributedStringValue = attributedString;
+		view.alphaValue = (row == 0) ? 1.0 : MAX(0.4, repo.scoreForAbbreviation);
+	} else {
+		// Otherwise just set the full string
+		view.textField.stringValue = repo.name ? : @"";
+		view.alphaValue = 1.0;
+	}
 	
 	return view;
 }

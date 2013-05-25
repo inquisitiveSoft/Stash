@@ -7,6 +7,7 @@ const struct StashRepoAttributes StashRepoAttributes = {
 	.identifier = @"identifier",
 	.name = @"name",
 	.public = @"public",
+	.urlString = @"urlString",
 };
 
 const struct StashRepoRelationships StashRepoRelationships = {
@@ -117,6 +118,13 @@ const struct StashRepoFetchedProperties StashRepoFetchedProperties = {
 - (void)setPrimitivePublicValue:(BOOL)value_ {
 	[self setPrimitivePublic:[NSNumber numberWithBool:value_]];
 }
+
+
+
+
+
+@dynamic urlString;
+
 
 
 

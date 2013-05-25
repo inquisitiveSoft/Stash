@@ -3,8 +3,6 @@
 
 @interface StashRepo ()
 
-// Private interface goes here.
-
 @end
 
 

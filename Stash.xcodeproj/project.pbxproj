@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4A147F7B174963A400C0AC82 /* NSArray+UntestedIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A147F78174963A400C0AC82 /* NSArray+UntestedIndex.m */; };
 		4A147F7C174963A400C0AC82 /* NSMutableArray+UntestedIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A147F7A174963A400C0AC82 /* NSMutableArray+UntestedIndex.m */; };
+		4A2726EB175004C3004BEE62 /* NSView+ConstraintAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2726EA175004C3004BEE62 /* NSView+ConstraintAdditions.m */; };
 		4A3CA7B1174336F80060AEE2 /* _StashRepo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3CA7B0174336F80060AEE2 /* _StashRepo.m */; };
 		4A3CA7B41743376D0060AEE2 /* StashRepo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3CA7B31743376D0060AEE2 /* StashRepo.m */; };
 		4A3CA7B7174342380060AEE2 /* NSURLRequest+TokenIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3CA7B6174342380060AEE2 /* NSURLRequest+TokenIdentifier.m */; };
@@ -16,7 +17,6 @@
 		4A3CA7BD174378010060AEE2 /* NSJSONSerialization+PrettyPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3CA7BC174378010060AEE2 /* NSJSONSerialization+PrettyPrint.m */; };
 		4A3CA7C01743A1160060AEE2 /* NSDictionary+Verification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3CA7BF1743A1160060AEE2 /* NSDictionary+Verification.m */; };
 		4A52158A174060FE0007CE0C /* Status Item Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A521589174060FE0007CE0C /* Status Item Icon.png */; };
-		4A52158C174061130007CE0C /* Status Item Icon - Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A52158B174061130007CE0C /* Status Item Icon - Highlighted.png */; };
 		4A665165174CA8DB00D2EF0D /* Public Repo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A665164174CA8DB00D2EF0D /* Public Repo.png */; };
 		4A665167174CAA8B00D2EF0D /* Private Repo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A665166174CAA8B00D2EF0D /* Private Repo.png */; };
 		4A66516A174CC79C00D2EF0D /* NSString+KeyCodeTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A665169174CC79C00D2EF0D /* NSString+KeyCodeTranslator.m */; };
@@ -27,7 +27,6 @@
 		4A7EB137173FA82800AF5916 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7EB136173FA82800AF5916 /* QuartzCore.framework */; };
 		4A7EB139173FAA3200AF5916 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7EB138173FAA3200AF5916 /* SystemConfiguration.framework */; };
 		4A7EB13F173FACEB00AF5916 /* StashView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EB13E173FACEB00AF5916 /* StashView.m */; };
-		4A7EB142173FB19E00AF5916 /* NSView+ConstraintAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EB141173FB19E00AF5916 /* NSView+ConstraintAdditions.m */; };
 		4A7EB147173FD9E800AF5916 /* StashDrawingFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EB146173FD9E800AF5916 /* StashDrawingFunctions.m */; };
 		4AB106C21749423D004DBFB9 /* StashRepoTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB106C01749423D004DBFB9 /* StashRepoTableCellView.m */; };
 		4AB61EDA174B853600B46EF2 /* StashTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB61ED9174B853600B46EF2 /* StashTextField.m */; };
@@ -41,7 +40,6 @@
 		4AB88B461742545B0085D8A7 /* AFHTTPRequestOperation+StashAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB88B451742545B0085D8A7 /* AFHTTPRequestOperation+StashAdditions.m */; };
 		4AB88B4817425E080085D8A7 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB88B4717425E080085D8A7 /* libicucore.dylib */; };
 		4AB88B4C17425E280085D8A7 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB88B4B17425E280085D8A7 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		4ABDA28417451D36002EADB7 /* Issue Collection View Item.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4ABDA28317451D36002EADB7 /* Issue Collection View Item.xib */; };
 		4ABDA28A17475CA7002EADB7 /* StashTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABDA28917475CA7002EADB7 /* StashTextView.m */; };
 		4AD190B9173DE4B100D3F24E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AD190B8173DE4B100D3F24E /* Cocoa.framework */; };
 		4AD190C3173DE4B100D3F24E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AD190C1173DE4B100D3F24E /* InfoPlist.strings */; };
@@ -69,9 +67,19 @@
 		4AD19111173DE77A00D3F24E /* XSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD1910E173DE77A00D3F24E /* XSViewController.m */; };
 		4AD19112173DE77A00D3F24E /* XSWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD19110173DE77A00D3F24E /* XSWindowController.m */; };
 		4AD19118173DE7FE00D3F24E /* Login View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AD19116173DE7FE00D3F24E /* Login View.xib */; };
+		4AF15431174E28BF007D1F9B /* Filter Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AF15430174E28BF007D1F9B /* Filter Button.png */; };
+		4AF15437174E6478007D1F9B /* Issues Checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AF15436174E6478007D1F9B /* Issues Checkbox.png */; };
+		4AF15439174E6C5A007D1F9B /* Settings Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AF15438174E6C5A007D1F9B /* Settings Button.png */; };
+		4AF1543C174E7092007D1F9B /* Issues Checkbox Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AF1543A174E7092007D1F9B /* Issues Checkbox Selected.png */; };
+		4AF1543D174E7092007D1F9B /* Issues Checkbox Selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AF1543B174E7092007D1F9B /* Issues Checkbox Selected@2x.png */; };
+		4AF1543F174E7097007D1F9B /* Issues Checkbox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AF1543E174E7097007D1F9B /* Issues Checkbox@2x.png */; };
+		4AF15446174E71FC007D1F9B /* Filter Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AF15444174E71FC007D1F9B /* Filter Button.png */; };
+		4AF15447174E71FC007D1F9B /* Filter Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AF15445174E71FC007D1F9B /* Filter Button@2x.png */; };
+		4AF1544A174E943C007D1F9B /* Create Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AF15448174E943B007D1F9B /* Create Button.png */; };
+		4AF1544B174E943C007D1F9B /* Create Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AF15449174E943B007D1F9B /* Create Button@2x.png */; };
 		4AF3E46C174819B50060AA3F /* StashAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF3E46A174819B50060AA3F /* StashAccountViewController.m */; };
 		4AF3E46D174819B50060AA3F /* Account View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AF3E46B174819B50060AA3F /* Account View.xib */; };
-		4AFDC5A91744A6D40038F953 /* StashIssueCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFDC5A81744A6D40038F953 /* StashIssueCollectionViewItem.m */; };
+		4AFDC5A91744A6D40038F953 /* StashIssuesTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFDC5A81744A6D40038F953 /* StashIssuesTableCellView.m */; };
 		4AFDC5AC1744AA4B0038F953 /* NSObject+BlockObservation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFDC5AB1744AA4B0038F953 /* NSObject+BlockObservation.m */; };
 		4AFFA9CF1740DD3000935AA9 /* StashHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9CE1740DD3000935AA9 /* StashHTTPClient.m */; };
 		4AFFA9D31740E46F00935AA9 /* Issues Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9D11740E46F00935AA9 /* Issues Model.xcdatamodeld */; };
@@ -93,6 +101,8 @@
 		4A147F78174963A400C0AC82 /* NSArray+UntestedIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+UntestedIndex.m"; path = "Submodules/SYMLFoundation/Combined/Categories/NSArray+UntestedIndex.m"; sourceTree = SOURCE_ROOT; };
 		4A147F79174963A400C0AC82 /* NSMutableArray+UntestedIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+UntestedIndex.h"; path = "Submodules/SYMLFoundation/Combined/Categories/NSMutableArray+UntestedIndex.h"; sourceTree = SOURCE_ROOT; };
 		4A147F7A174963A400C0AC82 /* NSMutableArray+UntestedIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+UntestedIndex.m"; path = "Submodules/SYMLFoundation/Combined/Categories/NSMutableArray+UntestedIndex.m"; sourceTree = SOURCE_ROOT; };
+		4A2726E9175004C3004BEE62 /* NSView+ConstraintAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+ConstraintAdditions.h"; sourceTree = "<group>"; };
+		4A2726EA175004C3004BEE62 /* NSView+ConstraintAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+ConstraintAdditions.m"; sourceTree = "<group>"; };
 		4A3CA7AF174336F80060AEE2 /* _StashRepo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _StashRepo.h; sourceTree = "<group>"; };
 		4A3CA7B0174336F80060AEE2 /* _StashRepo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _StashRepo.m; sourceTree = "<group>"; };
 		4A3CA7B21743376D0060AEE2 /* StashRepo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashRepo.h; sourceTree = "<group>"; };
@@ -106,12 +116,12 @@
 		4A3CA7BE1743A1150060AEE2 /* NSDictionary+Verification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Verification.h"; sourceTree = "<group>"; };
 		4A3CA7BF1743A1160060AEE2 /* NSDictionary+Verification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Verification.m"; sourceTree = "<group>"; };
 		4A521589174060FE0007CE0C /* Status Item Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Status Item Icon.png"; path = "Resources/Images/Status Item Icon.png"; sourceTree = SOURCE_ROOT; };
-		4A52158B174061130007CE0C /* Status Item Icon - Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Status Item Icon - Highlighted.png"; path = "Resources/Images/Status Item Icon - Highlighted.png"; sourceTree = SOURCE_ROOT; };
 		4A665164174CA8DB00D2EF0D /* Public Repo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Public Repo.png"; path = "Resources/Images/Public Repo.png"; sourceTree = SOURCE_ROOT; };
 		4A665166174CAA8B00D2EF0D /* Private Repo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Private Repo.png"; path = "Resources/Images/Private Repo.png"; sourceTree = SOURCE_ROOT; };
 		4A665168174CC79C00D2EF0D /* NSString+KeyCodeTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+KeyCodeTranslator.h"; sourceTree = "<group>"; };
 		4A665169174CC79C00D2EF0D /* NSString+KeyCodeTranslator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+KeyCodeTranslator.m"; sourceTree = "<group>"; };
 		4A66516B174CC9E000D2EF0D /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		4A665170174D0A2A00D2EF0D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		4A6B5B7A1743F87200CFC3AB /* AFOperationGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFOperationGroup.h; sourceTree = "<group>"; };
 		4A6B5B7B1743F87200CFC3AB /* AFOperationGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFOperationGroup.m; sourceTree = "<group>"; };
 		4A7EB12E173FA46400AF5916 /* StashIssuesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashIssuesViewController.h; sourceTree = "<group>"; };
@@ -121,8 +131,6 @@
 		4A7EB138173FAA3200AF5916 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4A7EB13D173FACEB00AF5916 /* StashView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashView.h; sourceTree = "<group>"; };
 		4A7EB13E173FACEB00AF5916 /* StashView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashView.m; sourceTree = "<group>"; };
-		4A7EB140173FB19E00AF5916 /* NSView+ConstraintAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+ConstraintAdditions.h"; sourceTree = "<group>"; };
-		4A7EB141173FB19E00AF5916 /* NSView+ConstraintAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+ConstraintAdditions.m"; sourceTree = "<group>"; };
 		4A7EB145173FD9E800AF5916 /* StashDrawingFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashDrawingFunctions.h; sourceTree = "<group>"; };
 		4A7EB146173FD9E800AF5916 /* StashDrawingFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashDrawingFunctions.m; sourceTree = "<group>"; };
 		4A9BCEA4174A322E00A65D08 /* StashCollectionViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StashCollectionViewDelegate.h; sourceTree = "<group>"; };
@@ -145,7 +153,6 @@
 		4AB88B4717425E080085D8A7 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		4AB88B4A17425E280085D8A7 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegexKitLite.h; path = Submodules/RegexKitLite/RegexKitLite.h; sourceTree = SOURCE_ROOT; };
 		4AB88B4B17425E280085D8A7 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegexKitLite.m; path = Submodules/RegexKitLite/RegexKitLite.m; sourceTree = SOURCE_ROOT; };
-		4ABDA28317451D36002EADB7 /* Issue Collection View Item.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Issue Collection View Item.xib"; sourceTree = "<group>"; };
 		4ABDA28817475CA7002EADB7 /* StashTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashTextView.h; sourceTree = "<group>"; };
 		4ABDA28917475CA7002EADB7 /* StashTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashTextView.m; sourceTree = "<group>"; };
 		4AD190B5173DE4B100D3F24E /* Stash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stash.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -201,11 +208,21 @@
 		4AD1910F173DE77A00D3F24E /* XSWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XSWindowController.h; path = Submodules/XSControllers/XSWindowController.h; sourceTree = SOURCE_ROOT; };
 		4AD19110173DE77A00D3F24E /* XSWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XSWindowController.m; path = Submodules/XSControllers/XSWindowController.m; sourceTree = SOURCE_ROOT; };
 		4AD19117173DE7FE00D3F24E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/Login View.xib"; sourceTree = "<group>"; };
+		4AF15430174E28BF007D1F9B /* Filter Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Filter Button.png"; path = "Resources/Images/Filter Button.png"; sourceTree = SOURCE_ROOT; };
+		4AF15436174E6478007D1F9B /* Issues Checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Issues Checkbox.png"; path = "Resources/Images/Issues Checkbox.png"; sourceTree = SOURCE_ROOT; };
+		4AF15438174E6C5A007D1F9B /* Settings Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Settings Button.png"; path = "Resources/Images/Settings Button.png"; sourceTree = SOURCE_ROOT; };
+		4AF1543A174E7092007D1F9B /* Issues Checkbox Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Issues Checkbox Selected.png"; path = "Resources/Images/Issues Checkbox Selected.png"; sourceTree = SOURCE_ROOT; };
+		4AF1543B174E7092007D1F9B /* Issues Checkbox Selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Issues Checkbox Selected@2x.png"; path = "Resources/Images/Issues Checkbox Selected@2x.png"; sourceTree = SOURCE_ROOT; };
+		4AF1543E174E7097007D1F9B /* Issues Checkbox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Issues Checkbox@2x.png"; path = "Resources/Images/Issues Checkbox@2x.png"; sourceTree = SOURCE_ROOT; };
+		4AF15444174E71FC007D1F9B /* Filter Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Filter Button.png"; path = "Resources/Images/Filter Button.png"; sourceTree = SOURCE_ROOT; };
+		4AF15445174E71FC007D1F9B /* Filter Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Filter Button@2x.png"; path = "Resources/Images/Filter Button@2x.png"; sourceTree = SOURCE_ROOT; };
+		4AF15448174E943B007D1F9B /* Create Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Create Button.png"; path = "Resources/Images/Create Button.png"; sourceTree = SOURCE_ROOT; };
+		4AF15449174E943B007D1F9B /* Create Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Create Button@2x.png"; path = "Resources/Images/Create Button@2x.png"; sourceTree = SOURCE_ROOT; };
 		4AF3E469174819B50060AA3F /* StashAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashAccountViewController.h; sourceTree = "<group>"; };
 		4AF3E46A174819B50060AA3F /* StashAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashAccountViewController.m; sourceTree = "<group>"; };
 		4AF3E46B174819B50060AA3F /* Account View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Account View.xib"; sourceTree = "<group>"; };
-		4AFDC5A71744A6D40038F953 /* StashIssueCollectionViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashIssueCollectionViewItem.h; sourceTree = "<group>"; };
-		4AFDC5A81744A6D40038F953 /* StashIssueCollectionViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashIssueCollectionViewItem.m; sourceTree = "<group>"; };
+		4AFDC5A71744A6D40038F953 /* StashIssuesTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashIssuesTableCellView.h; sourceTree = "<group>"; };
+		4AFDC5A81744A6D40038F953 /* StashIssuesTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashIssuesTableCellView.m; sourceTree = "<group>"; };
 		4AFDC5AA1744AA4B0038F953 /* NSObject+BlockObservation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+BlockObservation.h"; path = "Submodules/SYMLFoundation/Combined/Block Observation/NSObject+BlockObservation.h"; sourceTree = SOURCE_ROOT; };
 		4AFDC5AB1744AA4B0038F953 /* NSObject+BlockObservation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+BlockObservation.m"; path = "Submodules/SYMLFoundation/Combined/Block Observation/NSObject+BlockObservation.m"; sourceTree = SOURCE_ROOT; };
 		4AFFA9CD1740DD3000935AA9 /* StashHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashHTTPClient.h; sourceTree = "<group>"; };
@@ -253,11 +270,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A2726EC1750E48C004BEE62 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				4AF15448174E943B007D1F9B /* Create Button.png */,
+				4AF15449174E943B007D1F9B /* Create Button@2x.png */,
+				4AF15430174E28BF007D1F9B /* Filter Button.png */,
+				4AF15436174E6478007D1F9B /* Issues Checkbox.png */,
+				4AF1543E174E7097007D1F9B /* Issues Checkbox@2x.png */,
+				4AF1543A174E7092007D1F9B /* Issues Checkbox Selected.png */,
+				4AF1543B174E7092007D1F9B /* Issues Checkbox Selected@2x.png */,
+				4AF15444174E71FC007D1F9B /* Filter Button.png */,
+				4AF15445174E71FC007D1F9B /* Filter Button@2x.png */,
+				4AF15438174E6C5A007D1F9B /* Settings Button.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 		4A7EB143173FB1A300AF5916 /* Categories & Functions */ = {
 			isa = PBXGroup;
 			children = (
-				4A7EB140173FB19E00AF5916 /* NSView+ConstraintAdditions.h */,
-				4A7EB141173FB19E00AF5916 /* NSView+ConstraintAdditions.m */,
+				4A2726E9175004C3004BEE62 /* NSView+ConstraintAdditions.h */,
+				4A2726EA175004C3004BEE62 /* NSView+ConstraintAdditions.m */,
 				4AB61EDB174BA86F00B46EF2 /* NSString+Additions.h */,
 				4AB61EDC174BA86F00B46EF2 /* NSString+Additions.m */,
 				4AB61EE1174BB70D00B46EF2 /* NSString+ScoreForAbbreviation.h */,
@@ -276,9 +310,9 @@
 				4A7EB12E173FA46400AF5916 /* StashIssuesViewController.h */,
 				4A7EB12F173FA46400AF5916 /* StashIssuesViewController.m */,
 				4A7EB133173FA48400AF5916 /* Issues View.xib */,
-				4AFDC5A71744A6D40038F953 /* StashIssueCollectionViewItem.h */,
-				4AFDC5A81744A6D40038F953 /* StashIssueCollectionViewItem.m */,
-				4ABDA28317451D36002EADB7 /* Issue Collection View Item.xib */,
+				4AFDC5A71744A6D40038F953 /* StashIssuesTableCellView.h */,
+				4AFDC5A81744A6D40038F953 /* StashIssuesTableCellView.m */,
+				4A2726EC1750E48C004BEE62 /* Images */,
 			);
 			name = "Issues View";
 			sourceTree = "<group>";
@@ -314,6 +348,7 @@
 			isa = PBXGroup;
 			children = (
 				4AB88B4717425E080085D8A7 /* libicucore.dylib */,
+				4A665170174D0A2A00D2EF0D /* WebKit.framework */,
 				4A7EB138173FAA3200AF5916 /* SystemConfiguration.framework */,
 				4A7EB136173FA82800AF5916 /* QuartzCore.framework */,
 				4AD190D5173DE4C000D3F24E /* Security.framework */,
@@ -467,7 +502,6 @@
 				4AD190DF173DE6F100D3F24E /* StashStatusItemController.h */,
 				4AD190E0173DE6F100D3F24E /* StashStatusItemController.m */,
 				4A521589174060FE0007CE0C /* Status Item Icon.png */,
-				4A52158B174061130007CE0C /* Status Item Icon - Highlighted.png */,
 			);
 			name = "Status Item";
 			sourceTree = "<group>";
@@ -630,12 +664,20 @@
 				4AD19118173DE7FE00D3F24E /* Login View.xib in Resources */,
 				4A7EB135173FA48400AF5916 /* Issues View.xib in Resources */,
 				4A52158A174060FE0007CE0C /* Status Item Icon.png in Resources */,
-				4A52158C174061130007CE0C /* Status Item Icon - Highlighted.png in Resources */,
 				4AB88B4317423C4F0085D8A7 /* Issues Model.xcdatamodeld in Resources */,
-				4ABDA28417451D36002EADB7 /* Issue Collection View Item.xib in Resources */,
 				4AF3E46D174819B50060AA3F /* Account View.xib in Resources */,
 				4A665165174CA8DB00D2EF0D /* Public Repo.png in Resources */,
 				4A665167174CAA8B00D2EF0D /* Private Repo.png in Resources */,
+				4AF15431174E28BF007D1F9B /* Filter Button.png in Resources */,
+				4AF15437174E6478007D1F9B /* Issues Checkbox.png in Resources */,
+				4AF15439174E6C5A007D1F9B /* Settings Button.png in Resources */,
+				4AF1543C174E7092007D1F9B /* Issues Checkbox Selected.png in Resources */,
+				4AF1543D174E7092007D1F9B /* Issues Checkbox Selected@2x.png in Resources */,
+				4AF1543F174E7097007D1F9B /* Issues Checkbox@2x.png in Resources */,
+				4AF15446174E71FC007D1F9B /* Filter Button.png in Resources */,
+				4AF15447174E71FC007D1F9B /* Filter Button@2x.png in Resources */,
+				4AF1544A174E943C007D1F9B /* Create Button.png in Resources */,
+				4AF1544B174E943C007D1F9B /* Create Button@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -668,7 +710,6 @@
 				4AD19112173DE77A00D3F24E /* XSWindowController.m in Sources */,
 				4A7EB131173FA46400AF5916 /* StashIssuesViewController.m in Sources */,
 				4A7EB13F173FACEB00AF5916 /* StashView.m in Sources */,
-				4A7EB142173FB19E00AF5916 /* NSView+ConstraintAdditions.m in Sources */,
 				4A7EB147173FD9E800AF5916 /* StashDrawingFunctions.m in Sources */,
 				4AFFA9CF1740DD3000935AA9 /* StashHTTPClient.m in Sources */,
 				4AFFA9D31740E46F00935AA9 /* Issues Model.xcdatamodeld in Sources */,
@@ -694,7 +735,7 @@
 				4A3CA7BD174378010060AEE2 /* NSJSONSerialization+PrettyPrint.m in Sources */,
 				4A3CA7C01743A1160060AEE2 /* NSDictionary+Verification.m in Sources */,
 				4A6B5B7C1743F87200CFC3AB /* AFOperationGroup.m in Sources */,
-				4AFDC5A91744A6D40038F953 /* StashIssueCollectionViewItem.m in Sources */,
+				4AFDC5A91744A6D40038F953 /* StashIssuesTableCellView.m in Sources */,
 				4AFDC5AC1744AA4B0038F953 /* NSObject+BlockObservation.m in Sources */,
 				4ABDA28A17475CA7002EADB7 /* StashTextView.m in Sources */,
 				4AF3E46C174819B50060AA3F /* StashAccountViewController.m in Sources */,
@@ -706,6 +747,7 @@
 				4AB61EE0174BB27F00B46EF2 /* StashCollectionView.m in Sources */,
 				4AB61EE3174BB70D00B46EF2 /* NSString+ScoreForAbbreviation.m in Sources */,
 				4A66516A174CC79C00D2EF0D /* NSString+KeyCodeTranslator.m in Sources */,
+				4A2726EB175004C3004BEE62 /* NSView+ConstraintAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

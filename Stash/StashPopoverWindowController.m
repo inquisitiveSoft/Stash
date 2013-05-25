@@ -1,6 +1,7 @@
 #import "StashPopoverWindowController.h"
 
 #import "StashNetworkManager.h"
+#import "StashIssuesManager.h"
 
 #import "StashLoginViewController.h"
 #import "StashAccountViewController.h"
@@ -54,8 +55,18 @@
 	self.accountViewController = [[StashAccountViewController alloc] initWithNibName:@"Account View" bundle:nil windowController:self];
 	self.issuesViewController = [[StashIssuesViewController alloc] initWithNibName:@"Issues View" bundle:nil windowController:self];
 	
-	StashRootMode rootMode = [[StashNetworkManager sharedNetworkManager] isAuthenticated] ? StashRootModeAccount : StashRootModeLogin;
-	[self setRootMode:rootMode animated:FALSE];
+	// Set the initial mode
+	StashRootMode initialRootMode = StashRootModeLogin;
+	
+	if([[StashNetworkManager sharedNetworkManager] isAuthenticated]) {
+		if([StashIssuesManager sharedIssuesManager].currentAccount.currentRepo) {
+			initialRootMode = StashRootModeIssues;
+		} else
+			initialRootMode = StashRootModeAccount;
+	}
+	
+	[self setRootMode:initialRootMode animated:FALSE];
+	
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeAuthorized:) name:StashDidBecomeAuthorizedNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didResignAuthorization:) name:StashDidResignAuthorizationNotification object:nil];

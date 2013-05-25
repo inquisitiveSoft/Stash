@@ -9,7 +9,7 @@ typedef enum StashIssuesViewMode : NSUInteger {
 } StashIssuesViewMode;
 
 
-@interface StashIssuesViewController : StashViewController <NSTextViewDelegate, NSCollectionViewDelegate>
+@interface StashIssuesViewController : StashViewController <NSTextViewDelegate, NSTableViewDelegate, NSTableViewDataSource>
 
 
 

@@ -6,6 +6,7 @@
 const struct StashIssueAttributes StashIssueAttributes = {
 	.assignee = @"assignee",
 	.body = @"body",
+	.color = @"color",
 	.creationDate = @"creationDate",
 	.identifier = @"identifier",
 	.modificationDate = @"modificationDate",
@@ -87,6 +88,13 @@ const struct StashIssueFetchedProperties StashIssueFetchedProperties = {
 
 
 
+@dynamic color;
+
+
+
+
+
+
 @dynamic creationDate;
 
 
@@ -157,22 +165,22 @@ const struct StashIssueFetchedProperties StashIssueFetchedProperties = {
 
 
 
-- (int16_t)stateValue {
+- (BOOL)stateValue {
 	NSNumber *result = [self state];
-	return [result shortValue];
+	return [result boolValue];
 }
 
-- (void)setStateValue:(int16_t)value_ {
-	[self setState:[NSNumber numberWithShort:value_]];
+- (void)setStateValue:(BOOL)value_ {
+	[self setState:[NSNumber numberWithBool:value_]];
 }
 
-- (int16_t)primitiveStateValue {
+- (BOOL)primitiveStateValue {
 	NSNumber *result = [self primitiveState];
-	return [result shortValue];
+	return [result boolValue];
 }
 
-- (void)setPrimitiveStateValue:(int16_t)value_ {
-	[self setPrimitiveState:[NSNumber numberWithShort:value_]];
+- (void)setPrimitiveStateValue:(BOOL)value_ {
+	[self setPrimitiveState:[NSNumber numberWithBool:value_]];
 }
 
 

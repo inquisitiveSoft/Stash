@@ -7,6 +7,7 @@
 extern const struct StashIssueAttributes {
 	__unsafe_unretained NSString *assignee;
 	__unsafe_unretained NSString *body;
+	__unsafe_unretained NSString *color;
 	__unsafe_unretained NSString *creationDate;
 	__unsafe_unretained NSString *identifier;
 	__unsafe_unretained NSString *modificationDate;
@@ -29,6 +30,7 @@ extern const struct StashIssueFetchedProperties {
 @class StashLabel;
 @class StashMilestone;
 @class StashRepo;
+
 
 
 
@@ -69,6 +71,16 @@ extern const struct StashIssueFetchedProperties {
 
 
 //- (BOOL)validateBody:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSString* color;
+
+
+
+//- (BOOL)validateColor:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -126,9 +138,9 @@ extern const struct StashIssueFetchedProperties {
 
 
 
-@property int16_t stateValue;
-- (int16_t)stateValue;
-- (void)setStateValue:(int16_t)value_;
+@property BOOL stateValue;
+- (BOOL)stateValue;
+- (void)setStateValue:(BOOL)value_;
 
 //- (BOOL)validateState:(id*)value_ error:(NSError**)error_;
 
@@ -219,6 +231,12 @@ extern const struct StashIssueFetchedProperties {
 
 
 
+- (NSString*)primitiveColor;
+- (void)setPrimitiveColor:(NSString*)value;
+
+
+
+
 - (NSDate*)primitiveCreationDate;
 - (void)setPrimitiveCreationDate:(NSDate*)value;
 
@@ -252,8 +270,8 @@ extern const struct StashIssueFetchedProperties {
 - (NSNumber*)primitiveState;
 - (void)setPrimitiveState:(NSNumber*)value;
 
-- (int16_t)primitiveStateValue;
-- (void)setPrimitiveStateValue:(int16_t)value_;
+- (BOOL)primitiveStateValue;
+- (void)setPrimitiveStateValue:(BOOL)value_;
 
 
 

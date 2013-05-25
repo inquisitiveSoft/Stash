@@ -10,6 +10,7 @@
 
 
 @implementation StashIssue
+@synthesize scoreForAbbreviation, maskForAbbreviation;
 
 
 + (NSDateFormatter *)dateFormatter
@@ -75,14 +76,12 @@
 - (BOOL)updateIssueWithProperties:(NSDictionary *)issueProperties
 {
 	__block BOOL shouldUpdateValues = !self.identifier;
+	shouldUpdateValues = TRUE;
 	
-	if(shouldUpdateValues) {
-		NSDictionary *syncedStateDictionary = self.syncedStateDictionary;
-		if(!syncedStateDictionary) {
-			qLog(@"Couldn't find a syncedStateDictionary fot the issue: %@", self);
-			return FALSE;
-		}
-		
+	
+	NSDictionary *syncedStateDictionary = self.syncedStateDictionary;
+	
+	if(syncedStateDictionary) {
 		shouldUpdateValues = [syncedStateDictionary count];
 		
 		if(shouldUpdateValues) {
@@ -92,6 +91,7 @@
 			}];
 		}
 	}
+	
 	
 	if(shouldUpdateValues) {
 		self.identifier = issueProperties[@"id"];

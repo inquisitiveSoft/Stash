@@ -30,13 +30,15 @@
 
 - (StashRepo *)currentRepo
 {
-	StashRepo *currentRepo = nil;
 	NSNumber *currentRepoIdentifier = self.currentRepoIdentifier;
+	StashRepo *currentRepo = nil;
 	
-	for(StashRepo *repo in [self repos]) {
-		if(!currentRepoIdentifier || [repo.identifier isEqualToNumber:currentRepoIdentifier]) {
-			currentRepo = repo;
-			break;
+	if(currentRepoIdentifier) {
+		for(StashRepo *repo in self.repos) {
+			if([repo.identifier isEqualToNumber:currentRepoIdentifier]) {
+				currentRepo = repo;
+				break;
+			}
 		}
 	}
 	

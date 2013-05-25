@@ -2,6 +2,7 @@
 
 #import "StashPopoverWindowController.h"
 #import "StashTexturedWindow.h"
+#import "qLog.h"
 
 
 @interface StashStatusItemController ()
@@ -38,8 +39,15 @@
 	NSStatusItem *statusItem = [statusBar statusItemWithLength:32.0];
 	statusItem.toolTip = NSLocalizedString(@"Stash ideas and issues in GitHub", @"Tooltip");
 	statusItem.view = statusItemButton;
-	
 	self.statusItem = statusItem;
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(screensDidChange:) name:NSApplicationDidChangeScreenParametersNotification object:nil];
+}
+
+
+- (void)screensDidChange:(NSNotification *)notification
+{
+	[self hidePopover];
 }
 
 

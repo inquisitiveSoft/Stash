@@ -14,6 +14,8 @@ typedef NS_ENUM(NSUInteger, StashIssueState) {
 + (NSString *)stringFromState:(StashIssueState)issueState;
 
 @property (assign, nonatomic) NSDictionary *syncedStateDictionary;
+@property (assign) CGFloat scoreForAbbreviation;
+@property (strong) NSIndexSet *maskForAbbreviation;
 
 - (BOOL)updateIssueWithProperties:(NSDictionary *)issueProperties;
 

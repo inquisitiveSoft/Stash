@@ -33,12 +33,12 @@
 		
 		CGRect labelRect = frame;
 		labelRect.size.height -= 7.0;
-		labelRect.size.width -= horizontalPadding + 22.0;
+		labelRect.size.width -= horizontalPadding + 36.0;
 		labelRect.origin.x += horizontalPadding;
 		
 		NSTextField *label = [[NSTextField alloc] initWithFrame:labelRect];
 		label.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-		label.font = [NSFont fontWithName:@"Lucida Grande" size:13.0];
+		label.font = [self labelFont];
 		label.editable = FALSE;
 		label.selectable = FALSE;
 		label.bordered = FALSE;
@@ -50,7 +50,7 @@
 		CGRect numberRect = frame;
 		numberRect.size.height -= 6.0;
 		numberRect.size.width = 30.0;
-		numberRect.origin.x = frame.size.width - 40.0;
+		numberRect.origin.x = frame.size.width - 35.0;
 		numberRect.origin.y = 0.0;
 		
 		NSTextField *numberLabel = [[NSTextField alloc] initWithFrame:numberRect];
@@ -68,6 +68,13 @@
 	
 	return self;
 }
+
+
+- (NSFont *)labelFont
+{
+	return [NSFont fontWithName:@"Lucida Grande" size:13.0];
+}
+
 
 
 @end

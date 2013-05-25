@@ -346,16 +346,7 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 - (void)pullChanges:(AFRequestSuccessBlock)successBlock failure:(AFRequestFailureBlock)failureBlock
 {
 	AFOperationGroup *group = [[AFOperationGroup alloc] initWithCompletionBlock:^(NSArray *operations) {
-//		NSArray *repos = [self.issuesManager fetchObjectsOfEntityName:[StashRepo entityName] matching:nil];
-//		qLog(@"repos: %d", repos.count);
-//		
-//		for(StashRepo *repo in repos) {
-//			printf("%s\n", [[NSString stringWithFormat:@"	%@", repo.name] UTF8String]);
-//			
-//			for(StashIssue *issue in repo.issues) {
-//				printf("%s\n", [[NSString stringWithFormat:@"		#%@ %@", issue.number, issue.title] UTF8String]);
-//			}
-//		}
+		
 	}];
 
 	[self requestReposWithParameters:nil previousContent:nil group:group success:^(AFHTTPRequestOperation *operation, NSArray *combinedContent) {
@@ -428,11 +419,6 @@ static NSString *StashBase64EncodedStringFromString(NSString *string);
 		NSDictionary *closedPatameters = @{ @"state" : @"closed" };
 		[self requestIssuesForRepo:repo withParameters:closedPatameters previousContent:issuesArray group:group success:^(AFHTTPRequestOperation *operation, NSArray *issuesArray) {
 			NSArray *issues = [self.issuesManager updateIssuesforRepo:repo withArray:issuesArray];
-			
-//			qLog(nil);
-//			for(StashIssue *issue in issues) {
-//				printf("%s\n", [[NSString stringWithFormat:@"	%@	#%@ %@", issue.repo.name, issue.number, issue.title] UTF8String]);
-//			}
 			
 			if(successBlock) {
 				successBlock(operation, issues);

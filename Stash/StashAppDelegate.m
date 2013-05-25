@@ -56,6 +56,7 @@
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification
 {
+	[self.statusItemController displayPopover];
 }
 
 

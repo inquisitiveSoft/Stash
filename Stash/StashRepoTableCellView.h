@@ -5,4 +5,6 @@
 
 @property (readonly, nonatomic) NSTextField *numberLabel;
 
+- (NSFont *)labelFont;
+
 @end

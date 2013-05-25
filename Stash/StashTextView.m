@@ -4,12 +4,13 @@
 @implementation StashTextView
 
 
-- (void)drawInsertionPointInRect:(NSRect)aRect color:(NSColor *)aColor turnedOn:(BOOL)flag
+- (void)drawInsertionPointInRect:(NSRect)rect color:(NSColor *)aColor turnedOn:(BOOL)flag
 {
 	[[NSColor blueColor] setFill];
 	
-	aRect.size.width = 1.0;
-	NSRectFill(aRect);
+	rect.size.width = 1.0;
+	rect = NSInsetRect(rect, 0.0, 1.0);
+	NSRectFill(rect);
 }
 
 
