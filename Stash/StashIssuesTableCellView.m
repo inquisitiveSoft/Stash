@@ -2,7 +2,7 @@
 
 #import "StashIssue.h"
 #import "StashView.h"
-
+#import "StashNinePartImage.h"
 
 @implementation StashIssuesTableCellView
 
@@ -77,22 +77,25 @@
 	
 	NSRect numberRect = [self.numberLabel.attributedStringValue boundingRectWithSize:NSZeroSize options:0];
 	numberRect.size.width += 6.0;
-	numberRect.origin.y = (bounds.size.height - numberRect.size.height) / 2.0;
+	numberRect.origin.y = ((bounds.size.height - numberRect.size.height) / 2.0) - 1.0;
 	numberRect.origin.x = bounds.size.width - floorf(numberRect.size.width / 2.0) - numberInset;
 	
 	if((numberRect.size.width / 2.0) > (numberInset - rightPadding))
 		numberRect.origin.x = bounds.size.width - numberRect.size.width - rightPadding;
 	
-	self.numberLabel.frame = numberRect;
+	self.numberLabel.frame = CGRectIntegral(numberRect);
 	
 	NSRect labelRect = bounds;
 	labelRect.origin.x += leftPadding;
 	labelRect.origin.x -= 2.0;
+	labelRect.size.height -= 1.0;
 	labelRect.size.width = numberRect.origin.x - leftPadding - 3.0;
 	self.textField.frame = labelRect;
 	
 	NSRect checkboxFrame = bounds;
 	checkboxFrame.size.width = 34.0;
+	checkboxFrame.size.height -= 4.0;
+	checkboxFrame.origin.y += 1.0;
 	self.checkboxButton.frame = checkboxFrame;
 }
 
@@ -112,6 +115,26 @@
 		checkboxImageName = @"Issues Checkbox Selected";
 	
 	self.checkboxButton.image = [NSImage imageNamed:checkboxImageName];
+}
+
+
+- (void)setBackgroundStyle:(NSBackgroundStyle)backgroundStyle
+{
+	NSLog(@"backgroundStyle: %ld", backgroundStyle);
+}
+
+
+- (NSBackgroundStyle)backgroundStyle
+{
+	return NSBackgroundStyleLight;
+}
+
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+//	NSRect selectionRect = NSInsetRect(self.bounds, 6.0, 1.0);
+//	StashNinePartImage *selectionImage = (StashNinePartImage *)[[StashNinePartImage imageNamed:@"Issues Selection"] resizableImageWithCapInsets:NSEdgeInsetsMake(3.0, 3.0, 3.0, 3.0)];
+//	[selectionImage drawInRect:selectionRect operation:NSCompositeSourceOver fraction:1.0];
 }
 
 

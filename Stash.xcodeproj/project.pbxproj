@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A072B8F17541FFA0001D205 /* Popover Triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A072B8E17541FFA0001D205 /* Popover Triangle.png */; };
+		4A072B91175420120001D205 /* Popover Triangle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A072B90175420120001D205 /* Popover Triangle@2x.png */; };
 		4A147F7B174963A400C0AC82 /* NSArray+UntestedIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A147F78174963A400C0AC82 /* NSArray+UntestedIndex.m */; };
 		4A147F7C174963A400C0AC82 /* NSMutableArray+UntestedIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A147F7A174963A400C0AC82 /* NSMutableArray+UntestedIndex.m */; };
 		4A2726EB175004C3004BEE62 /* NSView+ConstraintAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2726EA175004C3004BEE62 /* NSView+ConstraintAdditions.m */; };
@@ -22,6 +24,10 @@
 		4A66516A174CC79C00D2EF0D /* NSString+KeyCodeTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A665169174CC79C00D2EF0D /* NSString+KeyCodeTranslator.m */; };
 		4A66516C174CC9E000D2EF0D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A66516B174CC9E000D2EF0D /* Carbon.framework */; };
 		4A6B5B7C1743F87200CFC3AB /* AFOperationGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6B5B7B1743F87200CFC3AB /* AFOperationGroup.m */; };
+		4A6B61971753798800141D8D /* Top Button Normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A6B61951753798800141D8D /* Top Button Normal.png */; };
+		4A6B61981753798800141D8D /* Top Button Normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A6B61961753798800141D8D /* Top Button Normal@2x.png */; };
+		4A6B619B17537AE300141D8D /* StashButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6B619A17537AE300141D8D /* StashButton.m */; };
+		4A6B61A417538D4F00141D8D /* StashNinePartImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6B61A317538D4F00141D8D /* StashNinePartImage.m */; };
 		4A7EB131173FA46400AF5916 /* StashIssuesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EB12F173FA46400AF5916 /* StashIssuesViewController.m */; };
 		4A7EB135173FA48400AF5916 /* Issues View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A7EB133173FA48400AF5916 /* Issues View.xib */; };
 		4A7EB137173FA82800AF5916 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7EB136173FA82800AF5916 /* QuartzCore.framework */; };
@@ -29,6 +35,7 @@
 		4A7EB13F173FACEB00AF5916 /* StashView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EB13E173FACEB00AF5916 /* StashView.m */; };
 		4A7EB147173FD9E800AF5916 /* StashDrawingFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EB146173FD9E800AF5916 /* StashDrawingFunctions.m */; };
 		4AB106C21749423D004DBFB9 /* StashRepoTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB106C01749423D004DBFB9 /* StashRepoTableCellView.m */; };
+		4AB1887117560A6900FBADC2 /* StashTableRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB1887017560A6900FBADC2 /* StashTableRowView.m */; };
 		4AB61EDA174B853600B46EF2 /* StashTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB61ED9174B853600B46EF2 /* StashTextField.m */; };
 		4AB61EDD174BA86F00B46EF2 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB61EDC174BA86F00B46EF2 /* NSString+Additions.m */; };
 		4AB61EE0174BB27F00B46EF2 /* StashCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB61EDF174BB27F00B46EF2 /* StashCollectionView.m */; };
@@ -81,6 +88,8 @@
 		4AF3E46D174819B50060AA3F /* Account View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AF3E46B174819B50060AA3F /* Account View.xib */; };
 		4AFDC5A91744A6D40038F953 /* StashIssuesTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFDC5A81744A6D40038F953 /* StashIssuesTableCellView.m */; };
 		4AFDC5AC1744AA4B0038F953 /* NSObject+BlockObservation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFDC5AB1744AA4B0038F953 /* NSObject+BlockObservation.m */; };
+		4AFEFAF117554A280022A482 /* Issues Selection.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AFEFAEF17554A280022A482 /* Issues Selection.png */; };
+		4AFEFAF217554A280022A482 /* Issues Selection@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AFEFAF017554A280022A482 /* Issues Selection@2x.png */; };
 		4AFFA9CF1740DD3000935AA9 /* StashHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9CE1740DD3000935AA9 /* StashHTTPClient.m */; };
 		4AFFA9D31740E46F00935AA9 /* Issues Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9D11740E46F00935AA9 /* Issues Model.xcdatamodeld */; };
 		4AFFA9E11740F36C00935AA9 /* _StashAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFFA9D61740F36C00935AA9 /* _StashAccount.m */; };
@@ -97,6 +106,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4A072B8E17541FFA0001D205 /* Popover Triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Popover Triangle.png"; path = "Resources/Images/Popover Triangle.png"; sourceTree = SOURCE_ROOT; };
+		4A072B90175420120001D205 /* Popover Triangle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Popover Triangle@2x.png"; path = "Resources/Images/Popover Triangle@2x.png"; sourceTree = SOURCE_ROOT; };
 		4A147F77174963A400C0AC82 /* NSArray+UntestedIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+UntestedIndex.h"; path = "Submodules/SYMLFoundation/Combined/Categories/NSArray+UntestedIndex.h"; sourceTree = SOURCE_ROOT; };
 		4A147F78174963A400C0AC82 /* NSArray+UntestedIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+UntestedIndex.m"; path = "Submodules/SYMLFoundation/Combined/Categories/NSArray+UntestedIndex.m"; sourceTree = SOURCE_ROOT; };
 		4A147F79174963A400C0AC82 /* NSMutableArray+UntestedIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+UntestedIndex.h"; path = "Submodules/SYMLFoundation/Combined/Categories/NSMutableArray+UntestedIndex.h"; sourceTree = SOURCE_ROOT; };
@@ -124,6 +135,12 @@
 		4A665170174D0A2A00D2EF0D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		4A6B5B7A1743F87200CFC3AB /* AFOperationGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFOperationGroup.h; sourceTree = "<group>"; };
 		4A6B5B7B1743F87200CFC3AB /* AFOperationGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFOperationGroup.m; sourceTree = "<group>"; };
+		4A6B61951753798800141D8D /* Top Button Normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Top Button Normal.png"; path = "Resources/Images/Top Button Normal.png"; sourceTree = SOURCE_ROOT; };
+		4A6B61961753798800141D8D /* Top Button Normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Top Button Normal@2x.png"; path = "Resources/Images/Top Button Normal@2x.png"; sourceTree = SOURCE_ROOT; };
+		4A6B619917537AE300141D8D /* StashButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashButton.h; sourceTree = "<group>"; };
+		4A6B619A17537AE300141D8D /* StashButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashButton.m; sourceTree = "<group>"; };
+		4A6B61A217538D4F00141D8D /* StashNinePartImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashNinePartImage.h; sourceTree = "<group>"; };
+		4A6B61A317538D4F00141D8D /* StashNinePartImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashNinePartImage.m; sourceTree = "<group>"; };
 		4A7EB12E173FA46400AF5916 /* StashIssuesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashIssuesViewController.h; sourceTree = "<group>"; };
 		4A7EB12F173FA46400AF5916 /* StashIssuesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashIssuesViewController.m; sourceTree = "<group>"; };
 		4A7EB134173FA48400AF5916 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/Issues View.xib"; sourceTree = "<group>"; };
@@ -136,6 +153,8 @@
 		4A9BCEA4174A322E00A65D08 /* StashCollectionViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StashCollectionViewDelegate.h; sourceTree = "<group>"; };
 		4AB106BF1749423C004DBFB9 /* StashRepoTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashRepoTableCellView.h; sourceTree = "<group>"; };
 		4AB106C01749423D004DBFB9 /* StashRepoTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashRepoTableCellView.m; sourceTree = "<group>"; };
+		4AB1886F17560A6900FBADC2 /* StashTableRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashTableRowView.h; sourceTree = "<group>"; };
+		4AB1887017560A6900FBADC2 /* StashTableRowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashTableRowView.m; sourceTree = "<group>"; };
 		4AB61ED8174B853600B46EF2 /* StashTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashTextField.h; sourceTree = "<group>"; };
 		4AB61ED9174B853600B46EF2 /* StashTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashTextField.m; sourceTree = "<group>"; };
 		4AB61EDB174BA86F00B46EF2 /* NSString+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Additions.h"; sourceTree = "<group>"; };
@@ -225,6 +244,8 @@
 		4AFDC5A81744A6D40038F953 /* StashIssuesTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashIssuesTableCellView.m; sourceTree = "<group>"; };
 		4AFDC5AA1744AA4B0038F953 /* NSObject+BlockObservation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+BlockObservation.h"; path = "Submodules/SYMLFoundation/Combined/Block Observation/NSObject+BlockObservation.h"; sourceTree = SOURCE_ROOT; };
 		4AFDC5AB1744AA4B0038F953 /* NSObject+BlockObservation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+BlockObservation.m"; path = "Submodules/SYMLFoundation/Combined/Block Observation/NSObject+BlockObservation.m"; sourceTree = SOURCE_ROOT; };
+		4AFEFAEF17554A280022A482 /* Issues Selection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Issues Selection.png"; path = "Resources/Images/Issues Selection.png"; sourceTree = SOURCE_ROOT; };
+		4AFEFAF017554A280022A482 /* Issues Selection@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Issues Selection@2x.png"; path = "Resources/Images/Issues Selection@2x.png"; sourceTree = SOURCE_ROOT; };
 		4AFFA9CD1740DD3000935AA9 /* StashHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StashHTTPClient.h; sourceTree = "<group>"; };
 		4AFFA9CE1740DD3000935AA9 /* StashHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StashHTTPClient.m; sourceTree = "<group>"; };
 		4AFFA9D21740E46F00935AA9 /* Issues Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Issues Model.xcdatamodel"; sourceTree = "<group>"; };
@@ -273,6 +294,12 @@
 		4A2726EC1750E48C004BEE62 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				4AFEFAEF17554A280022A482 /* Issues Selection.png */,
+				4AFEFAF017554A280022A482 /* Issues Selection@2x.png */,
+				4A072B8E17541FFA0001D205 /* Popover Triangle.png */,
+				4A072B90175420120001D205 /* Popover Triangle@2x.png */,
+				4A6B61951753798800141D8D /* Top Button Normal.png */,
+				4A6B61961753798800141D8D /* Top Button Normal@2x.png */,
 				4AF15448174E943B007D1F9B /* Create Button.png */,
 				4AF15449174E943B007D1F9B /* Create Button@2x.png */,
 				4AF15430174E28BF007D1F9B /* Filter Button.png */,
@@ -298,6 +325,8 @@
 				4AB61EE2174BB70D00B46EF2 /* NSString+ScoreForAbbreviation.m */,
 				4A665168174CC79C00D2EF0D /* NSString+KeyCodeTranslator.h */,
 				4A665169174CC79C00D2EF0D /* NSString+KeyCodeTranslator.m */,
+				4A6B61A217538D4F00141D8D /* StashNinePartImage.h */,
+				4A6B61A317538D4F00141D8D /* StashNinePartImage.m */,
 				4A7EB145173FD9E800AF5916 /* StashDrawingFunctions.h */,
 				4A7EB146173FD9E800AF5916 /* StashDrawingFunctions.m */,
 			);
@@ -309,6 +338,8 @@
 			children = (
 				4A7EB12E173FA46400AF5916 /* StashIssuesViewController.h */,
 				4A7EB12F173FA46400AF5916 /* StashIssuesViewController.m */,
+				4AB1886F17560A6900FBADC2 /* StashTableRowView.h */,
+				4AB1887017560A6900FBADC2 /* StashTableRowView.m */,
 				4A7EB133173FA48400AF5916 /* Issues View.xib */,
 				4AFDC5A71744A6D40038F953 /* StashIssuesTableCellView.h */,
 				4AFDC5A81744A6D40038F953 /* StashIssuesTableCellView.m */,
@@ -378,7 +409,6 @@
 				4AD19114173DE7A600D3F24E /* Network Manager */,
 				4AD19115173DE7DC00D3F24E /* Status Item */,
 				4AD19113173DE79600D3F24E /* Issues Window */,
-				4A7EB143173FB1A300AF5916 /* Categories & Functions */,
 				4AD190BF173DE4B100D3F24E /* Supporting Files */,
 			);
 			path = Stash;
@@ -465,10 +495,11 @@
 			children = (
 				4AD190D9173DE6F100D3F24E /* StashPopoverWindowController.h */,
 				4AD190DA173DE6F100D3F24E /* StashPopoverWindowController.m */,
-				4AD1911A173DE8A400D3F24E /* UI Elements */,
 				4AD19119173DE80100D3F24E /* Login View */,
 				4AF3E468174819970060AA3F /* Account View */,
 				4A7EB144173FB7A200AF5916 /* Issues View */,
+				4AD1911A173DE8A400D3F24E /* UI Elements */,
+				4A7EB143173FB1A300AF5916 /* Categories & Functions */,
 			);
 			name = "Issues Window";
 			sourceTree = "<group>";
@@ -527,6 +558,8 @@
 				4AD190E6173DE6F100D3F24E /* StashViewController.m */,
 				4A7EB13D173FACEB00AF5916 /* StashView.h */,
 				4A7EB13E173FACEB00AF5916 /* StashView.m */,
+				4A6B619917537AE300141D8D /* StashButton.h */,
+				4A6B619A17537AE300141D8D /* StashButton.m */,
 				4AB61EDE174BB27F00B46EF2 /* StashCollectionView.h */,
 				4AB61EDF174BB27F00B46EF2 /* StashCollectionView.m */,
 				4ABDA28817475CA7002EADB7 /* StashTextView.h */,
@@ -678,6 +711,12 @@
 				4AF15447174E71FC007D1F9B /* Filter Button@2x.png in Resources */,
 				4AF1544A174E943C007D1F9B /* Create Button.png in Resources */,
 				4AF1544B174E943C007D1F9B /* Create Button@2x.png in Resources */,
+				4A6B61971753798800141D8D /* Top Button Normal.png in Resources */,
+				4A6B61981753798800141D8D /* Top Button Normal@2x.png in Resources */,
+				4A072B8F17541FFA0001D205 /* Popover Triangle.png in Resources */,
+				4A072B91175420120001D205 /* Popover Triangle@2x.png in Resources */,
+				4AFEFAF117554A280022A482 /* Issues Selection.png in Resources */,
+				4AFEFAF217554A280022A482 /* Issues Selection@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -748,6 +787,9 @@
 				4AB61EE3174BB70D00B46EF2 /* NSString+ScoreForAbbreviation.m in Sources */,
 				4A66516A174CC79C00D2EF0D /* NSString+KeyCodeTranslator.m in Sources */,
 				4A2726EB175004C3004BEE62 /* NSView+ConstraintAdditions.m in Sources */,
+				4A6B619B17537AE300141D8D /* StashButton.m in Sources */,
+				4A6B61A417538D4F00141D8D /* StashNinePartImage.m in Sources */,
+				4AB1887117560A6900FBADC2 /* StashTableRowView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

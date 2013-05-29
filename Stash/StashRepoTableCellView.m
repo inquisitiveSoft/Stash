@@ -32,7 +32,7 @@
 		self.imageView = imageView;
 		
 		CGRect labelRect = frame;
-		labelRect.size.height -= 7.0;
+		labelRect.size.height -= 5.0;
 		labelRect.size.width -= horizontalPadding + 36.0;
 		labelRect.origin.x += horizontalPadding;
 		
@@ -48,7 +48,7 @@
 		self.textField = label;
 		
 		CGRect numberRect = frame;
-		numberRect.size.height -= 6.0;
+		numberRect.size.height -= 4.0;
 		numberRect.size.width = 30.0;
 		numberRect.origin.x = frame.size.width - 35.0;
 		numberRect.origin.y = 0.0;

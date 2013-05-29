@@ -2,11 +2,12 @@
 #import "StashNetworkManager.h"
 
 
-typedef enum StashIssuesViewMode : NSUInteger {
+typedef NS_ENUM(NSUInteger, StashIssuesViewMode) {
 	StashIssuesViewModeUnknown,
 	StashIssuesViewModeFiltering,
 	StashIssuesViewModeCreation
-} StashIssuesViewMode;
+};
+
 
 
 @interface StashIssuesViewController : StashViewController <NSTextViewDelegate, NSTableViewDelegate, NSTableViewDataSource>

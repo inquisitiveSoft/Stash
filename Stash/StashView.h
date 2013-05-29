@@ -3,7 +3,7 @@
 
 @class StashView;
 
-typedef void (^ StashViewDrawBlock)(StashView *view, NSRect dirtyRect);
+typedef void (^ StashViewDrawBlock)(NSView *view, NSRect dirtyRect);
 typedef void (^ StashKeyEventHandlingBlock)(NSEvent *keyEvent, BOOL *shouldCallSuper);
 
 @interface StashView : NSView

@@ -54,7 +54,7 @@
 - (void)updatePopoverAttachmentPosition
 {
 	CGRect statusItemRect = self.statusItem.view.window.frame;
-	CGPoint attachmentPosition = CGPointMake(CGRectGetMidX(statusItemRect), CGRectGetMinY(statusItemRect));
+	CGPoint attachmentPosition = CGPointMake(CGRectGetMidX(statusItemRect), CGRectGetMinY(statusItemRect) + 2.0);
 	
 	StashTexturedWindow *popoverWindow = (StashTexturedWindow *)self.popoverWindowController.window;
 	popoverWindow.attachmentPosition = attachmentPosition;

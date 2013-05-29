@@ -53,11 +53,11 @@ NSString * const StashRepoListSelectionIdentifier = @"StashRepoListSelectionIden
 	[reposCollectionScrollView setScrollerStyle:NSScrollerStyleOverlay];
 	
 	NSTableView *reposTableView = self.reposTableView;
-	reposTableView.rowHeight = 32.0;
+	reposTableView.rowHeight = 28.0;
 	reposTableView.delegate = self;
 	reposTableView.dataSource = self;
 	[reposTableView setNeedsDisplay];
-		
+	
 	__weak StashAccountViewController *accountViewController = self;
 	[(StashView *)self.view setKeyEventHandlingBlock:^(NSEvent *keyEvent, BOOL *shouldCallSuper) {
 		*shouldCallSuper = [accountViewController handleKeyEvent:keyEvent];
@@ -140,7 +140,7 @@ NSString * const StashRepoListSelectionIdentifier = @"StashRepoListSelectionIden
 		__block NSMutableString *abbreviationMatchingRegex = [[NSMutableString alloc] initWithString:@".*"];
 		__block NSCharacterSet *regularExpressionCharactersToEscape = [NSCharacterSet characterSetWithCharactersInString:@"\\.+*?[^]$(){}=!<>|:-"];
 		
-		[[filterString normalizedString] enumerateSubstringsInRange:NSMakeRange(0, [filterString length])
+		[filterString enumerateSubstringsInRange:NSMakeRange(0, [filterString length])
 														 options:NSStringEnumerationByComposedCharacterSequences
 													  usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
 			if([substring rangeOfCharacterFromSet:regularExpressionCharactersToEscape].location != NSNotFound)
