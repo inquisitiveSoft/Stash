@@ -20,7 +20,7 @@
 - (void)awakeFromNib
 {
 	self.usernameTextField.stringValue = @"inquisitiveSoft";
-	self.passwordTextField.stringValue = @"JXCvWfHRsmOAH7swL6dLL";
+	self.passwordTextField.stringValue = @"nnt[du3ovDQ+T^wt,fDkvU.8RHAj";
 }
 
 

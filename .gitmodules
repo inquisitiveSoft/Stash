@@ -3,4 +3,4 @@
 	url = git://github.com/AFNetworking/AFNetworking.git
 [submodule "Submodules/SYMLFoundation"]
 	path = Submodules/SYMLFoundation
-	url = git@github.com:inquisitiveSoft/SYMLFoundation.git
+	url = git@bitbucket.org:inquisitivesoft/symlfoundation.git

@@ -668,6 +668,16 @@
 				CLASSPREFIX = Stash;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Harry Jordan";
+				TargetAttributes = {
+					4AD190B4173DE4B100D3F24E = {
+						DevelopmentTeam = D92MT22EX5;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
+					};
+				};
 			};
 			buildConfigurationList = 4AD190B0173DE4B100D3F24E /* Build configuration list for PBXProject "Stash" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -901,7 +911,6 @@
 		4AD190D3173DE4B100D3F24E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = Stash/Stash.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -915,7 +924,6 @@
 		4AD190D4173DE4B100D3F24E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = Stash/Stash.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

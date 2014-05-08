@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>7D4D14E9-731B-4D5F-AA79-0BFD64DC8F91</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Stash</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>8A08B361-1CDE-4B0B-9BFA-FB97F9516DE8</key>
+		<string>ssh://github.com/inquisitiveSoft/Stash.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Stash.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>8A08B361-1CDE-4B0B-9BFA-FB97F9516DE8</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/inquisitiveSoft/Stash.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>8A08B361-1CDE-4B0B-9BFA-FB97F9516DE8</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8A08B361-1CDE-4B0B-9BFA-FB97F9516DE8</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Stash</string>
+		</dict>
+	</array>
+</dict>
+</plist>
