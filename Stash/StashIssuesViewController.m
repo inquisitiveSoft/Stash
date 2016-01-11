@@ -82,7 +82,7 @@ NSString * const StashIssuesFilterMilestoneRegex = @"(m|milestone):[ \\t]{0,3}(.
 	issuesTableView.rowHeight = 22.0;
 	issuesTableView.selectionHighlightStyle = NSTableViewSelectionHighlightStyleRegular;
 	
-	NSImage *backgroundImage = [[StashNinePartImage imageNamed:@"Top Button Normal"] resizableImageWithCapInsets:NSEdgeInsetsMake(5.0, 5.0, 5.0, 5.0)];	
+	NSImage *backgroundImage = [(StashNinePartImage *)[StashNinePartImage imageNamed:@"Top Button Normal"] resizableImageWithCapInsets:NSEdgeInsetsMake(5.0, 5.0, 5.0, 5.0)];
 	
 	self.topButton.font = [NSFont fontWithName:@"Avenir Next Medium" size:14.0];
 	self.topButton.backgroundImage = backgroundImage;

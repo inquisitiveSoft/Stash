@@ -22,6 +22,7 @@ NSString * const StashPreviousContentViewController = @"StashPreviousContentView
 
 
 @implementation StashTexturedWindow
+@synthesize contentViewController = _contentViewController;
 
 
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
